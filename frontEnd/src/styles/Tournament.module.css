@@ -1,0 +1,243 @@
+li {
+    display: inline;
+    margin: 10px;
+    padding: 5px;
+}
+
+ul {
+    margin: 5px auto;
+}
+
+
+
+
+
+
+
+
+/* TABLE */
+.table h2, .result h2, .fix h2 {
+    text-align: left;
+    margin: 10px;
+}
+
+
+
+
+
+
+.teams {
+    display: inline-flex;
+    justify-content: center;
+    margin: auto;
+}
+.teams li {
+    display: flex;
+    width: 100%;
+    margin: auto 0 auto auto;
+}
+.table li {
+    margin: auto 0 auto auto;
+}
+
+.teams div {
+    display: inline-flex;
+}
+
+.team  span {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+
+}
+
+.teams .info {
+    display: inline-flex;
+    justify-self: first baseline;
+}
+
+.table ul {
+    display: flex;
+}
+
+.table .teams {
+    display: block;
+}
+
+.dot div {
+    border: 2px green solid;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    /* position: relative;
+    top: 4px; */
+    justify-content: center;
+    margin: auto;
+}
+
+.pos, .dot, .team {
+    justify-items: start;
+    margin-right:10px ;
+  
+}
+
+.head, .head2 {
+    display: inline-flex;
+    text-align: end;
+    justify-items: flex-end;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+.head div, .head2 div {
+    display: inline-flex;
+    margin: auto 5px;
+    width: 30px;
+    text-align: center;
+
+}
+
+.head div *, .head2 abbr {
+    text-align: center;
+    margin: auto;
+}
+
+
+
+
+
+.teams li:hover {
+    background-color: rgb(71, 69, 65);
+}
+
+
+
+
+
+/* PLAYER */
+
+
+
+
+
+
+
+
+
+/* fixtures */
+.fixtures span {
+    display: inline-flex;
+}
+
+.day {
+    text-align: left;
+    margin: auto 10px;
+}
+
+time {
+    border:  2px bisque solid;
+    padding: 5px;
+    text-align: center;
+}
+
+.date {
+    font-size: larger;
+    font-weight: bold;
+    color: #d4cbff;
+    display: block;
+}
+
+.fixtures {
+    text-align: center;
+    margin: auto;
+    background-color: #1a1a1a;
+}
+
+.list {
+    text-align: center;
+    margin: auto;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+}
+
+.home {
+    text-align: right;
+    margin: auto 10px auto auto;
+    display: flex;
+
+}
+
+.away {
+    text-align: left;
+    margin: auto auto auto 10px;
+    display: flex;
+
+
+}
+.name, .score  {
+    padding: 0 6px;
+    font-weight: bolder;
+    font-size: larger;
+    margin: auto;
+}
+
+ .fixtures:hover {
+    background-color: rgb(71, 69, 65);
+}
+
+
+.comp {
+    width: 10px;
+    display: inline-flex;
+    height: 10px;
+}
+
+.comp img {
+    width: 10px;
+    height: 10px;
+}
+
+
+/* result */
+
+.results {
+    background-color: #1a1a1a;
+}
+.score {
+    border:  2px rgb(212, 196, 255) solid;
+    padding: 5px 15px;
+    background-color: rgb(10, 92, 92);
+    display: flex;
+}
+
+.teams .scoreboard {
+    display: block;
+}
+
+.scoreboard p {
+    font-size: x-small;
+}
+
+.results:hover {
+    background-color: rgb(71, 69, 65);
+}
+
+
+@media (max-width: 500px) {
+
+    #draw , #loss, #win, #ga, #gs{
+        display: none;
+        width: 0;
+    }
+
+
+    .fixtures span, .result span {
+        font-size: small;
+    }
+    
+
+
+ }

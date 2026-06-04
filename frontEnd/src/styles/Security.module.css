@@ -1,0 +1,23 @@
+.app {
+    
+}
+
+.app form {
+    margin: 10px;
+}
+
+.app h1 {
+    text-align: center;
+}
+.app h3, .app h5 {
+    margin: 10px;
+}
+
+
+.alternate a {
+    color: gold;
+}
+
+.forgetpass a {
+    color: rgb(255, 115, 255);
+}

@@ -1,0 +1,93 @@
+
+nav {
+    background: #000;
+    margin: 0;
+    padding: 2px;
+    
+    width: 100%;
+    position: relative;
+    text-align: left;
+
+}
+
+nav #navh1 {
+    margin: auto auto auto 15px ;
+    display: inline;
+   
+}
+
+.burger {
+    display: none;
+}
+
+.menu {
+    display: inline-flex;
+}
+
+nav img {
+    width: 100px;
+    height: 45px;
+}
+.rnav {
+    float: right;
+    padding: 2px ;
+    right: 0px;
+    position: absolute;
+    top: 5px;
+    margin: auto 1%;    
+    display: inline-flex;
+}
+
+.rnav button {
+    border: none;
+    font-size: large;
+    box-shadow: none;
+    
+}
+
+.rnav input {
+    border: none;
+    font-size: small;
+    box-shadow: none;
+    width: 100px;
+}
+
+#form {
+
+}
+
+.navr {
+    margin: auto 3%;
+    padding: 0 5px;
+
+
+}
+
+.lnav {
+    float: left;
+    padding: 2px 8px;
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 500px) {
+   
+
+    .burger {
+        display: inline-flex;
+        margin-left: 5px;
+    }
+
+    .menu {
+        display: none;
+    }
+
+ 
+ }

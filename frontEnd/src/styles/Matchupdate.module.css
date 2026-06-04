@@ -1,0 +1,187 @@
+
+.app {
+    text-align: left;
+}
+
+.app label {
+    text-align: left;
+    display: block;
+    margin: 0;
+}
+.app h1 {
+    text-align: center;
+}
+
+
+.top {
+    border: 1px gold solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+
+
+
+
+
+/* player admin form */
+
+.select {
+    display: inline-block;
+    margin: 10px;
+}
+
+.select select {
+    font-size: x-large;
+
+}
+
+.pimg {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: auto;
+}
+
+.pimg img {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.teamAdmin {
+    text-align: left;
+}
+
+.teamadminmenu {
+    margin: 10px;
+
+}
+
+.teamadminmenulist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+
+
+
+
+/* news form */
+
+
+.textarea {
+    text-align: left;
+    margin: 10px;
+    display: block;
+}
+
+.textarea textarea {
+    width: 90%;
+
+}
+
+
+
+
+
+
+
+/* news list */
+.newsgrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 10px auto;
+
+}
+
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 10px auto;
+}
+
+.match {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 10px auto;
+    text-align: center;
+}
+
+
+
+
+@media (max-width: 900px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .match {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+
+
+
+
+
+@media (max-width: 700px) {
+    
+    
+
+ }
+
+
+ @media (max-width: 610px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .newsgrid {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .list {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .match {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+}
+
+
+
+
+
+@media (max-width: 450px) {
+
+
+    .select select {
+        font-size: medium;
+    }
+    
+
+    .newsgrid {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .list {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+    
+    
+     }

@@ -1,0 +1,267 @@
+/* list */
+.app {
+    text-align: left;
+    background-color: #000;
+}
+
+.competion, .competitions {
+    text-align: left;
+    margin-left: auto;
+    background-color: #000;
+}
+
+.competitions h3 {
+    margin: 10px;
+}
+
+
+.regions {
+    display: inline-flex;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: left;
+}
+
+
+.regions a, .allregions a {
+    margin: 10px;
+    
+}
+
+.allregions {
+    display: grid;
+    justify-content: space-evenly;
+
+    grid-template-columns: repeat(4, 1fr);
+
+}
+
+
+
+
+
+@media (max-width: 850px) {
+   
+
+.allregions {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+ 
+ }
+ 
+ 
+ 
+ 
+ 
+ @media (max-width: 650px) {
+   
+
+    .allregions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+     
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* region & components  */
+
+
+
+     
+.top {
+    border: 1px gold solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+
+
+
+.head {
+    display: flex;
+    margin: 50px auto ;
+    background-image: repeating-linear-gradient(45deg, rgba(54, 158, 28, 0.205), rgba(223, 220, 22, 0.253) 10%, rgba(145, 11, 127, 0.363) 20%) ;
+    padding: 100px 0;
+}
+
+
+.name {
+    display: inline;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+
+
+.img {
+    width: 200px;
+    justify-content: center;
+
+    margin: auto 10px;
+}
+
+.img img {
+    width: 100%;
+}
+
+
+
+/* standing */
+
+
+
+.standing {
+    margin: 10px;
+    text-align: left;
+}
+
+.result, .fixture {
+    margin: 10px;
+}
+
+
+
+
+
+/*  team fix */
+
+.teamFix {
+    text-align: left;
+    margin: 10px;
+}
+
+
+
+.fix {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+    justify-items: flex-start;
+}
+
+.fix .fixture {
+    width: 90%;
+}
+
+
+/* team results  */
+
+
+.teamRes {
+    text-align: left;
+    margin: 10px;
+}
+
+
+.res {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+    justify-items: flex-start;
+}
+
+.res .result {
+    width: 90%;
+}
+
+.teamRes button, .teamFix button {
+    text-align: center;
+    display: flex;
+    margin: auto;
+}
+
+
+/* team news */
+
+.teamNews {
+    text-align: left;
+    margin: auto 20px;
+}
+.top {
+    margin: 10px auto;
+}
+
+
+
+
+@media (max-width: 900px) {
+    
+.fix, .res {
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+ }
+
+
+
+
+@media (max-width: 700px) {
+    
+
+    .head {
+        display: block;
+        padding: 50px 0;
+    }
+    .name {
+        display: block;
+        text-align: center;
+        margin: auto ;
+    }
+    
+    
+    
+    .img {
+        width: 200px;
+        display: block;
+        justify-content: center;
+    
+        margin: auto ;
+    }
+
+
+    .layout {
+       display: block;
+    }
+
+    .matches {
+        display: block;
+    }
+
+    .result, .fixture {
+        margin: 10px;
+    }
+ }
+
+
+
+
+
+ @media (max-width: 600px) {
+    
+    .fix, .res {
+        grid-template-columns: repeat(1, 1fr);
+    
+    }
+        
+
+     }

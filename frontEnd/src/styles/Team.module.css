@@ -1,0 +1,380 @@
+.app {
+    background-color: #000;
+
+}
+
+.tres, .tfix {
+    background-color: #1a1a1a;
+}
+
+.head {
+    display: flex;
+    margin: 50px auto ;
+    background-image: repeating-linear-gradient(45deg, rgba(54, 158, 28, 0.205), rgba(223, 220, 22, 0.253) 10%, rgba(145, 11, 127, 0.363) 20%) ;
+    padding: 100px 0;
+}
+
+
+.name {
+    display: inline;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+
+.top {
+    border: 1px gold solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+
+.top .img {
+    width: 200px;
+    justify-content: center;
+
+    margin: auto 10px;
+}
+
+.img img {
+    width: 100%;
+}
+
+
+.layout {
+    display: grid;
+    grid-template-columns: auto 20%;
+    margin: 10px;
+    width: 100%;
+    text-align: left;
+
+}
+
+.list {
+    text-align: left;
+    margin: auto 10px;
+    display: block;
+
+
+}
+
+.list ul {
+    display: flex;
+}
+
+.matches {
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 50%;
+
+
+}
+
+.matches h2 {
+    margin: 10px 0;
+}
+
+.result > div {
+    position: relative;
+    top: 7px;
+    text-align: left;
+}
+
+.result > div, .fixture > div {
+
+    justify-items: flex-start;
+}
+
+/* standing */
+
+
+
+.standing {
+    margin: 10px;
+}
+
+.result, .fixture {
+    margin: 10px;
+}
+
+
+
+/* form */
+
+.form {
+    margin: 10px;
+}
+
+
+
+/* .news {
+    display: flex;
+} */
+
+
+/* right */
+
+
+
+/* other team */
+
+
+.otherTeams {
+    display: block;
+    margin: 10px;
+}
+
+
+.listT {
+    margin-bottom: 5px;
+    display: inline-flex;
+}
+
+
+
+.listT img {
+    width: 20px;
+    margin-right: 5px;
+
+}
+
+
+
+/*  team fix */
+
+.teamFix {
+    text-align: left;
+    margin: 10px;
+}
+
+
+
+.fix {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    display: grid;
+    grid-template-columns: auto 70%;
+
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+    justify-items: flex-start;
+}
+
+.fix .fixture {
+    width: 90%;
+}
+
+
+/* team results  */
+
+
+.teamRes {
+    text-align: left;
+    margin: 10px;
+}
+
+
+.res {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    display: grid;
+    grid-template-columns: auto 70%;
+
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+    justify-items: flex-start;
+}
+
+.res .result {
+    width: 90%;
+}
+
+
+/* team news */
+
+.teamNews {
+    text-align: left;
+    margin: auto 20px;
+}
+.top {
+    margin: 10px auto;
+}
+
+
+
+
+/* team squad  */
+.squads {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    display: grid;
+    grid-template-columns: auto 70%;
+
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+    justify-items: flex-start;
+}
+
+.listS {
+    text-align: left;
+    display: inline-flex;
+    background-color: #1a1a1a;
+    padding: 10px 5px;
+    width: 90%;
+    margin: 10px;
+}
+
+.listS h3, .listS h1 {
+    display: inline-flex;
+    text-align: left;
+}
+.info {
+    margin: auto 5px;
+}
+
+.name {
+    margin: auto 0;
+}
+
+.number {
+    justify-content: center;
+    margin: auto 5px ;
+}
+
+.listS img, .listS .img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+}
+
+
+
+
+
+
+
+
+
+/* team admin */
+
+.teamAdmin {
+    text-align: left;
+}
+
+.teamadminmenu {
+    margin: 10px;
+
+}
+
+.teamadminmenulist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+
+@media (max-width: 900px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+
+
+
+
+
+@media (max-width: 700px) {
+    
+
+    .head {
+        display: block;
+        padding: 40px 0;
+    }
+    .name {
+        display: block;
+        text-align: center;
+        margin: auto ;
+    }
+    
+    .top .img {
+        width: 200px;
+        display: block;
+        justify-content: center;
+    
+        margin: auto ;
+    }
+    .list {
+        font-size: small;
+    }
+
+    .list li {
+        margin: 5px;
+        padding: 0;
+    }
+
+    .listS .img {
+        margin: auto 3px auto 0;
+    }
+
+    .listS .name {
+        margin: auto 2px;
+    }
+    
+    
+    
+
+
+
+    .layout {
+       display: block;
+    }
+
+    .matches {
+        display: block;
+    }
+
+    .result, .fixture {
+        margin: 10px;
+    }
+ }
+
+
+ @media (max-width: 610px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(1, 1fr);
+        /* margin: 10px; */
+
+    }
+}
+
+
+
+@media (max-width: 400px) {
+
+    .name {
+        font-size: small;
+    }
+
+    .number {
+        font-size: x-small;
+        margin: auto 2px;
+    }
+
+    .pos {
+        font-size: small;
+    }
+
+    .listS img, .listS .img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+    }
+
+}

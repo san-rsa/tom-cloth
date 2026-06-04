@@ -1,0 +1,139 @@
+.coc {
+    transition: 2s;
+    background-color: #4c5e58;
+}
+
+.coclist {
+    width: 100%;
+    text-align: left;
+
+}
+
+.coclist .section {
+    margin: 20px;
+    padding: 10px;
+
+}
+
+.head h3 {
+    display: inline;
+    color: gold;
+
+}
+
+.head svg{
+    float: right;
+    position: relative;
+    top: 3px;
+
+}
+
+
+.section .head {
+    background-color: rgb(12, 43, 48);
+    padding: 1px 20px;
+    font-style: oblique;
+
+}
+
+
+.section .active {
+    background-color: rgb(19, 97, 109);
+
+}
+
+.section p{
+    margin: 0;
+    padding: 10px;
+    /* font-weight: 900; */
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(2 88 101 / 64%);
+    color: #ffec87;
+    white-space: pre-wrap;
+}
+
+
+
+/* bg */
+
+  
+  .player .body  {
+    margin: 10px;
+    background-image: url("../img/background/players/1.jpg"), url("../img/background/players/2.jpg") ;
+
+    background-repeat: repeat-y;
+
+    background-size:  50%, 50%;
+
+    background-position: left top, right top; /* Position images side by side */
+
+    background-attachment: fixed;
+  }
+  
+
+  .coach .body  {
+    margin: 10px;
+    background-image: url("../img/background/coaches/1.jpg"), url("../img/background/coaches/2.jpg") ;
+
+    background-repeat: repeat-y;
+
+    background-size:  50%, 50%;
+
+    background-position: left top, right top; /* Position images side by side */
+
+    background-attachment: fixed;
+  }  
+  
+  
+  .referee .body  {
+    margin: 10px;
+    background-image: url("../img/background/referees/1.jpg"), url("../img/background/referees/1.jpg") ;
+
+    background-repeat: repeat-y;
+
+    background-size:  50%, 50%;
+
+    background-position: left top, right top; /* Position images side by side */
+
+    background-attachment: fixed;
+  }  
+  
+  .fans .body  {
+    margin: 10px;
+    background-image: url("../img/background/fans/1.jpg"), url("../img/background/fans/2.jpg") ;
+
+    background-repeat: repeat-y;
+
+    background-size:  50%, 50%;
+
+    background-position: left top, right top; /* Position images side by side */
+
+    background-attachment: fixed;
+  }  
+
+
+  .club .body  {
+    margin: 10px;
+    background-image: url("../img/background/fans/4.jpg"), url("../img/background/fans/5.jpg") ;
+
+    background-repeat: repeat-y;
+
+    background-size:  50%, 50%;
+
+    background-position: left top, right top; /* Position images side by side */
+
+    background-attachment: fixed;
+  } 
+
+
+  @keyframes slide {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-1920px, 0, 0); /* The image width */
+    }
+  }
+  
+

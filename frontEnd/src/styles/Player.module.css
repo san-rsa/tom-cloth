@@ -1,0 +1,172 @@
+.app {
+    text-align: left;
+}
+
+.app hr {
+    height: 2px;
+}
+
+.info, .season {
+    margin: 10px;
+}
+
+.player {
+    margin: 50px auto;
+}
+
+.player h3 {
+    margin: 10px;
+}
+
+
+.top {
+    border: 1px #ffffff solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+.head {
+    display: flex;
+    margin: 10px auto ;
+    /* background-color: rgb(16, 19, 17); */
+    /* padding: 100px 0; */
+}
+
+
+.name {
+    display: inline;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+
+
+.head .img {
+    width: 100px;
+    height: 100px;
+    justify-content: left;
+    text-align: left;
+    margin: auto 20px auto 10px;
+    border-radius: 50px;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* info */
+
+.teams {
+    margin:  10px auto;
+}
+
+
+.teams h2 {
+    margin: 10px auto;
+}
+
+
+.bio, .stat {
+    justify-content: space-evenly;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: left;
+}
+
+.biostat {
+    margin: 10px 0;
+}
+
+
+
+
+
+
+@media (max-width: 700px) {
+
+    .bio, .stat {
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+    
+
+    .head {
+        display: block;
+    }
+    .name {
+        display: block;
+        text-align: center;
+        margin: auto ;
+    }
+    
+    
+    
+    .head .img {
+        display: block;
+        text-align: center;
+        justify-content: center;
+    
+        margin: auto ;
+    }
+
+
+    .layout {
+       display: block;
+    }
+
+    .matches {
+        display: block;
+    }
+
+    .result, .fixture {
+        margin: 10px;
+    }
+ }
+
+
+
+ @media (max-width: 450px) {
+
+    .bio, .stat {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+    
+
+    .head {
+        display: block;
+    }
+    .name {
+        display: block;
+        text-align: center;
+        margin: auto ;
+    }
+    
+    
+    
+    .img {
+        width: 200px;
+        display: block;
+        justify-content: center;
+    
+        margin: auto ;
+    }
+
+
+    .layout {
+       display: block;
+    }
+
+    .matches {
+        display: block;
+    }
+
+    .result, .fixture {
+        margin: 10px;
+    }
+ }

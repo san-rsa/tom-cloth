@@ -1,0 +1,207 @@
+ .top {
+    text-align: left;
+    margin: 0;
+    padding: 15px;
+    /* background-color: rgb(34, 24, 39); */
+    background-color: #000;
+ }
+ 
+ .news {
+    text-align: left;
+}
+
+.newsm {
+    text-align: left;
+    width: 100%;
+}
+
+.perone {
+    text-align: left;
+    display: inline-flex;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-bottom: 30px;
+    width: 25%;
+    margin: 10px auto;
+  }
+
+
+
+/* 1 */
+.news1 {
+    display: grid;
+    grid-template-columns: auto 40%;
+    border: 1px rgb(255, 255, 255) solid;
+    width: 100%;
+    text-align: left;
+    margin: auto;
+}
+
+
+/* img */
+
+.img1 img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
+}
+
+.img1 {
+    margin: 0;
+    position: relative;
+    height:100%;    
+    overflow: hidden;
+
+}
+
+
+/* 2 */
+
+.news2, .news3 {
+    text-align: left;
+    margin: auto 15px 15px 15px;
+    border: 1px rgb(255 255 255 / 18%) solid;
+
+    width: 90%;
+    
+
+}
+
+
+/* img */
+
+.img2 img, .news2 img, .img3 img {
+    object-fit: cover;
+    /* width: 100%; */
+    height: 200px;
+
+}
+
+.img2, .img3 {
+    margin: auto;
+    position: relative;
+    height:100%;
+    width: 100%;    
+    overflow: hidden;
+    margin-bottom: 4%;
+
+}
+
+
+
+
+
+/* text */
+
+
+
+.text1, .text2, .text3 {
+    margin: 33px 10px auto 20px;
+    font-size: smaller;
+    text-align: left;
+}
+
+
+
+.head1, .head2, .head3 {
+    margin-bottom: auto;
+    font-size: smaller;
+}
+
+
+
+.text2, .text3 {
+    margin: auto;
+    margin: 10px;
+    
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+
+.head1 {
+    /* margin: 90px 10px auto 20px; */
+
+    font-size: larger;
+}
+
+.body1 {
+    font-size: larger;
+}
+
+
+
+
+ @media (max-width: 900px) {
+
+    .perone {
+       width: 50%;
+    }
+ }
+
+
+
+
+
+
+/* mobile */
+
+@media (max-width: 700px) {
+
+    .body1 {
+        display: none;
+    }
+    .text1 {
+        margin: auto;
+
+    }
+
+    .news1 {
+        display: block;
+    }
+
+    .news2 {
+        display: flex;
+        width: 98%;
+        flex-direction: row-reverse;
+        margin: 2px;
+    }
+
+    .text2, .text3 {
+        margin: auto auto auto 5px;
+        word-break: normal;
+
+    }
+
+    .head1 {
+        font-size: small;
+    }
+
+
+
+    .img2 {
+        flex-shrink: 0;
+        width:  120px;
+        height: 80px;
+        margin: auto 10px;
+
+    }
+
+    .img2 img, .news2 img, .img3 img {
+    object-fit: cover;
+    /* width: 100%; */
+    height: 100%;
+
+}
+  
+
+
+    .perone {
+        display: block;
+        width: 100%;
+        margin: 10px auto;
+       
+    }
+
+ }

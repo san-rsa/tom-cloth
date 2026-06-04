@@ -1,0 +1,299 @@
+.profile {
+    text-align: left;
+}
+
+
+/* news */
+
+
+.other_news {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 10px auto;
+
+}
+
+
+.bio {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 10px auto;
+
+}
+
+
+
+
+
+.other {
+    text-align: left;
+}
+
+
+.other input , .name input{
+    font-size: large;
+    text-align: left;
+    width: 100%;
+    margin: 3%;
+    padding: 0 2%;
+    border-radius: 11px;
+}
+
+
+
+ 
+
+.head {
+    display: flex;
+    margin: 50px auto ;
+    background-color: rgb(16, 19, 17);
+    padding: 100px 0;
+}
+
+
+.name {
+    display: inline;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+
+.top {
+    border: 1px gold solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+
+.top .img {
+    width: 200px;
+    justify-content: center;
+
+    margin: auto 10px;
+}
+
+.img img {
+    width: 100%;
+}
+
+
+.list {
+    text-align: left;
+    margin: auto 10px;
+    display: block;
+
+
+}
+
+.list ul {
+    display: flex;
+}
+
+.matches {
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+
+
+.matches h2 {
+    margin: 10px 0;
+}
+
+.result, .fixture {
+    text-align: left;
+}
+
+.result > a {
+    position: relative;
+    top: 7px;
+    text-align: left;
+}
+
+.result > a, .fixture > a {
+
+    justify-items: flex-start;
+}
+
+
+.result  div, .fixture  div {
+    text-align: left;
+
+}
+
+
+/* team news */
+
+.teamNews {
+    text-align: left;
+    margin: auto 20px;
+}
+.top {
+    margin: 10px auto;
+}
+
+
+
+
+
+/* profile admin */
+
+.overview {
+    text-align: left;
+}
+
+.teamAdmin {
+    text-align: left;
+}
+
+.teamadminmenu {
+    margin: 10px;
+
+}
+
+.teamadminmenulist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+
+
+
+/* logout */
+
+.logout {
+    background: rgb(252, 79, 79);
+    border: 3px #ff0000 solid; 
+    color: rgb(255, 255, 255);
+}
+
+
+
+@media (max-width: 900px) {
+    .other_news {
+        grid-template-columns: repeat(4, 1fr);
+    
+    }
+
+    .bio {
+        grid-template-columns: repeat(3, 1fr);
+    
+    }
+}
+
+
+
+
+
+
+@media (max-width: 700px) {
+    
+
+    .head {
+        display: block;
+        padding: 40px 0;
+    }
+    .name {
+        display: block;
+        text-align: center;
+        margin: auto ;
+    }
+    
+    .top .img {
+        width: 200px;
+        display: block;
+        justify-content: center;
+    
+        margin: auto ;
+    }
+    .list {
+        font-size: small;
+    }
+
+    .list li {
+        margin: 5px;
+        padding: 0;
+    }
+
+    .listS .img {
+        margin: auto 3px auto 0;
+    }
+
+    .listS .name {
+        margin: auto 2px;
+    }
+    
+    
+    
+
+
+
+    .layout {
+       display: block;
+    }
+
+    .matches {
+        display: block;
+    }
+
+    .result, .fixture {
+        margin: 10px;
+    }
+
+
+    .other_news {
+        grid-template-columns: repeat(1, 1fr);
+    
+    }
+
+    .bio {
+        grid-template-columns: repeat(2, 1fr);
+    
+    }
+ }
+
+
+ @media (max-width: 610px) {
+    .fix, .res, .squads, .bio {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+
+    .result  div, .fixture  div {
+        text-align: center;
+    
+    }
+}
+
+
+
+@media (max-width: 400px) {
+
+    .name {
+        font-size: small;
+    }
+
+    .number {
+        font-size: x-small;
+        margin: auto 2px;
+    }
+
+    .pos {
+        font-size: small;
+    }
+
+    .listS img, .listS .img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+    }
+
+}

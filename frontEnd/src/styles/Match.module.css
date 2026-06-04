@@ -1,0 +1,384 @@
+
+
+.team {
+    text-align: center;
+}
+
+
+/* competion */
+.competition {
+    display: inline-flex;
+    border-radius: 40px;
+    margin: auto;
+    background: #949494;
+    padding: 5px;
+    justify-items: center;
+    margin-top: 10px;
+}
+
+.competition .logo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+
+}
+
+.competition img {
+    width: 100%;
+}
+
+.list {
+    display: none;
+    text-align: center;
+    border: 1px gold solid;
+    border-width: 1px 0 ;
+}
+
+
+.update a {
+    width: 100%;
+    margin: 0;
+    
+}
+
+
+
+
+
+
+
+
+/* team */
+
+
+.team {
+    text-align: center;
+    justify-items: center;
+
+}
+
+
+.team .logo {
+    width: 100px;
+    height: 100px;
+}
+
+
+
+/* event */
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.eventH  {
+    display: grid;
+    grid-template-areas: "home timeline away";
+    text-align: right;
+    grid-template-columns: 18rem 2rem 18rem;
+
+}
+
+
+.eventA {
+    display: grid;
+    grid-template-areas: "home timeline away";
+    text-align: left;
+    grid-template-columns: 18rem 4rem 18rem;
+
+}
+
+
+.eventH .listS, .eventH .time, .eventA .listS, .eventA .time {
+    display: flex;
+}
+
+.eventH .listS {
+    grid-area: home;
+}
+
+.eventH .time, .eventA .time {
+    grid-area: timeline;
+}
+
+.eventA .listS {
+    grid-area: away;
+}
+
+
+
+.eventH .time, .eventA .time {
+    justify-items: center;
+}
+
+
+
+.eventH .time h3, .eventA .time h3 {
+    margin: auto;
+}
+
+.eventH .listS {
+    text-align: end;
+    justify-content: end;
+}
+
+.eventA .listS {
+    text-align: start;
+    justify-content: start;
+}
+
+
+
+
+.listS .img {
+    width: 40px;
+    margin: auto 5px;    
+}
+
+
+.stime {
+    display: none;
+}
+
+
+
+.listS {
+    text-align: left;
+    display: inline-flex;
+    background-color: rgb(35, 51, 46);
+    padding: 10px 5px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+
+.main {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.assist {
+    font-size: smaller;
+    font-weight: lighter;
+}
+
+
+
+
+
+
+/* starting xi */
+
+.lineup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+.lineup h3 {
+    margin: 0;
+}
+
+.starting_lineup span {
+    display: none;
+}
+ 
+ 
+ 
+ 
+ 
+ @media (max-width: 650px) {
+
+
+    .list {
+        display: block;
+    }
+
+    .starting_lineup span {
+        display: inline;
+    }
+
+
+   
+
+    .lineup {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+
+
+    /* event */
+
+    .eventH {
+        display: flex;
+        align-self: flex-start;
+    }
+
+    .eventA {
+        display: flex;
+        align-self: flex-end;
+    }
+
+    .eventH .time, .eventA .time {
+        display: none;
+    }
+
+    .stime {
+        display: block;
+        margin: auto;
+    }
+
+    .eventH .listS {
+        flex-direction: row-reverse;
+        text-align: left;
+    }
+
+    .eventA .listS {
+        flex-direction: row-reverse;
+        text-align: right;
+    }
+    
+     
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* region & components  */
+
+
+
+     
+.top {
+    border: 1px gold solid;
+    border-width: 1px 0 ;
+    text-align: center;
+
+    background-color: rgb(16, 19, 17);
+
+
+}
+
+.app {
+    text-align: left;
+        background-color: #000;
+
+}
+
+
+.head {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    /* margin: 50px auto ; */
+    padding: 50px 0;
+}
+
+
+.name {
+    display: inline;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+.matchday {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+
+
+/* standing */
+
+
+
+.standing {
+    margin: 10px;
+    text-align: left;
+}
+
+
+
+
+
+/*  team fix */
+
+
+
+
+
+/* team results  */
+
+.score {
+    font-size: xx-large;
+    margin-bottom: 5px;
+}
+
+
+
+
+/* team news */
+
+
+
+
+
+@media (max-width: 900px) {
+    
+.fix, .res {
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+ }
+
+
+
+
+@media (max-width: 700px) {
+    
+
+    .head {
+    }
+
+
+ }
+
+
+
+
+
+ @media (max-width: 400px) {
+    
+
+    .score {
+        font-size: medium;
+    }
+
+    .matchday, .team, .competition {
+        font-size: x-small;
+    }
+        
+
+     }
