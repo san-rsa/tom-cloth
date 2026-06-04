@@ -23,6 +23,9 @@ const Sub_Region = require('../../models/competition/competition-location')
 
 
 
+const Cloth = require('../../models/clothes')
+const Category = require('../../models/category')
+
 
 
 
@@ -125,14 +128,69 @@ router.post('/banner',  async (req, res)=> {
 
 
 
-router.post('/code-of-conduct', async (req, res)=> {
+router.post('/cloth', async (req, res)=> {
 
     const data = JSON.parse(req.body.data)
+    const file = req.files?.img  
       
+    
+    if (!req.files) {
+        // No file was uploaded
+        return res.status(400).json({ error: "No file uploaded" });
+      }      
     
 
     try {
-        const {title, body}= data
+        const {name, description, type, size, categoryId,  }= data
+        const imgUrl = []
+
+
+
+
+
+        console.log(data)
+
+		if (!name || !type, !description ) {
+			return res.status(403).json({
+				success: false,
+				message: "All Fields are required",
+			});
+		}
+
+
+          if (file.length > 1) {
+    
+                for (const i in file){
+                  const image = await cloudinary.uploader.upload(
+                    file[i].tempFilePath,
+                    { folder: 'Product' },
+    
+                );
+    
+                imgUrl.push({url: image.secure_url,  imgId: image.public_id})
+                console.log(image);
+                }
+              
+                
+          } else {
+    
+                 const image = await cloudinary.uploader.upload(
+            file.tempFilePath,
+            { folder: 'Product' },
+    
+          );
+    
+    
+            imgUrl.push({url: image.secure_url,  imgId: image.public_id})
+    
+                          console.log(image)
+    
+    
+          }
+            console.log(imgUrl, )
+
+
+ 
 
 
 
@@ -146,7 +204,7 @@ router.post('/code-of-conduct', async (req, res)=> {
 		}
 
         //check if use already exists?
-        const existingItem = await Codeofconduct.findOne({title})
+        const existingItem = await Cloth.findOne({name})
 
         if(existingItem){
             return res.status(400).json({
@@ -155,8 +213,8 @@ router.post('/code-of-conduct', async (req, res)=> {
             })
         }
 
-        const db = await Codeofconduct.create({
-            title, body,
+        const db = await Cloth.create({
+           name, description, type, size, categoryId, img: imgUrl,
         })
             // res.redirect("/login")
 
@@ -177,253 +235,79 @@ router.post('/code-of-conduct', async (req, res)=> {
 })
 
 
-router.post('/competition', async (req, res)=> {
+router.post('/category',  async (req, res)=> {
 
-    const data = JSON.parse(req.body.data)
-    const file = req.files?.img  
-      
-    
-    if (!req.files) {
-        // No file was uploaded
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-     
+     const data = JSON.parse(req.body.data)
+        const file = req.files.img 
+
+    console.log(file);
+            
+        if (!req.files) {
+            // No file was uploaded
+            return res.status(400).json({ error: "No file uploaded" });
+          }
+         
 
     try {
-        const {name, description, type, starting, sub, ft, et}= data
-        const logo = []
-
-
-
-       const substitute = {starting, sub }
-       const min = {ft, et}
-
-
-        console.log(data)
-
-		if (!name || !type ) {
-			return res.status(403).json({
-				success: false,
-				message: "All Fields are required",
-			});
-		}
-
-
-        const image = await cloudinary.uploader.upload(
-            file.tempFilePath,
-            { folder: 'Banner' },
+            const {name}= data
+            const imgUrl = []
     
+            const image = await cloudinary.uploader.upload(
+            file.tempFilePath,
+            { folder: 'Category' },
           );
+    
+    
+          imgUrl.push({url: image.secure_url,  imgId: image.public_id})
+    
+                          console.log(image)
+    
+    
+        
+        // Check if All Details are there or not
 
+        if (!name || !imgUrl) {
+            return res.status(403).json({
+                success: false,
+                message: "All Fields are required",
+            });
+        }
 
-      logo.push({url: image.secure_url,  imgId: image.public_id})
-
- 
-      
         //check if use already exists?
-        const existingItem = await Competition.findOne({name})
+        const existingItem = await Category.findOne({name})
         if(existingItem){
             return res.status(400).json({
                 success: false,
-                message: "already exists"
+                message: "category  already exists"
             })
         }
 
-        const save = await Competition.create({
-           name, type, description, logo: logo[0], substitute, min
+        console.log(imgUrl);
+        
+
+
+
+        const cat = await Category.create({
+            name, slug: name, imgUrl: imgUrl[0]
         })
-            // res.redirect("/login")
+        
 
         return res.status(200).json({
             success: true,
-            save,
-            message: "created successfully ✅"
+            cat,
+            message: "category  created successfully ✅"
            
         })  
     } catch (error) {
         console.error(error)
         return res.status(500).json({
             success: false,
-            message : "registration failed"
+            message : "category  registration failed"
         })
        
    }  
 })
 
-
-
-router.post('/add-team-to-competition', async (req, res)=> {
-
-    const data = JSON.parse(req.body.data)
-     
-
-    try {
-        const {competitionId, team, }= data
-
-
-
-		if (!team || !competitionId ) {
-			return res.status(403).json({
-				success: false,
-				message: "All Fields are required",
-			});
-		}
-
- 
-      
-        //check if use already exists?
-        const existingItem = await Competition.findOne({name: competitionId})
-        const existingTeam = await Team.findOne({name: team})
-
-
-
-        if(!existingItem || !existingTeam){
-            return res.status(400).json({
-                success: false,
-                message: "region or team not found"
-            })
-        }
-
-
-
-
-        existingItem.teams.addToSet(existingTeam.name)
-        existingTeam.regionId.addToSet(existingItem.name)
-
-
-
-
-
-        existingItem.save()
-        existingTeam.save()
-
-
-        console.log(existingItem, existingTeam);
-        
-
-
-
-
-
-
-
-
-
-            // res.redirect("/login")
-
-        return res.status(200).json({
-            success: true,
-   
-            message: "successfully ✅ added"
-           
-        })  
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success: false,
-            message : "registration failed"
-        })
-       
-   }  
-})
-
-
-
-router.post('/add-user-to-team', async (req, res)=> {
-
-    const data = JSON.parse(req.body.data)
-     
-
-    try {
-        const {user, teamId, }= data
-
-
-
-		if (!teamId || !user ) {
-			return res.status(403).json({
-				success: false,
-				message: "All Fields are required",
-			});
-		}
-
- 
-      
-        //check if use already exists?
-        const existingUser = await User.findOne({_id: user})
-        const existingTeam = await Team.findOne({name: teamId})
-
-
-
-        if(!existingUser || !existingTeam){
-            return res.status(400).json({
-                success: false,
-                message: "region or team not found"
-            })
-        }
-
-
-        if(existingUser.teamId ){
-            return res.status(400).json({
-                success: false,
-                message: "user already has team"
-            })
-        }
-
-
-        if(existingTeam.userId.length > 2){
-            return res.status(400).json({
-                success: false,
-                message: "team has reached maximum user"
-            })
-        }
-        
-
-
-
-
-        existingUser.teamId = existingTeam.name
-
-        existingUser.role = process.env.TEAM
-
-
-        existingTeam.userId.addToSet(existingUser._id)
-
-
-
-
-
-        existingUser.save()
-        existingTeam.save()
-
-
-        console.log(existingUser, existingTeam, 7);
-        
-
-
-
-
-
-
-
-
-
-            // res.redirect("/login")
-
-        return res.status(200).json({
-            success: true,
-   
-            message: "successfully ✅ added", existingUser
-           
-        })  
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success: false,
-            message : "registration failed"
-        })
-       
-   }  
-})
 
 
 
@@ -964,26 +848,6 @@ router.post('/team', async (req, res)=> {
        
    }  
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

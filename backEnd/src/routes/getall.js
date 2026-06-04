@@ -23,6 +23,9 @@ const Competition = require('../models/competition/competition')
 const Stat = require('../models/competition/stats')
 const Player = require('../models/competition/player')
 const Sub_Region = require('../models/competition/competition-location')
+const Cloth = require('../models/clothes')
+const Order = require('../models/order')
+const Cart = require('../models/cart')
 
 // const Product = require('../models/product')
 // const Auth = require('../middleware/mid')
@@ -50,9 +53,9 @@ const data = await Banner.find().sort([['updatedAt', 'desc']]);
 })
 
 
-router.get('/code-of-conduct', async(req, res)=> {
+router.get('/clothes', async(req, res)=> {
 
-  const data = await Codeofconduct.find({}) //.sort("title")
+  const data = await Cloth.find({}) //.sort("title")
   if (data.length !== 0) {
 
     return  res.status(200).json({
@@ -72,9 +75,9 @@ router.get('/code-of-conduct', async(req, res)=> {
 
 
 
-router.get('/competition', async(req, res)=> {
+router.get('/orders', async(req, res)=> {
 
-    const data = await Competition.find().sort("name")
+    const data = await Order.find() //.sort("name")
     
     if (data.length !== 0) {
 
@@ -93,9 +96,14 @@ router.get('/competition', async(req, res)=> {
 })
 
 
-router.get('/sub-competition', async(req, res)=> {  // all
 
-      const data = await Sub_Region.find().sort("name")
+
+
+router.get('/user-cart', auth, async(req, res)=> {  // all
+
+      const user = req.userId
+
+      const data = await Cart.findOne({userId: user}).populate("products.productId", "name img size ")
       
       if (data.length !== 0) {
 
@@ -108,10 +116,35 @@ router.get('/sub-competition', async(req, res)=> {  // all
       else {
         return  res.status(404).json({
         success: false,
-        data: "not found"
+        data: "empty"
         })
       }
 })
+
+router.get('/user-orders', auth, async(req, res)=> {  // all
+
+      const user = req.userId
+
+      const data = await Order.find({userId: user})
+      
+      if (data.length !== 0) {
+
+        return  res.status(200).json({
+         success: true,
+        data: data
+       })
+      }
+    
+      else {
+        return  res.status(404).json({
+        success: false,
+        data: "no order found"
+        })
+      }
+})
+
+
+
 
 
 router.get(':link/sub-competition', async(req, res)=> {  // all in d region

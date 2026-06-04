@@ -9,27 +9,19 @@ const Schema = new mongoose.Schema({
 
     img: [{url: {type: String, required: true}, imgId: {type: String, required: true} }],
 
-    description: {type: String, },
+    description: {type: String, trim: true },
 
-    playerId: [{type: mongoose.Schema.Types.String, ref: "Player", }],
+    type: {type: String, required: true, trim: true, enum: [ 'top', 'bottom', 'accesory'],},
 
+    size: [{ size: {type: String, required: true }, price: {type: Number, required: true }  }],
 
-    regionId: [{type: mongoose.Schema.Types.String, ref: "Competition",   }, ],
+    categoryId: {type: mongoose.Schema.Types.String, ref: "Category",     },
 
-    userId: [{type: mongoose.Schema.Types.String, ref: "Team", }],
+    views: {type: Number, required: true, default: 0},
 
-    size: {type: String, required: true, trim: true, },
-
-    type: {type: String, required: true, trim: true, },
-
-    size: {type: String, required: true, trim: true, },
-
-
-
+    ordered: {type: Number, required: true, default: 0 },
       
 
-
-      
 
 
 
@@ -37,6 +29,6 @@ const Schema = new mongoose.Schema({
     timestamps: true
 })
 
-const Team = mongoose.model('Team', Schema)
+const Cloth = mongoose.model('Cloth', Schema)
 
-module.exports = Team
+module.exports = Cloth

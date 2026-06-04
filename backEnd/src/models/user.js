@@ -20,8 +20,6 @@ const userSchema = new mongoose.Schema({
             }
         }},
 
-    imgUrl: {url: {type: String}, imgId: {type: String} },
-
 
     password: {type: String, required: true, minLength: 8,
 
@@ -40,12 +38,10 @@ const userSchema = new mongoose.Schema({
 
     // tokens: [{ token: {type: String, required: true }}],
 
-    // address: {type: String,  },
+    address: { street: String, city: String, county: String, zipCode: String },
 
     // paymentId: {type: String, required: true,
     // },
-
-   teamId: {type: mongoose.Schema.Types.String, ref: "Team", },
 
 
 
