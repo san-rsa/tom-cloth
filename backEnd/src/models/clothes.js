@@ -15,7 +15,16 @@ const Schema = new mongoose.Schema({
 
     size: [{ size: {type: String, required: true }, price: {type: Number, required: true }  }],
 
-    categoryId: {type: mongoose.Schema.Types.String, ref: "Category",     },
+    categoryId: [{type: mongoose.Schema.Types.String, ref: "Category",     },],
+
+
+    gender: {type: String, required: true, trim: true, enum: [ 'male', 'female', 'all'],},
+
+    age: {type: String, required: true, trim: true, enum: [ 'adult', 'minor'],},
+
+
+
+    
 
     views: {type: Number, required: true, default: 0},
 

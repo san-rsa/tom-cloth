@@ -16,7 +16,6 @@ const News = require('../models/news/news')
 const Live = require('../models/competition/live')
 const Player = require('../models/competition/player')
 const Team = require('../models/competition/team')
-const Sub_Region = require('../models/competition/competition-location')
 const Stat = require('../models/competition/stats')
 
 

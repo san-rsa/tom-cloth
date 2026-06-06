@@ -1,0 +1,11 @@
+.app h3 {
+    margin: 10px;
+}
+
+.cat, .search {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 25px;
+  margin: auto 10px;
+}
+

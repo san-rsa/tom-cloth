@@ -1,0 +1,140 @@
+
+/* Hero */
+
+.hero {
+  height: 85vh;
+  background: linear-gradient(
+      rgba(0,0,0,0.4),
+      rgba(0,0,0,0.4)
+    ),
+    url("https://images.unsplash.com/photo-1441986300917-64674bd600d8")
+      center/cover;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-left: 8%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+}
+
+.hero-content h1 {
+  font-size: 60px;
+}
+
+.hero-content p {
+  margin: 20px 0;
+  font-size: 18px;
+
+  font-weight: 600;
+}
+
+.hero button {
+  padding: 12px 30px;
+  border: none;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Categories */
+
+.categories {
+  /* padding: 80px 8%; */
+  margin: 10px;
+}
+
+.categories h2 {
+  text-align: left;
+  margin: 10px 0;
+}
+
+/* .category-grid {
+
+    margin: 10px;
+} */
+
+.category-card {
+  background: white;
+  padding: 60px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+
+.categories button {
+  text-align: center;
+  margin: 10px auto;
+  background: #d4ddd9;
+  box-shadow: 2px 11px 4px rgba(0, 0, 0, 0.25); 
+  border: 2px #ff4d4d solid; 
+  justify-content: center; 
+  align-items: center; 
+  /* display: inline-flex; */
+  color: rgb(0, 0, 0);
+  padding: 1px 3%;
+  text-align: center; font-size: 24px; font-family: Inter; font-weight: 600; word-wrap: break-word;
+
+  
+}
+
+.categories a {
+  text-align: center;
+  margin: 10px auto;
+  display: block;
+}
+/* Products */
+
+.products {
+  padding: 80px 0;
+  margin: 10px;
+}
+
+
+.products h2 {
+  text-align: left;
+  margin: 10px 0;
+}
+
+.product-grid, .category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 25px;
+}
+
+/* Newsletter */
+
+.newsletter {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.newsletter-form {
+  margin-top: 20px;
+}
+
+.newsletter input {
+  padding: 12px;
+  width: 300px;
+  border: none;
+}
+
+.newsletter button {
+  padding: 12px 20px;
+  border: none;
+  background: #ff4d4d;
+  color: white;
+}
+
+/* Footer */
+
+.footer {
+  text-align: center;
+  background: black;
+  color: white;
+  padding: 20px;
+}

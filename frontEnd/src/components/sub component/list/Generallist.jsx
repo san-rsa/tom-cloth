@@ -82,6 +82,78 @@ const Inputs = ({label, type, name, onchange, value, disabled, placeholder, requ
 }
 
 
+const ProductCard = ({id, size, image, name, price, link} ) => {
+  return (
+    <div className={Style.product_card}>
+
+      <Link to={link}>
+            <img src={image} alt={name} />
+
+      <h4>{name}</h4>
+
+      <p>{price}</p>
+      </Link>
+
+      <button>Add to Cart</button>
+    </div>
+  );
+}
+
+
+
+const CatList2 = ({name,  img, id}) => {
+
+
+
+
+    return (
+
+ 
+       <div className="cat">
+            <Link to={"/category/" + id}>
+              <div className="img">
+                    <img src={img} alt="" />
+              </div>
+              
+              <div className="cardText">
+                <h2>{name}</h2>
+              </div>
+
+            </Link>
+  
+        </div>
+    )
+}
+
+
+
+const CatList = ({name,  img, id, link}) => {
+
+
+
+
+    return (
+
+ 
+       <div className={Style.cat}>
+            <Link to={link}>
+
+                <div className={Style.card}>
+                <img className={Style['card-bg-img']} src={img} alt="" />
+            
+           
+            <div className={Style['card-overlay']}>
+              <h2 className={Style['card-title']}>{name}</h2>
+            </div>
+          </div>
+
+            </Link>
+  
+        </div>
+    )
+}
+
+
 
 const CardList = ({logo, name, category, to}) => {
 
@@ -365,4 +437,4 @@ const AlertError = (message ) => {
 
 
 
-export {CardList, PlayerBio, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }
+export {CardList, CatList, ProductCard, PlayerBio, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }

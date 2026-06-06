@@ -139,6 +139,144 @@
     font-size: large;
 }
 
+
+
+
+/* card */
+
+.product_card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.product_card:hover {
+  transform: translateY(-8px);
+}
+
+.product_card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product_card h3 {
+  margin-top: 15px;
+}
+
+.product_card h4 {
+  color: black;
+}
+
+.product_card p {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.product_card button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 5px;
+}
+
+/* category */
+
+
+.categories {
+  padding: 80px 8%;
+}
+
+.categories h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  padding: 60px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.cat:hover {
+  transform: translateY(-8px);
+}
+
+
+
+ .card {
+      position: relative;
+      /* width: 350px; */
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      font-family: sans-serif;
+    }
+
+    /* Background Image Layer */
+    .card-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      /* width: 100%;
+      height: 100%; */
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Overlay Layer for Centering & Readability */
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* Darkens the image to make text readable */
+      z-index: 2;
+      
+      /* Flexbox layout to center content horizontally and vertically */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Typography Styling */
+    .card-title {
+      color: #ffffff;
+      font-size: 2rem;
+      margin: 0 0 10px 0;
+    }
+
+    .card-description {
+      color: #e0e0e0;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+.trend {
+    margin: 20px;
+}
+
+
 @media (max-width: 650px) {
     
 .a2, .a3, .a4 {
@@ -192,3 +330,7 @@
 
 
  }
+
+
+
+

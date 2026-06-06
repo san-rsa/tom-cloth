@@ -27,7 +27,7 @@
 
 .social svg {
     color: rgb(0, 0, 0);
-    background-color: gold;
+    background-color: #ff4d4d;
     padding: 5px;
     border-radius: 50%;
 
@@ -36,7 +36,7 @@
 .social p {
   margin: 5px auto;  
   font-size: small;
-  color: gold;
+  color: #ff4d4d;
 }
 
 .social h5 {

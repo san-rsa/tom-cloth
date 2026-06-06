@@ -18,7 +18,6 @@ const Result = require('../../models/competition/result')
 const Standing = require('../../models/competition/standing/standing')
 const Codeofconduct = require('../../models/news/codesofconduct')
 const CupStanding = require('../../models/competition/standing/cup')
-const Sub_Region = require('../../models/competition/competition-location')
 
 
 

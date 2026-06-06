@@ -73,7 +73,24 @@ nav img {
 
 
 
+.searchNav {
+    text-align: center;
+    margin: 10px auto;
 
+ 
+}
+
+#searchNav input {
+    margin: auto;
+    font-size: large;
+    border-radius: 10px;
+
+}
+
+#searchNav button {
+    background: none;
+    font-size: medium;
+}
 
 
 
@@ -88,6 +105,12 @@ nav img {
     .menu {
         display: none;
     }
+
+
+    #searchNav input {
+    font-size: medium;
+
+}
 
  
  }

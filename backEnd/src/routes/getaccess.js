@@ -22,7 +22,6 @@ const CupStanding = require('../models/competition/standing/cup')
 const Competition = require('../models/competition/competition')
 const Stat = require('../models/competition/stats')
 const Player = require('../models/competition/player')
-const Sub_Region = require('../models/competition/competition-location')
 
 
 
