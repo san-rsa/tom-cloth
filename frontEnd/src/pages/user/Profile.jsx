@@ -5,7 +5,7 @@ import Nav from "../../components/sub component/Nav"
 import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { Overview, ProfileAdmin, ProfileNews, } from "../../components/sub component/profileview";
+import { Overview, ProfileAdmin, ProfileNews, ProfileOrder, ProfileWishlist, } from "../../components/sub component/profileview";
 import Footer from "../../components/sub component/Footer";
 import { TeamAdmin, TeamNews} from "../../components/sub component/Teamview";
 
@@ -13,7 +13,7 @@ import { TeamAdmin, TeamNews} from "../../components/sub component/Teamview";
 
 
 const Profile = ({}) => {
-    const [mode, setInputs] = useState({overview: true, news: false, fixtures: false, results: false, squad: false, transfer: false, official: false, admin: false });
+    const [mode, setInputs] = useState({overview: true, wishlist: false, orders: false, results: false, squad: false, transfer: false, official: false, admin: false });
 
     const [user, setUser] = useState({admin: false, team: false, })
 
@@ -86,7 +86,7 @@ const Profile = ({}) => {
         const handleChange = (event) => {
             const name = event.target.innerHTML.toLowerCase();
     
-            setInputs({overview: false, news: false, account: false, admin: false, transfer: false, official: false });
+            setInputs({overview: false, wishlist: false, orders: false, admin: false, transfer: false, official: false });
 
             
             setInputs(values => ({...values, [name]: true}))
@@ -170,8 +170,6 @@ const Profile = ({}) => {
 
                 <div className={Style.top}>
                         <div className={Style.player}>
-                        <h3 > USER </h3>
-
 
                     <div className={Style.head} >
 
@@ -199,7 +197,8 @@ const Profile = ({}) => {
             
                     <ul >
                         <li onClick={handleChange} >Overview</li>
-                        <li onClick={handleChange}  >News</li>
+                        <li onClick={handleChange}  >Wishlist</li>
+                        <li onClick={handleChange}  >Orders</li>
                         { (user.admin || user.team ) ? <li onClick={handleChange}  >Admin</li> : null }
 
     
@@ -213,7 +212,9 @@ const Profile = ({}) => {
 
             { mode.overview && <Overview info={data}  user={user } />}
 
-            { mode.news ? user.admin ? <ProfileNews />  : user.team ? data.teamId ? <TeamNews id={data.teamId}  /> : null : null : null }
+            { mode.wishlist ? <ProfileWishlist />  : null }
+
+            { mode.orders ? <ProfileOrder />  : null }
 
             { mode.admin ? user.admin ? <ProfileAdmin  /> : user.team ? <TeamAdmin  /> : null : null }
 

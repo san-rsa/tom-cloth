@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
 
     // tokens: [{ token: {type: String, required: true }}],
 
-    address: { street: String, city: String, county: String, zipCode: String },
+    address: { street: String, city: String, county: String, zipcode: String },
 
     // paymentId: {type: String, required: true,
     // },

@@ -7,37 +7,37 @@ import { Inputs } from "./list/Generallist";
 
 
 
-// const Nav = () => {
+const Nav = () => {
 
 
-//     const [data, setInputs] = useState({});
-//     const [burger, setburger] = useState(false)
-//     const navigate = useNavigate();
+    const [data, setInputs] = useState({});
+    const [burger, setburger] = useState(false)
+    const navigate = useNavigate();
 
 
-//     const handleChange = (event) => {
-//       const name = event.target.name;
-//       const value = event.target.value;
-//       setInputs(values => ({...values, [name]: value}))
-//     }
+    const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      setInputs(values => ({...values, [name]: value}))
+    }
 
 
 
-//     const login = async () => {
+    const login = async () => {
        
            
-//     const api = await fetch(process.env.REACT_APP_API_LINK + 'auth/autoLogin/', {
-//         method: 'GET',
-//         credentials: "include",
-//         headers: {'Content-Type': 'application/json'},
-//          })
+    const api = await fetch(process.env.REACT_APP_API_LINK + 'auth/autoLogin/', {
+        method: 'GET',
+        credentials: "include",
+        headers: {'Content-Type': 'application/json'},
+         })
          
-//          if (api.status === 200) {
-//           navigate("/user");
-//         } else {
-//             navigate("/login")
-//         }
-//       }
+         if (api.status === 200) {
+          navigate("/user");
+        } else {
+            navigate("/login")
+        }
+      }
 
 
 
@@ -45,96 +45,99 @@ import { Inputs } from "./list/Generallist";
 
 
 
-//     const [search, setelement] = useState()
+    const [search, setelement] = useState()
 
-//     function toggle (p){
+    function toggle (p){
 
-//         setburger(!burger)
+        setburger(!burger)
 
-//     }
+    }
 
-//     return (
-//         <nav>
-//             <FontAwesomeIcon className={Style.burger} icon={faBars} size="2x" onClick={toggle} /> 
+    return (
+        <nav>
+            <FontAwesomeIcon className={Style.burger} icon={faBars} size="2x" onClick={toggle} /> 
 
-//              <Link to={"/"}>
-//              {/* <img src={require("../../logo.png")} /> */}
-//              <h1 id={Style.navh1}> AGBEDIAN LEAGUE</h1>
-//              </Link>
+             <Link to={"/"}>
+             {/* <img src={require("../../logo.png")} /> */}
+             <h1 id={Style.navh1}> ARA CLOSET</h1>
+             </Link>
 
 
 
-//                        <div className={Style.menu} >
+                       <div className={Style.menu} >
            
-//                       <Link to={"/regions"}> <h3 id={Style.navh1}> Regions</h3> </Link>
+                      {/* <Link to={"/regions"}> <h3 id={Style.navh1}> Regions</h3> </Link>
           
-//                       <Link to={"/teams"}> <h3 id={Style.navh1}> Teams</h3> </Link>
+                      <Link to={"/teams"}> <h3 id={Style.navh1}> Teams</h3> </Link> */}
                        
                        
                        
                        
                        
-//                        {/* <Link to={"/"}>
+                       {/* <Link to={"/"}>
           
-//                                          {/*  <Link to={"/"}>
-//                        <h3 id={Style.navh1}> Matches </h3>
-//                        </Link>
-//                         */}
+                                         {/*  <Link to={"/"}>
+                       <h3 id={Style.navh1}> Matches </h3>
+                       </Link>
+                        */}
 
-//                        {/*   <Link to={"/"}>
-//                        <h3 id={Style.navh1}> Teams </h3>
-//                        </Link>
-//                       */}
+                       {/*   <Link to={"/"}>
+                       <h3 id={Style.navh1}> Teams </h3>
+                       </Link>
+                      */}
                        
-//                        </div>
+                       </div>
 
 
-//           { burger &&  
-//                        <div className={Style.navmenu} >
+          { burger &&  
+                       <div className={Style.navmenu} >
                         
-//                         <Link to={"/regions"}> <h3 id={Style.navh1}> Regions</h3> </Link>
+                        <Link to={"/regions"}> <h3 id={Style.navh1}> Regions</h3> </Link>
           
-//                        <Link to={"/teams"}> <h3 id={Style.navh1}> Teams</h3> </Link>
-//                        {/* <Link to={"/"}>
-//                        <h3 id={Style.navh1}> Matches </h3>
-//                        </Link>
+                       <Link to={"/teams"}> <h3 id={Style.navh1}> Teams</h3> </Link>
+                       {/* <Link to={"/"}>
+                       <h3 id={Style.navh1}> Matches </h3>
+                       </Link>
 
-//                        <Link to={"/"}>
-//                        <h3 id={Style.navh1}> Teams </h3>
-//                        </Link> */}
+                       <Link to={"/"}>
+                       <h3 id={Style.navh1}> Teams </h3>
+                       </Link> */}
           
                        
-//                        </div>
-//           }
+                       </div>
+          }
 
-//         {/* <div className={Style.rnav}>
-//                 <Link className={Style.navr}to={"/login"}  onClick={login} ><FontAwesomeIcon icon={faUser}/> </Link>
+        <div className={Style.rnav}>
+
+                   <Link className={Style.navr} to={"/cart"}><FontAwesomeIcon icon={faCartShopping}/> </Link>
+          
+                <Link className={Style.navr}to={"/login"}  onClick={login} ><FontAwesomeIcon icon={faUser}/> </Link>
         
 
 
-//         </div> */}
+        </div>
 
-//     </nav>
-//     )
-// }
-
-
-function Nav() {
-  return (
-    <nav className="navbar">
-      <div className="logo">FASHION HUB</div>
-
-      <ul className="nav-links">
-        {/* <li>Men</li>
-        <li>Women</li> */}
-      </ul>
-
-      <div className="nav-icons">
-        <span>🛒</span>
-      </div>
     </nav>
-  );
+    )
 }
+
+
+// function Nav() {
+//   return (
+//     <nav className="navbar">
+//       <div className="logo">FASHION HUB</div>
+
+//       <ul className="nav-links">
+//         {/* <li>Men</li>
+//         <li>Women</li> */}
+//       </ul>
+
+//       <div className="nav-icons">
+//         <span>🛒</span>
+//       </div>
+//     </nav>
+//   );
+// }
 
 
 

@@ -17,6 +17,7 @@ const Live = require('../models/competition/live')
 const Player = require('../models/competition/player')
 const Team = require('../models/competition/team')
 const Stat = require('../models/competition/stats')
+const Wishlist = require('../models/wishlist')
 
 
 
@@ -327,6 +328,27 @@ router.get('/user', auth, async (req, res, next) => {
 })
 
 
+router.get('/wishlist', auth, async (req, res, next) => {
+
+        const user = req.userId
+    
+
+
+        try {
+            const data = await Wishlist.findOne( {userId: user} ).populate("products.productId", "name img size ")
+
+            if (data) {
+                
+              res.status(200).json(data);
+
+            } else {
+              res.status(404).json("not found");
+
+            }
+        } catch (error) {
+            return next(error);
+        }
+})
 
 router.get('/user/:id', auth,  async(req, res)=> {
 

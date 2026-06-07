@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const setupDB = async () => {
   try {
-    const uri = 'mongodb+srv://sanrsa:rahman417@cluster0.w7dwc.mongodb.net/footballDB' // process.env.MONGO_URI ;
+    const uri = 'mongodb+srv://sanrsa:rahman417@cluster0.w7dwc.mongodb.net/ara-closetDB' // process.env.MONGO_URI ;
 
     await mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true,
       })

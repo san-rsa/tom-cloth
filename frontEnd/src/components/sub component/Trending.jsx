@@ -165,6 +165,7 @@ function Trending() {
               price={project.price}
               name={project.name}
               image={project.image}
+              link={'/product/' + product.name}
               // size={project.size[0]._id}
         /> 
               </div>

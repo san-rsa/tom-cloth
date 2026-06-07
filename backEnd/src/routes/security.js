@@ -17,17 +17,11 @@ router.post('/register', async(req, res)=> {
     try {
 
       const data = JSON.parse(req.body.data)
-      const file = req.files.img 
-      const imgUrl = [] 
         
-      const {fname, lname, email, password, phone, username,}= data
+      const {fname, lname, email, password, phone, username, street, city, county, zipcode, }= data
 
       const fullname = {first: fname, last: lname}
 
-      if (!req.files) {
-          // No file was uploaded
-          return res.status(400).json({ error: "No file uploaded" });
-        }
 
         console.log(fname, lname, email, password, phone, username);
         
@@ -58,20 +52,8 @@ router.post('/register', async(req, res)=> {
         }
 
 
-
-        const image = await cloudinary.uploader.upload(
-          file.tempFilePath,
-          { folder: 'user' },
-  
-        );
-  
-        imgUrl.push({url: image.secure_url,  imgId: image.public_id})
-  
-  
-
-
         const user = await User.create({
-            name: fullname, email, password, phone, username, imgUrl: imgUrl[0]
+            name: fullname, email, password, phone, username, address: { street, city, county, zipcode, }, role: 'admin'
         })
 
         user.save()

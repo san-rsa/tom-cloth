@@ -101,6 +101,46 @@ const ProductCard = ({id, size, image, name, price, link} ) => {
 
 
 
+const OrderCard = ({id, size, image, name, price, link} ) => {
+  return (
+    <div className={Style.order_card}>
+
+      <Link to={link}>
+            <img src={image} alt={name} />
+
+      <h4>{name}</h4>
+
+      <p>{price}</p>
+      </Link>
+
+    <div className={Style.orderbtn}>
+            <button>View Order</button>    </div>
+    </div>
+  );
+}
+
+
+
+const OrderCardAdmin = ({id, size, image, name, price, link, style, status, } ) => {
+  return (
+    <div className={Style.order_card}>
+
+      <Link to={link}>
+            <img src={image} alt={name} />
+
+      <h4>{name}</h4>
+
+      <p>{price}</p>
+      </Link>
+
+    <div className={Style.orderbtn}>
+            <button className={Style.view}>View Order</button>
+        <button style={style} className={Style.status}> {status} </button>
+    </div>
+    </div>
+  );
+}
+
 const CatList2 = ({name,  img, id}) => {
 
 
@@ -437,4 +477,4 @@ const AlertError = (message ) => {
 
 
 
-export {CardList, CatList, ProductCard, PlayerBio, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }
+export {CardList, CatList, ProductCard, OrderCard, PlayerBio, OrderCardAdmin, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }

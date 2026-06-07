@@ -111,6 +111,7 @@ button:disabled {
 
 .trending {
   height: 520px;
+  overflow: hidden;
 
 }
 

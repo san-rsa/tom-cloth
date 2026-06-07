@@ -210,6 +210,7 @@ function ProductSection() {
             name={product.name}
             price={product.price}
             image={product.image}
+            link={'/product/' + product.name}
           />
         ))}
       </div>
