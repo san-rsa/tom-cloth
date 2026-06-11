@@ -25,6 +25,7 @@ const Player = require('../models/competition/player')
 const Cloth = require('../models/clothes')
 const Order = require('../models/order')
 const Cart = require('../models/cart')
+const Category = require('../models/category')
 
 // const Product = require('../models/product')
 // const Auth = require('../middleware/mid')
@@ -50,6 +51,29 @@ const data = await Banner.find().sort([['updatedAt', 'desc']]);
     })
   }
 })
+
+
+
+
+router.get('/category', async(req, res)=> {
+
+const data = await Category.find().sort([['name', 'asc']]);
+  if (data.length !== 0) {
+
+    return  res.status(200).json({
+     success: true,
+    data: data
+   })
+  }
+
+  else {
+    return  res.status(404).json({
+    success: false,
+    data: "not found"
+    })
+  }
+})
+
 
 
 router.get('/clothes', async(req, res)=> {

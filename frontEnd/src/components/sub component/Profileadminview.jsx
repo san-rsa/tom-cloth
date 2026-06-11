@@ -586,49 +586,35 @@ const AdminNews = ({event, typeId }) => {
 
 
 
-const AdminRegion = ({event, typeId }) => {
+const AdminCategory = ({event, typeId }) => {
   const [data, setInputs] = useState({})
-  const [region, settRegion] = useState([])
-
-
   const [img, setFile] = useState({});
   const [submitbtn, setSubmitBtn] = useState(false)
 
   const [fetchs, setFetch] = useState({link: "", method: ""})
 
-
-
   let navigate = useNavigate()
-
-
-
-
 
 
         useEffect(() => {
 
           if (typeId) {
-            fetch(process.env.REACT_APP_API_LINK  + "getone/competition/" + typeId)
+            fetch(process.env.REACT_APP_API_LINK  + "getone/category/" + typeId)
             .then((res) =>  res.json())
             .then((data) =>  setInputs({
-              name:data.name,
-              type: data.type,
-              img: data?.logo[0]?.url,
-              starting: data.substitute?.starting,
-              sub:  data.substitute?.sub,
-              ft: data.min?.ft,
-              et: data.min?.et
-
-              
-              
+              name:data.name, img: data?.imgUrl?.url,
+            
             })
           );
-          }       
+          }    
+          
+          console.log(data, typeId);
+          
 
         if (event.add ) {
-      setFetch({link: 'admin/add/competition/', method: 'POST'  })
+      setFetch({link: 'admin/add/category/', method: 'POST'  })
     } else if (event.edit) {
-      setFetch({link: 'admin/edit/competition/' + typeId, method: 'PATCH'  })
+      setFetch({link: 'admin/edit/category/' + typeId, method: 'PATCH'  })
 
     }
 
@@ -637,11 +623,11 @@ const AdminRegion = ({event, typeId }) => {
 
 
 
-    const h1 = (event.add) ? "Add Region" : (event.edit) ? "Edit Region" : "please try again later" ;  
+    const h1 = (event.add) ? "Add Category" : (event.edit) ? "Edit Category" : "please try again later" ;  
     
     
       const handleChange = (event) => {
-        const name = event.target.name;
+        const name = event.target.name;     
         const value = event.target.value;
         setInputs(values => ({...values, [name]: value}))
 
@@ -650,11 +636,6 @@ const AdminRegion = ({event, typeId }) => {
       const handleFileChange = (event) => {
         setFile(event.target.files)
       };
-
-
-
-          console.log(data, img);
-    
 
 
       const HandleSubmit = async (event) => {
@@ -698,6 +679,8 @@ const AdminRegion = ({event, typeId }) => {
            
             if (data.success == false) {
                AlertError(data.message)
+                setSubmitBtn(false);
+
 
                console.log(data.message);
                
@@ -711,7 +694,7 @@ const AdminRegion = ({event, typeId }) => {
         
         .catch((e) => {
           console.log(e);
-          setSubmitBtn(!submitbtn)
+          setSubmitBtn(false)
           AlertError("error try again later")
 
         })
@@ -744,30 +727,6 @@ const AdminRegion = ({event, typeId }) => {
 
         <Inputs label={'name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name'} disabled={false} required={true}  />
         
-
-        <Inputs label={'starting lineup'} type={'number'} name={'starting'} onchange={handleChange} value={data.starting}  placeholder={'choose starting lineup'} disabled={false} required={true}  />
-
-        <Inputs label={'substitute lineup'} type={'number'} name={'sub'} onchange={handleChange} value={data.sub}  placeholder={'choose substitute lineup'} disabled={false} required={true}  />
-
-        <Inputs label={'match minutes'} type={'number'} name={'ft'} onchange={handleChange} value={data.ft}  placeholder={'match minutes'} disabled={false} required={true}  />
-
-        <Inputs label={'match minutes et'} type={'number'} name={'et'} onchange={handleChange} value={data.et}  placeholder={'match minutes extra time'} disabled={false} required={true}  />
-
-       <div className={Style.select} >
-
-
-        <label rel="select" htmlFor="select" >region</label>
-
-          <select id="region" name={"type"} onChange={handleChange} title="type" value={data.type} required > 
-          { data.type ?  null : <option value={""} > select type  </option> }
-            <option name={"type"} value={"league"} > League  </option>
-
-            <option name={"type"} value={"cup"} > Cup  </option>            
-
-
-          </select>
-
-        </div>
 
 
         <Inputs label={'logo'} type={'file'} name={'logo'} onchange={handleFileChange} value={data.logo}  placeholder={'first name'} disabled={false}  />
@@ -1232,24 +1191,79 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
 }
 
 
-const AdminFixture = ({event, regionId, typeId,  }) => {
+const AdminProduct = ({event, regionId, typeId,  }) => {
+
+
+  const [color, setColor] = useState([{color: ''}]);
+  // Initialize the sub-form tracking structure with one empty entry
+  const [size, setSize] = useState([{ size: '', price: '' }]);
   const [data, setInputs] = useState({})
-  const [teams, setTeam] = useState([])
-  const [type, setType] = useState("")
-  
-
-
+  const [category, setCategory] = useState([])
+  const [img, setFile] = useState([]);
   const [submitbtn, setSubmitBtn] = useState(false)
-
   const [fetchs, setFetch] = useState({link: "", method: ""})
-
-
-
-
-
-  const groups = new Array( 26 ).fill( 1 ).map( ( _, i ) => String.fromCharCode( 65 + i ) );
-
   
+  // Handle value modifications for specific indices within the array
+  const handleSizeChange = (index, event) => {
+    const { name, value } = event.target;
+    const updated = [...size];
+    updated[index][name] = value;
+    setSize(updated);
+  };
+
+
+    const handleColorChange = (index, event) => {
+    // const { name, value } = event.target;
+    // const updated = [...color];
+    // updated[index][name] = value;
+
+    const { value, name } = event.target;
+    const updated = [...color];
+    updated[index][name] = value;
+    console.log(event.target, index,  updated, value, updated[index]) ;
+    
+
+
+    setColor(updated);
+
+
+            // setColor(values => ([  value]))
+
+  };
+
+
+  // Append a brand new object element to the array state
+  const addSizeField = () => {
+    setSize([...size, { size: '', price: '' }]);
+  };
+
+  // Evict an object element by target index
+  const removeSizeField = (index) => {
+    const updatedSkills = size.filter((_, i) => i !== index);
+    setSize(updatedSkills);
+  };
+
+
+
+    const addColor = () => {
+    setColor([...color, {color: ''} ]);
+  };
+
+  // Evict an object element by target index
+  const removeColor = (index) => {
+    const updatedSkills = color.filter((_, i) => i !== index);
+    setColor(updatedSkills);
+  };
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1257,29 +1271,10 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
 
 
           useEffect(() => {
-            if (!typeId) {
-              fetch(process.env.REACT_APP_API_LINK  + "getone/competition/" + regionId)
-              .then((res) =>  res.json())
-              .then((data) => setInputs(values => ({...values, competition: data.name, img: data.logo[0].url, type: data.type})),
-               
-            );
 
-          }
-            if (!typeId) {
-              fetch(process.env.REACT_APP_API_LINK  + "getone/fixtures/year/" + regionId )
-              .then((res) =>  res.json())
-              .then((data) =>  setInputs(values => ({...values, year: data.year, })),
-            
-            );
-
-          }
-
-
-
-
-            fetch(process.env.REACT_APP_API_LINK  + "getall/teams/" + regionId)
+            fetch(process.env.REACT_APP_API_LINK  + "getall/category/" )
             .then((res) =>  res.json())
-            .then((data) =>  setTeam(data.data)
+            .then((data) =>  setCategory(data.data)
           );
           
 
@@ -1288,31 +1283,72 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
   
           }, []);
 
+function editinput(data) {
+  setSize(data.size)
+
+    // data.size.forEach(e => {
+    //       setSize([...size, { size: e.size, price: e.price }]);
+    //       console.log(e);
+
+    // });
+
+             setInputs({
+
+              name: data.name ,
+              type: data.type,
+              description: data.description ,
+              gender: data.gender ,
+              age: data.age ,
+              categoryId: data.categoryId[0],
+
+              
+           }) 
+
+
+            //  setColor(data.color)
+
+                   //   setColor(data.color.map(value => (console.log({ color: value })   )));
+                      setColor(data.color.map(value => ({color: value}   )));
+
+                      setSize(data.size.map(value => ({size: value.size, price: value.price}   )));
+
+
+
+    //             data.color.forEach(e => { //  { color: value }
+    //       setColor([ {color: e}] );
+    //       // console.log(e, color);
+
+          
+
+    // });
+
+            console.log(data.color, 333, color, data.size, data.img);
+            
+}
+
+            console.log(data.color, 333, color, data.size, data.img);
 
 
         useEffect(() => {
 
           if (typeId) {
-            fetch(process.env.REACT_APP_API_LINK + "getone/" + regionId + "/fixture/" + typeId   )
+            fetch(process.env.REACT_APP_API_LINK + "getone/cloth/" + typeId   )
             .then((res) =>  res.json())
-            .then((data) => setInputs({
+            .then((data) => editinput(data)
+          // setSize([data.size]),
+          //    setInputs({
 
-              competition: data.info.competition ,
-              // img: data?.logo[0]?.match. ,              
-              type: data.info.type,
-              year: data.info.year ,
-              matchday: data.info.matchday ,
-              time: data.match.day.time ,
-              date: data.match.day.date.slice(0, 10),
-              home: data.match.home._id ,
-              away: data.match.away._id,
-              stage: data.match?.stage ,
-              group: data.match?.group ,
+          //     name: data.name ,
+          //     type: data.type,
+          //     description: data.description ,
+          //     gender: data.gender ,
+          //     age: data.age ,
+          //     category: data.categoryId,
 
               
+          //  }) , setColor([data.color]) ,  
+           
 
-              
-           })             
          
 
           );
@@ -1321,9 +1357,9 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
           
 
         if (event.add ) {
-      setFetch({link: 'admin/add/fixture/', method: 'POST'  })
+      setFetch({link: 'admin/add/cloth/', method: 'POST'  })
     } else if (event.edit) {
-      setFetch({link: 'admin/edit/' + regionId +  '/fixture/' + typeId.replaceAll('-',' '), method: 'PATCH'  })
+      setFetch({link: 'admin/edit/cloth/' + typeId?.replaceAll('-',' '), method: 'PATCH'  })
 
     }
 
@@ -1331,10 +1367,18 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
         
 
 
+      console.log(color, size);
+      
 
-    const h1 = (event.add) ? "Add Fixture " : (event.edit) ? "Edit Fixture" : "please try again later" ;  
+
+    const h1 = (event.add) ? "Add Cloth " : (event.edit) ? "Edit Cloth" : "please try again later" ;  
     
     
+          const handleFileChange = (e) => {
+            const files = Array.from(e.target.files);
+            setFile(files);      
+          };
+
       const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -1356,8 +1400,23 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
         const formData = new FormData();
       
     
+                Array.from(img).forEach(imgs => {
+    
+          formData.append('img', imgs);
+    
+      });
+
+      //                 Array.from(color).forEach(p => {
+    
+      //     formData.append('color', p);
+    
+      // });
     
         formData.append('data',  JSON.stringify(data));
+        formData.append('color',  JSON.stringify(color));
+        formData.append('size',  JSON.stringify(size));
+        // formData.append('data',  JSON.stringify(data));
+
     
     
     
@@ -1385,6 +1444,8 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
            
             if (data.success == false) {
                AlertError(data.message)
+                setSubmitBtn(false)
+
 
                console.log(data.message);
                
@@ -1398,7 +1459,7 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
         
         .catch((e) => {
           console.log(e);
-          setSubmitBtn(!submitbtn)
+          setSubmitBtn(false)
           AlertError("error try again later")
 
 
@@ -1438,32 +1499,43 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
 
         <form className={Style.form} onSubmit={HandleSubmit}>
 
-        <Inputs label={'region Id'} type={'text'} name={'competition'} value={data.competition} disabled={true} required={true}  />        
-
-        <Inputs label={'season '} type={'number'} name={'year'} onchange={handleChange} value={data.year}  placeholder={'season '} disabled={false} required={true}  />
+        <Inputs label={'Name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name of item '} disabled={false} required={true}  />
         
-        <Inputs label={'matchday '} type={'number'} name={'matchday'} onchange={handleChange} value={data.matchday}  placeholder={'matchday '} disabled={false} required={true}  />
+        <div className={Style.picture} > 
+          <h3 > Picture</h3>
+                  <input type="file"  multiple accept="image/*" onChange={handleFileChange}  />
+        
+        {/* List names of selected files as a preview */}
+        <ul>
+          {img?.map((file, index) => (
+            <li key={index}>{file?.name}</li>
+          ))}
+        </ul>
 
-        <Inputs label={'match time '} type={'time'} name={'time'} onchange={handleChange} value={data.time}  placeholder={'time '} disabled={false} required={true}  />
+        </div>
 
-        <Inputs label={'match date'} type={'date'} name={'date'} onchange={handleChange} value={data.date} disabled={false} required={true}  />
+
+          <div className={Style.description} > 
+           <h3 > Description</h3>
+
+            <textarea name={'description'} required value={data.description} onChange={handleChange} > </textarea>
+
+
+        </div>
 
        <div className={Style.select} >
 
 
-        <label rel="select" htmlFor="select" > home team </label>
+        <label rel="select" htmlFor="select" > Gender </label>
 
-          <select id="region" name={"home"} onChange={handleChange} title="home" value={data.home} required > 
-          { data.home ?  null : <option value={""} > select home team  </option> }
-
-          {teams.map((props) => (
-
-                        
-          <option key={props._id} value={props._id} > {props.name}  </option>
- 
+          <select id="type" name={"gender"} onChange={handleChange} title="gender" value={data.gender} required > 
+          { data.type ?  null : <option value={""} > select type  </option> }
 
 
-                )   )   }
+              <option value={"male"} > male  </option>
+              <option value={"female"} > female </option> 
+              <option value={"all"} > all  </option>
+
 
           </select>
 
@@ -1473,17 +1545,50 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
                <div className={Style.select} >
 
 
-        <label rel="select" htmlFor="select" > away team </label>
+        <label rel="select" htmlFor="select" > Age </label>
 
-          <select id="region" name={"away"} onChange={handleChange} title="away" value={data.away} required > 
-          { data.away ?  null : <option value={""} > select away Team  </option> }
+          <select id="type" name={"age"} onChange={handleChange} title="type" value={data.age} required > 
+          { data.type ?  null : <option value={""} > select age group  </option> }
 
-          {teams.map((props) => (
+
+              <option value={"adult"} > adult  </option>
+              <option value={"minor"} > minor </option> 
+          </select>
+
+        </div>
+
+
+
+               <div className={Style.select} >
+
+
+        <label rel="select" htmlFor="select" > Type </label>
+
+          <select id="type" name={"type"} onChange={handleChange} title="type" value={data.type} required > 
+          { data.type ?  null : <option value={""} > select type  </option> }
+
+
+              <option value={"top"} > top  </option>
+              <option value={"bottom"} > bottom </option> 
+              <option value={"accesory"} > accesory  </option>
+
+          </select>
+
+        </div>
+
+
+               <div className={Style.select} >
+
+
+        <label rel="select" htmlFor="select" > category </label>
+
+          <select id="category" name={"categoryId"} onChange={handleChange} title="category" value={data.category} required > 
+          { data.categoryId ?  null : <option value={""} > select category  </option> }
+
+          {category.map((props) => (
 
                         
-          <option key={props._id} value={props._id} > {props.name}  </option>
- 
-
+          <option key={props._id} value={props.name} > {props.name}  </option>
 
                 )   )   }
 
@@ -1491,71 +1596,64 @@ const AdminFixture = ({event, regionId, typeId,  }) => {
 
         </div>
 
+            <div className={Style.size} >
+                      <h3>Size</h3>
+        {size?.map((skill, index) => (
+          <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
 
-        
+              <Inputs label={'size'} type={'text'} name={'size'} onchange={(e) => handleSizeChange(index, e)} value={size[index].size}  placeholder={'size available '} disabled={false} required={true}  />
+              <Inputs label={'price'} type={'number'} name={'price'} onchange={(e) => handleSizeChange(index, e)} value={size[index].price}  placeholder={'price '} disabled={false} required={true}  />
 
+            {size.length > 1 && (
+              <button type="button" onClick={() => removeSizeField(index)} style={{ marginTop: '5px', color: 'red' }}>
+                Remove size
+              </button>
+            )}
+          </div>
+        ))}
 
-        { data.type == "cup" &&
-
-           <div className={Style.select} >
-
-
-        <label rel="select" htmlFor="select" > stage </label>
-
-          <select id="region" name={"stage"} onChange={handleChange} title="stage" value={data.stage} required > 
-          { data.stage ?  null : <option value={""} > select stage  </option> }
-
-
-                        
-          <option value={"group"} > group  </option>
-          <option value={"knockout"} > knockout  </option>
-
- 
-
-
-
-          </select>
-
-        </div>
-          
-        
-        }
+        <button type="button" onClick={addSizeField} style={{ marginRight: '10px' }}>
+          + Add Another size
+        </button>
+            </div>
 
 
 
 
-                { data.stage == "group" &&
 
-           <div className={Style.select} >
+          <div className={Style.color} >
+              <h3>Color</h3>
+        {color?.map((skill, index) => (
+          <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+
+              <Inputs key={index} label={'color'} type={'text'} name={'color'} onchange={(e) => handleColorChange(index, e)} value={color[index].color}  placeholder={'color available '} disabled={false} required={true}  />
+
+            <label>Experience: </label>
+              {/* <input
+                type="text"
+                key={index}
+                name="color"
+                value={color}
+                onChange={(e) => handleColorChange(index, e)}
+                required
+              /> */}
+            {color.length > 1 && (
+              <button type="button" onClick={() => removeColor(index)} style={{ marginTop: '5px', color: 'red' }}>
+                Remove color
+              </button>
+            )}
+          </div>
+        ))}
 
 
-        <label rel="select" htmlFor="select" > group </label>
-
-          <select id="region" name={"group"} onChange={handleChange} title="group" value={data.group} required > 
-          { data.group ?  null : <option value={""} > select group  </option> }
 
 
-                        
-          {groups.map((props) => (
+        <button type="button" onClick={addColor} style={{ marginRight: '10px' }}>
+          + Add Another color
+        </button>
+            </div>
 
-                        
-          <option key={props} value={props} > {props}  </option>
- 
-
-
-                )   )   }
-
- 
-
-
-
-          </select>
-
-        </div>
-          
-        
-        }
-
+      
 
 
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
@@ -2141,4 +2239,4 @@ const AdminAddAdmin = ({event, regionId, typeId }) => {
     )
 }
 
-export {AdminTeam, AdminCodeOfConduct, AdminNews, AdminBanner, AdminRegion, AdminSubRegion, AdminAddTeamToRegion, AdminFixture, AdminAddAdmin, AdminAddUserToTeam}
+export {AdminTeam, AdminCodeOfConduct, AdminNews, AdminBanner, AdminCategory, AdminSubRegion, AdminAddTeamToRegion, AdminProduct, AdminAddAdmin, AdminAddUserToTeam}

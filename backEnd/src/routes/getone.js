@@ -18,6 +18,8 @@ const Player = require('../models/competition/player')
 const Team = require('../models/competition/team')
 const Stat = require('../models/competition/stats')
 const Wishlist = require('../models/wishlist')
+const Category = require('../models/category')
+const Cloth = require('../models/clothes')
 
 
 
@@ -44,6 +46,54 @@ router.get('/banner/:id',  async (req, res, next) => {
             res.status(500).json(error);
         }
 })
+
+
+router.get('/category/:id',  async (req, res, next) => {
+  console.log(req.params.id +2);
+  
+
+
+        try {
+            const data = await Category.findOne({name: req.params.id})
+
+            if (data) {
+                
+              res.status(200).json(data);
+
+            } else {
+              res.status(404).json("not found");
+
+            }
+
+        } catch (error) {
+            res.status(500).json(error);
+        }
+})
+
+
+
+router.get('/cloth/:id',  async (req, res, next) => {
+  console.log(req.params.id +2);
+  
+
+
+        try {
+            const data = await Cloth.findOne({name: req.params.id})
+
+            if (data) {
+                
+              res.status(200).json(data);
+
+            } else {
+              res.status(404).json("not found");
+
+            }
+
+        } catch (error) {
+            res.status(500).json(error);
+        }
+})
+
 
 
 router.get('/code-of-conduct/:id', async (req, res, next) => {

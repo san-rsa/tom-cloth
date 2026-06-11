@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Style from "../../../styles/admin/Profile.module.css"
 import { MininewsEdit } from "./Newslist";
-import { CardList4 } from "./Generallist";
+import { CardList4, CatList, ProductCard } from "./Generallist";
 import { FixtureToEdit } from "./Tournamentlist";
 
 
@@ -74,7 +74,7 @@ const AdminBannerList = () => {
 
 
 
-const AdminCodeOfConductList = () => {
+const AdminCategoryList = () => {
 
     const [data, setData] = useState([])
    
@@ -82,7 +82,7 @@ const AdminCodeOfConductList = () => {
 
 
         useEffect(() => {
-            fetch(process.env.REACT_APP_API_LINK + "getall/code-of-conduct/" )
+            fetch(process.env.REACT_APP_API_LINK + "getall/category/" )
             .then((res) =>  res.json())
             .then((data) => setData(data.data));
         }, []);
@@ -106,18 +106,33 @@ const AdminCodeOfConductList = () => {
 
 
 
-                {data.map((project) => (
+            <div className={Style.cat}>
 
-                        
-            <MininewsEdit
-                head={project.title}
-                // img={project.imgUrl[0].url}
+
                 
+            {data?.map((p) => (
 
-                />  
+            <CatList 
+                key={p.id}
+                    name={p.name}
+                    price={p.price}
+                    img={p.imgUrl?.url}
+                    link={'./../' + p.name}
+
+                    />  
+
+
+  
 
 
             )   )   }
+
+
+
+
+
+
+     </div>
                     
 
                     </div>
@@ -135,6 +150,82 @@ const AdminCodeOfConductList = () => {
     )
 }
 
+
+
+const AdminProductList = () => {
+
+    const [data, setData] = useState([])
+   
+
+
+
+        useEffect(() => {
+            fetch(process.env.REACT_APP_API_LINK + "getall/clothes/" )
+            .then((res) =>  res.json())
+            .then((data) => setData(data.data));
+        }, []);
+
+
+
+    
+
+
+
+
+    return (
+        <div className={Style.app}>
+
+
+
+
+
+         
+                    <div className={Style.newsgrid} >
+
+
+            <div className={Style['product-grid']}>
+
+
+                
+            {data?.map((p) => (
+
+            <ProductCard
+                key={p.id}
+                    name={p.name}
+                    price={p.size[0]?.price}
+                    image={p.img[0]?.url}
+                    link={'./../' + p.name}
+
+                    />  
+
+
+  
+
+
+            )   )   }
+
+
+
+
+
+
+     </div>
+                    
+
+                    </div>
+
+
+
+
+
+
+
+                    </div>
+
+ 
+
+    )
+}
 
 const AdminNewsList = () => {
 
@@ -161,13 +252,6 @@ const AdminNewsList = () => {
 
 
 
-
-
-         
-                    <div className={Style.newsgrid} >
-
-
-
                 {data.map((project) => (
 
                         
@@ -181,9 +265,6 @@ const AdminNewsList = () => {
 
             )   )   }
                     
-
-                    </div>
-
 
 
 
@@ -689,4 +770,4 @@ const AdminAdminList = ({event}) => {
 
     )
 }
-export {AdminBannerList, AdminCodeOfConductList, AdminNewsList, AdminRegionList, AdminSubRegionList, AdminAdminList, AdminMatchRegionList, AdminMatchFixtureList, AdminTeamList } 
+export {AdminBannerList, AdminCategoryList, AdminProductList, AdminNewsList, AdminRegionList, AdminSubRegionList, AdminAdminList, AdminMatchRegionList, AdminMatchFixtureList, AdminTeamList } 

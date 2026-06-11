@@ -5,7 +5,7 @@ import Style from "../../../styles/admin/Profile.module.css"
 import Nav from "../../../components/sub component/Nav"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/sub component/Footer";
-import { AdminAdminList, AdminBannerList, AdminCodeOfConductList, AdminMatchFixtureList, AdminMatchRegionList, AdminNewsList, AdminRegionList, AdminSubRegionList, AdminTeamList } from "../../../components/sub component/list/Profileadminviewlist";
+import { AdminAdminList, AdminBannerList, AdminCategoryList, AdminCodeOfConductList, AdminMatchFixtureList, AdminMatchRegionList, AdminNewsList, AdminProductList, AdminRegionList, AdminSubRegionList, AdminTeamList } from "../../../components/sub component/list/Profileadminviewlist";
 import { TeamAdminNewsList, TeamAdminPlayerList } from "../../../components/sub component/list/Teamadminviewlist";
 
 
@@ -119,9 +119,9 @@ const List = ({}) => {
 
             { mode2.banner && <AdminBannerList  />}
 
-            { mode2.news && <AdminNewsList  />}
+            { mode2.product && <AdminProductList  />}
 
-            { mode2["code-of-conduct"] && <AdminCodeOfConductList />}
+            { mode2["category"] && <AdminCategoryList />}
        
             { mode2.news ? user.admin ? <AdminNewsList  /> : user.team ? team ? <TeamAdminNewsList teamid={team} /> : null : null : null}
             

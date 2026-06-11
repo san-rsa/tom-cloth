@@ -333,9 +333,9 @@ const ProfileAdmin = ({}) => {
             <h2 > Product </h2>
 
             <div className={Style.teamadminmenulist} >
-                <CardList3 name={"Region"} to={"add"} category={"add"} link={"region"} logo={faPlus} />  
-                <CardList3Edit name={"Region"} to={"edit"} category={"edit"} link={"region"} logo={faPenToSquare} id={"list"} />  
-                <CardList3 name={"ebuawa"} to={"region"} category={"delete"} link={"ebuawa"} logo={faTrash} />  
+                <CardList3 name={"Product"} to={"add"} category={"add"} link={"product"} logo={faPlus} />  
+                <CardList3Edit name={"Product"} to={"edit"} category={"edit"} link={"product"} logo={faPenToSquare} id={"list"} />  
+                <CardList3 name={"Product"} to={"region"} category={"delete"} link={"product"} logo={faTrash} />  
       
             </div>
             

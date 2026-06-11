@@ -18,6 +18,8 @@ const Result = require('../../models/competition/result')
 const Standing = require('../../models/competition/standing/standing')
 const Codeofconduct = require('../../models/news/codesofconduct')
 const CupStanding = require('../../models/competition/standing/cup')
+const Category = require('../../models/category')
+const Cloth = require('../../models/clothes')
 
 
 
@@ -61,7 +63,153 @@ const CupStanding = require('../../models/competition/standing/cup')
     });
 
 
+    
 
+    
+    router.patch('/category/:id' ,  async (req, res, next) => {
+        try {
+
+            const update = JSON.parse(req.body.data)
+            const file = req.files?.img    
+            const imgUrl = []
+    
+
+            // await cloudinary.uploader.destroy(data.imgUrl.imgId);
+
+            
+            if (req.files) {
+                // No file was uploaded
+   
+                const image = await cloudinary.uploader.upload(
+                file.tempFilePath,
+                { folder: 'Banner' },
+        
+              );        
+                imgUrl.push({url: image.secure_url,  imgId: image.puplic_id})        
+            }
+        
+        
+        
+            const save = await Category.findOneAndUpdate({name: req.params.id}, {
+                $set: update, imgUrl: imgUrl[0]
+            }, { new: true });
+            res.json(save);
+            console.log(save, req.body, " updated successfully!", imgUrl.url);
+        } catch (error) {
+            return next(error);
+        }
+    });
+
+
+
+
+
+
+
+router.patch('/cloth/:id', async (req, res)=> {
+
+    const update = JSON.parse(req.body.data)
+    const updatecolor = JSON.parse(req.body.color)
+    const updatesize = JSON.parse(req.body.size)
+
+    const file = req.files?.img  
+      
+    
+
+    try {
+        const {name, description, gender, age, type,  categoryId,  } = update 
+        const imgUrl = []
+
+
+
+
+
+        console.log(update, updatecolor, updatesize, file)
+
+        if (!name || !type, !description || !gender || !age || !categoryId ) {
+            return res.status(403).json({
+                success: false,
+                message: "All Fields are required",
+            });
+        }
+        const colors = []
+
+
+        if (req.files) {
+                      if (file.length > 1) {
+    
+                for (const i in file){
+                  const image = await cloudinary.uploader.upload(
+                    file[i].tempFilePath,
+                    { folder: 'Product' },
+    
+                );
+    
+                imgUrl.push({url: image.secure_url,  imgId: image.public_id})
+                console.log(image);
+                }
+              
+                
+          } else {
+    
+                 const image = await cloudinary.uploader.upload(
+            file.tempFilePath,
+            { folder: 'Product' },
+    
+          );
+    
+    
+            imgUrl.push({url: image.secure_url,  imgId: image.public_id})
+    
+                          console.log(image)
+    
+    
+          }
+        }
+            console.log(imgUrl, )
+
+            updatecolor.forEach(element => {
+                // Object.values(updatecolor)
+
+                colors.push(element.color)
+
+            });
+
+
+ 
+
+
+
+        console.log(update, imgUrl, updatesize, updatecolor, Object.values(updatecolor))
+
+
+        //check if use already exists?
+
+
+            const save = await Cloth.findOneAndUpdate({name: req.params.id}, {
+                $set: update, imgUrl: imgUrl, color: colors, size: updatesize,
+            }, { new: true });
+            res.json(save);
+            console.log(save, req.body, " updated successfully!", imgUrl.url);
+
+            // res.redirect("/login")
+
+        // return res.status(200).json({
+        //     success: true,
+        //     db,
+        //     message: " created successfully ✅"
+           
+        // })  
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({
+            success: false,
+            message : " registration failed"
+        })
+       
+   }  
+})
+    
 
 
 router.patch('/code-of-conduct/:id', async (req, res)=> {

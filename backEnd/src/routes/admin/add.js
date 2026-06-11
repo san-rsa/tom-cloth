@@ -127,9 +127,13 @@ router.post('/banner',  async (req, res)=> {
 
 
 
+
 router.post('/cloth', async (req, res)=> {
 
     const data = JSON.parse(req.body.data)
+    const color = JSON.parse(req.body.color)
+    const size = JSON.parse(req.body.size)
+
     const file = req.files?.img  
       
     
@@ -140,16 +144,16 @@ router.post('/cloth', async (req, res)=> {
     
 
     try {
-        const {name, description, type, size, categoryId,  }= data
+        const {name, description, gender, age, type,  categoryId,  } = data
         const imgUrl = []
 
 
 
 
 
-        console.log(data)
+        console.log(data, color, size, file)
 
-		if (!name || !type, !description ) {
+		if (!name || !type, !description || !gender || !age || !categoryId ) {
 			return res.status(403).json({
 				success: false,
 				message: "All Fields are required",
@@ -193,15 +197,18 @@ router.post('/cloth', async (req, res)=> {
 
 
 
-        console.log(data)
+        console.log(data, imgUrl, size, color, )
 
-		if (!title || !body ) {
-			return res.status(403).json({
-				success: false,
-				message: "All Fields are required",
-			});
-		}
 
+        const colors = []
+
+
+         updatecolor.forEach(element => {
+                // Object.values(updatecolor)
+
+                colors.push(element.color)
+
+            });
         //check if use already exists?
         const existingItem = await Cloth.findOne({name})
 
@@ -213,7 +220,7 @@ router.post('/cloth', async (req, res)=> {
         }
 
         const db = await Cloth.create({
-           name, description, type, size, categoryId, img: imgUrl,
+           name, description, type, categoryId, img: imgUrl, gender, age, type, color: colors, size
         })
             // res.redirect("/login")
 

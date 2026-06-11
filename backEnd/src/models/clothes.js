@@ -17,6 +17,14 @@ const Schema = new mongoose.Schema({
 
     categoryId: [{type: mongoose.Schema.Types.String, ref: "Category",     },],
 
+    discount: { type: Number,  }  ,
+
+    color: [{type: String},],
+
+
+
+
+
 
     gender: {type: String, required: true, trim: true, enum: [ 'male', 'female', 'all'],},
 

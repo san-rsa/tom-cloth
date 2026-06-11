@@ -3,7 +3,7 @@ import Style from "../../../styles/Team.module.css"
 import Nav from "../../../components/sub component/Nav"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/sub component/Footer";
-import { AdminAddAdmin, AdminAddTeamToRegion, AdminAddUserToTeam, AdminBanner, AdminCodeOfConduct, AdminFixture, AdminNews, AdminRegion, AdminSubRegion, AdminTeam } from "../../../components/sub component/Profileadminview";
+import { AdminAddAdmin, AdminAddUserToTeam, AdminBanner, AdminCategory, AdminCodeOfConduct, AdminNews, AdminProduct,  AdminTeam } from "../../../components/sub component/Profileadminview";
 import { TeamAdminNews, TeamAdminPlayer } from "../../../components/sub component/TeamAdminview";
 
 
@@ -65,35 +65,9 @@ const Add = ({}) => {
          })    
 
 
-         fetch(process.env.REACT_APP_API_LINK + 'getaccess/team/', {
-            method: 'GET',
-            credentials: "include",
-            headers: {'Content-Type': 'application/json'},
-             }).then((res) => {
-            if (res.status === 200) {
-                setUser({team: true})
-
-            } 
-
- })  
-
-
             
               
          },   []);
-
-
-
-
-
-         if (user.team) {
-            fetch(process.env.REACT_APP_API_LINK + 'getaccess/user/team/', {
-                method: 'GET',
-                credentials: "include",
-                headers: {'Content-Type': 'application/json'},
-                 }).then((res) =>  res.json())
-                 .then((data) => setTeam(data.data.name));
-         }
 
 
         console.log(mode1, mode2, event, type, typeId);
@@ -123,13 +97,11 @@ const Add = ({}) => {
             { mode2.player ? user.admin ? <AdminNews  event={mode1} typeId={typeId} /> : user.team ? team ?  <TeamAdminPlayer teamid={team} event={mode1} typeId={typeId} /> : null : null : null}
 
 
-            { mode2.region && <AdminRegion event={mode1} typeId={typeId} />}
+            {/* { mode2.region && <AdminRegion event={mode1} typeId={typeId} />} */}
 
-            { mode2["sub-region"] && <AdminSubRegion event={mode1} typeId={typeId} />}
+            { mode2["product"] && <AdminProduct event={mode1} typeId={typeId} />}
 
-           { mode2.fixture &&  <AdminFixture event={mode1} regionId={typeId} typeId={matchId}/> } 
-
-           { mode2["add-team-to-region"] &&  <AdminAddTeamToRegion event={mode1} regionId={typeId} /> } 
+           { mode2.category &&  <AdminCategory event={mode1} typeId={typeId} /> } 
 
 
 
