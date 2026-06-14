@@ -424,13 +424,13 @@ router.get('/wishlist', auth, async (req, res, next) => {
         }
 })
 
-router.get('/user/:id', auth,  async(req, res)=> {
+// router.get('/user/:id', auth,  async(req, res)=> {
 
 
-  const data = await User.findOne({_id: req.params.id})
+//   const data = await User.findOne({_id: req.params.id})
   
-   res.status(200).json(data)
-})
+//    res.status(200).json(data)
+// })
 
 
 

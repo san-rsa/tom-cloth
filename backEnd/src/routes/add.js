@@ -6,10 +6,10 @@ const Guest = require("../models/guest");
 const Cart = require("../models/cart");
 const Cloth = require("../models/clothes");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
+const mongoose = require('mongoose');
 
 router.post("/cart", auth, async (req, res) => {
-    const user = req.userId
+    const user = new mongoose.Types.ObjectId(String(req.userId));
     const {productId, category, quantity, size, color} = req.body
     // const quantity = Number.parseInt(req.body.quantity );
     // const size = req.body.weight
@@ -69,7 +69,7 @@ router.post("/cart", auth, async (req, res) => {
             else if (quantity > 0) {
                 cart.products.push({
                     productId: productId,
-                    proproductMode: category,
+                    productModel: category,
                     sizeId: size,
                     color: color,
                     quantity: quantity,
@@ -108,7 +108,7 @@ router.post("/cart", auth, async (req, res) => {
                     // weight:  productDetails.size[prices].weight,
                     
                     productId: productId,
-                    proproductMode: category,
+                    productModel: category,
                     sizeId: size,
                     color: color,
                     quantity: quantity,
@@ -138,7 +138,10 @@ router.post("/cart", auth, async (req, res) => {
 
 
 router.post("/carts-items", auth, async (req, res) => {
-    const user = req.userId
+
+
+
+    const user = new mongoose.Types.ObjectId(String(req.userId));
     // const {productId, category, quantity, size, color, products} = req.body
         const { products} = req.body
 
@@ -148,7 +151,9 @@ router.post("/carts-items", auth, async (req, res) => {
 
         
 
-    console.log(products, user);
+    console.log(products, user );
+
+
     
     if (!products ) {
         return res.status(500).json({
@@ -159,7 +164,10 @@ router.post("/carts-items", auth, async (req, res) => {
 
     try {
                     
-        const cart = await Cart.findOne({ userId: String(user) });
+        const cart = await Cart.findOne({ userId: user });
+
+        console.log(cart);
+        
         const new_user_items = [];
 
 
@@ -215,7 +223,7 @@ router.post("/carts-items", auth, async (req, res) => {
             else if (quantity > 0) {
                 cart.products.push({
                     productId: productId,
-                    proproductMode: category,
+                    productModel: category,
                     sizeId: size,
                     color: color,
                     quantity: quantity,
@@ -232,7 +240,7 @@ router.post("/carts-items", auth, async (req, res) => {
                 })
             }
             const data = await cart.save();
-            res.status(200).json({
+           return  res.status(200).json({
                 type: "success",
                 mgs: "Process successful",
                 data: data
@@ -243,7 +251,7 @@ router.post("/carts-items", auth, async (req, res) => {
 
                  new_user_items.push({
                     productId: productId,
-                    proproductMode: category,
+                    productModel: category,
                     sizeId: size,
                     color: color,
                     quantity: quantity,
@@ -260,8 +268,8 @@ router.post("/carts-items", auth, async (req, res) => {
         }
             
         } 
-        cart.save()
-              return res.status(201).send(cart);
+        // cart.save()
+        //       return res.status(201).send(cart);
 
 
         } else {

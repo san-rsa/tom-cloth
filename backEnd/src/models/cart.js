@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
 
         
-        userId : {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'
+        userId : {type: mongoose.Schema.Types.String, required: true, ref: 'User'
         },
     
     
         products: [{
-          productId: {type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'productModel' }, // Tells Mongoose to look at the 'itemModel' property
+          productId: {type: mongoose.Schema.Types.String, required: true, refPath: 'productModel' }, // Tells Mongoose to look at the 'itemModel' property
           productModel: {type: String, required: true, }, // Restricts allowed models
     
           sizeId: {type: mongoose.Schema.Types.ObjectId, ref: 'size', required: true },

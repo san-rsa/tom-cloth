@@ -62,22 +62,24 @@ const Nav = ({loggedin}) => {
   // 1. Load initial cart on component mount  isloggedin
 
 
-          let totalItems = total.reduce((sum, item) => sum + item.quantity, 0);
+          let totalItems = total?.reduce((sum, item) => sum + item.quantity, 0);
 
 
 
       
     
       // Fetch from Mongoose via API
-      const fetchUserCartFromDatabase = async () => {
+      const fetchUserCartFromDatabase =  () => {
     try {
-      const response = await  fetch(process.env.REACT_APP_API_LINK + 'getone/user/cart', {
+        fetch(process.env.REACT_APP_API_LINK + 'getall/user-cart', {
                       method: 'GET',
                       credentials: "include",
-                      headers: {'Content-Type': 'application/json'},});
+                      headers: {'Content-Type': 'application/json'},
+                    }).then((res) =>  res.json())
+              .then((data) =>  setTotal(data.data.products ) );
 
-      const data = await response.json();
-      setTotal(data.products );
+      // const data = await response.json();
+     
     } catch (err) {
       console.error('Error fetching cart:', err);
     }
@@ -105,9 +107,12 @@ const Nav = ({loggedin}) => {
           setTotal(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
 
     } else {
-      fetchUserCartFromDatabase()
+       const guest = JSON.parse(localStorage.getItem('guest_cart'))
 
-      if (JSON.parse(localStorage.getItem('guest_cart').length !== 0)) {
+
+       
+
+      if (guest !== null ) {
         const products = JSON.parse(localStorage.getItem('guest_cart'))
 
               try {
@@ -122,11 +127,13 @@ const Nav = ({loggedin}) => {
           
                     }).then((res) => {
                       if (res.status === 200) {
-                                  AlertSuccess('succesfully added to cart');
+                                  AlertSuccess('succesfully added to carts');
                                   console.log(res);
-                                  // localStorage.removeItem('guest_cart');
-                                  
-                      } else {
+                                   localStorage.removeItem('guest_cart');
+        
+                      } 
+                      
+                      else {
                                         AlertError('Error updating  cart:');
         
                       }
@@ -142,8 +149,11 @@ const Nav = ({loggedin}) => {
         
               }
       }
+                  fetchUserCartFromDatabase()
+
+
     }
-  }, [])
+  }, [ total ])  // total])
   
   // [   JSON.parse(localStorage.getItem('guest_cart')) || [] || total ]);
 
