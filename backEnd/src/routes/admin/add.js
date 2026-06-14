@@ -203,7 +203,7 @@ router.post('/cloth', async (req, res)=> {
         const colors = []
 
 
-         updatecolor.forEach(element => {
+         color.forEach(element => {
                 // Object.values(updatecolor)
 
                 colors.push(element.color)

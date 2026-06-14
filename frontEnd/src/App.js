@@ -3,10 +3,9 @@ import * as React from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 
 
+import "./styles/style.css"
 
 import Home from "./pages/Home";
-import Codeofconduct from "./pages/Codeofconduct";
-
 
 import {Register, Login, ForgetPassword, ResetPassword,  EditUser,} from "./pages/user/security/Security";
 import Profile from "./pages/user/Profile";
@@ -21,31 +20,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import "./styles/style.css"
 import News from "./pages/News";
-import Video from "./pages/Video";
-import Team from "./pages/Team";
-import Player from "./pages/Player";
-
-import Competition from "./pages/competition/Competition";
-
-import Fixtures from "./pages/competition/Fixtures";
-import Fixture from "./pages/competition/match/Fixture";
 
 
-import Results from "./pages/competition/Results";
-import Result from "./pages/competition/match/Result";
-
-
-// import Lives from "./pages/competition/Lives";
-
-
-import Stats from "./pages/competition/Stats";
-import TeamAdd from "./pages/user/adminteam/TeamAdd";
 import AdminAdd from "./pages/user/admin/AdminAdd";
 
-import TeamAdminList from "./pages/user/adminteam/List";
 import AdminList from "./pages/user/admin/List";
-import { MatchUpdate, MatchUpdateList, ResultUpdate, ResultUpdateList } from "./components/sub component/list/Matchupdateviewlist";
-import { Categories, Category, Competitions, Search, Teams } from "./pages/ListsAll";
+import { Categories, Category, Search, } from "./pages/ListsAll";
 import Description from "./pages/Description";
 
 
@@ -63,7 +43,6 @@ function Links() {
         <Route path="/" element={<Home />} />
 
 
-        <Route path="/video/:id" element={<Video />}/>
         <Route path="/news/:id" element={<News />}/>
 
 

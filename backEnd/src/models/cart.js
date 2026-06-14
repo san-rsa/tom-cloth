@@ -7,8 +7,6 @@ const cartSchema = new mongoose.Schema({
         userId : {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'
         },
     
-        guestId : {type: mongoose.Schema.Types.ObjectId, ref: 'Guest'
-        },
     
         products: [{
           productId: {type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'productModel' }, // Tells Mongoose to look at the 'itemModel' property
@@ -19,16 +17,19 @@ const cartSchema = new mongoose.Schema({
           quantity: {type: Number, required: true, min: 1, default: 1
           },
     
-          size: {type: String, required: true },
+        //   size: {type: String, required: true },
     
     
-          weight: {type: Number, min: 0, default: 0
-          },
+        //   weight: {type: Number, min: 0, default: 0
+        //   },
     
           price: {type: Number, default: 0,
           },
     
           total: {type: Number, default: 0,
+          },
+
+          color: {type: String, required: true
           },
     
           productCode: {type: String,

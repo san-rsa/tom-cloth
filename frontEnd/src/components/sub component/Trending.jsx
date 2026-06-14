@@ -56,7 +56,7 @@ import { ProductCard } from "./list/Generallist";
 ];
 
 
-function Trending() {
+function Trending({loggedin}) {
 
 
     function SampleNextArrow(props) {

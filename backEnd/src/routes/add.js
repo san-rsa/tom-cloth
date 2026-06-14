@@ -3,20 +3,27 @@ const router = new express.Router();
 const Wishlist = require("../models/wishlist");
 const {auth} = require("../middleware/mid");
 const Guest = require("../models/guest");
+const Cart = require("../models/cart");
+const Cloth = require("../models/clothes");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
 router.post("/cart", auth, async (req, res) => {
     const user = req.userId
-    const productId = req.body.productId
-    const quantity = Number.parseInt(req.body.quantity );
-    const size = req.body.weight
-    const price = Number(req.body.price)
+    const {productId, category, quantity, size, color} = req.body
+    // const quantity = Number.parseInt(req.body.quantity );
+    // const size = req.body.weight
+    // const price = Number(req.body.price)
 
-    if (!price <= !2 && !price >= !0) {
+        
+    
+    
+    
+
+    if (!size && !price ) {
         return res.status(500).json({
             type: "Not Found",
-            msg: "choose right weight"
+            msg: "choose size"
         })
     }
 
@@ -24,6 +31,7 @@ router.post("/cart", auth, async (req, res) => {
         const cart = await Cart.findOne({ userId: user });
        // let productDetailss = await productById(productId);
         const productDetails = await Product.findOne({ _id: productId });
+        const prices = productDetails.size.findIndex(item => item._id == size);
 
              if (!productDetails) {
             return res.status(500).json({
@@ -52,9 +60,8 @@ router.post("/cart", auth, async (req, res) => {
             //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
             else if (indexFound !== -1) {
                 cart.products[indexFound].quantity = cart.products[indexFound].quantity + quantity;
-                cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[price].price;
-                cart.products[indexFound].price = productDetails.size[price].price
-                cart.products[indexFound].weight = productDetails.size[price].weight
+                cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[prices].price;
+                cart.products[indexFound].price = productDetails.size[prices].price
 
                 cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
             }
@@ -62,12 +69,12 @@ router.post("/cart", auth, async (req, res) => {
             else if (quantity > 0) {
                 cart.products.push({
                     productId: productId,
+                    proproductMode: category,
                     sizeId: size,
-                    name : productDetails.name,
+                    color: color,
                     quantity: quantity,
-                    price: productDetails.size[price].price,
-                    weight: productDetails.size[price].weight,
-                    total: parseInt(productDetails.size[price].price * quantity)
+                    price: productDetails.size[prices].price,
+                    total: parseInt(productDetails.size[prices].price * quantity)
                 })
                 cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
             }
@@ -92,13 +99,21 @@ router.post("/cart", auth, async (req, res) => {
             const newCart = await Cart.create({
                 userId: user,
                 products: [{
-                    name: productDetails.name,
+                    // name: productDetails.name,
+                    // productId: productId,
+                    // sizeId: size,
+                    // quantity,
+                    // total: parseInt(productDetails.size[prices].price * quantity),
+                    // price:  productDetails.size[prices].price,
+                    // weight:  productDetails.size[prices].weight,
+                    
                     productId: productId,
+                    proproductMode: category,
                     sizeId: size,
-                    quantity,
-                    total: parseInt(productDetails.size[price].price * quantity),
-                    price:  productDetails.size[price].price,
-                    weight:  productDetails.size[price].weight
+                    color: color,
+                    quantity: quantity,
+                    price: productDetails.size[prices].price,
+                    total: parseInt(productDetails.size[prices].price * quantity)
 
                 }],
                 totalCost:  parseInt(productDetails.size[price].price * quantity)
@@ -118,6 +133,162 @@ router.post("/cart", auth, async (req, res) => {
     }
 });
 
+
+
+
+
+router.post("/carts-items", auth, async (req, res) => {
+    const user = req.userId
+    // const {productId, category, quantity, size, color, products} = req.body
+        const { products} = req.body
+
+    // const quantity = Number.parseInt(req.body.quantity );
+    // const size = req.body.weight
+    // const price = Number(req.body.price)
+
+        
+
+    console.log(products, user);
+    
+    if (!products ) {
+        return res.status(500).json({
+            type: "Not Found",
+            msg: "no cart items"
+        })
+    }
+
+    try {
+                    
+        const cart = await Cart.findOne({ userId: String(user) });
+        const new_user_items = [];
+
+
+        if (cart) {
+                    
+            
+            for (let i = 0; i < products.length; i++) {
+
+
+        const {productId, category, quantity, size, color, } = products[i]
+
+
+       // let productDetailss = await productById(productId);
+        const productDetails = await Cloth.findById( productId );
+
+
+
+        const prices = productDetails.size.findIndex(item => item._id == size);
+
+             if (!productDetails) {
+            return res.status(500).json({
+                type: "Not Found",
+                msg: "Invalid request"
+            })
+        }
+        //--If Cart Exists ----
+
+
+        if (cart) {
+            //---- Check if index exists ----
+            const indexFound = cart.products.findIndex(item => item.sizeId == size);
+
+
+
+            //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
+            if (indexFound !== -1 && quantity <= 0) {
+                cart.products.splice(indexFound, 1);
+                if (cart.products.length == 0) {
+                    cart.totalCost = 0;
+                } else {
+                    cart.totalCost = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
+                }
+            }
+            //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
+            else if (indexFound !== -1) {
+                cart.products[indexFound].quantity = cart.products[indexFound].quantity + quantity;
+                cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[prices].price;
+                cart.products[indexFound].price = productDetails.size[prices].price
+
+                cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+            }
+            //----Check if quantity is greater than 0 then add item to items array ----
+            else if (quantity > 0) {
+                cart.products.push({
+                    productId: productId,
+                    proproductMode: category,
+                    sizeId: size,
+                    color: color,
+                    quantity: quantity,
+                    price: productDetails.size[prices].price,
+                    total: parseInt(productDetails.size[prices].price * quantity)
+                })
+                cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+            }
+            //----If quantity of price is 0 throw the error -------
+            else {
+                return res.status(400).json({
+                    type: "Invalid",
+                    msg: "Invalid request"
+                })
+            }
+            const data = await cart.save();
+            res.status(200).json({
+                type: "success",
+                mgs: "Process successful",
+                data: data
+            })
+        }
+        //------------ This creates a new cart and then adds the item to the cart that has been created------------
+        else {
+
+                 new_user_items.push({
+                    productId: productId,
+                    proproductMode: category,
+                    sizeId: size,
+                    color: color,
+                    quantity: quantity,
+                    price: productDetails.size[prices].price,
+                    total: parseInt(productDetails.size[prices].price * quantity)
+                })
+
+
+
+
+
+        
+        
+        }
+            
+        } 
+        cart.save()
+              return res.status(201).send(cart);
+
+
+        } else {
+            const newCart = await Cart.create({
+                userId: user,
+                products: new_user_items
+
+
+              });
+
+             newCart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+
+             newCart.save()
+            return res.status(201).send(newCart);
+
+        }
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+});
 
 router.post('/guest',   async (req, res)=> {
 

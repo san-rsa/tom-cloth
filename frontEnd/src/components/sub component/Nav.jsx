@@ -1,13 +1,13 @@
-import React, { useState, ReactDOM } from "react";
+import React, { useState, ReactDOM, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Style from "../../styles/Nav.module.css"
 import {Link, useNavigate} from "react-router-dom"
 import { faBars, faUser, faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { Inputs } from "./list/Generallist";
+import { AlertError, AlertSuccess, Inputs } from "./list/Generallist";
 
 
 
-const Nav = () => {
+const Nav = ({loggedin}) => {
 
 
     const [data, setInputs] = useState({});
@@ -20,6 +20,7 @@ const Nav = () => {
       const value = event.target.value;
       setInputs(values => ({...values, [name]: value}))
     }
+
 
 
 
@@ -45,6 +46,7 @@ const Nav = () => {
 
 
 
+
     const [search, setelement] = useState()
 
     function toggle (p){
@@ -52,6 +54,118 @@ const Nav = () => {
         setburger(!burger)
 
     }
+
+
+      const [total, setTotal] = useState([]);
+
+
+  // 1. Load initial cart on component mount  isloggedin
+
+
+          let totalItems = total.reduce((sum, item) => sum + item.quantity, 0);
+
+
+
+      
+    
+      // Fetch from Mongoose via API
+      const fetchUserCartFromDatabase = async () => {
+    try {
+      const response = await  fetch(process.env.REACT_APP_API_LINK + 'getone/user/cart', {
+                      method: 'GET',
+                      credentials: "include",
+                      headers: {'Content-Type': 'application/json'},});
+
+      const data = await response.json();
+      setTotal(data.products );
+    } catch (err) {
+      console.error('Error fetching cart:', err);
+    }
+  };
+      
+
+
+
+
+
+// export default function ShoppingCart() {
+//   // 1. Initialize state directly from localStorage (fallback to empty array)
+//   const [cart, setCart] = useState(() => {
+//     const savedCart = localStorage.getItem('cart');
+//     return savedCart ? JSON.parse(savedCart) : [];
+//   });
+
+  // 2. Automatically sync localStorage whenever the cart state changes
+  useEffect(() => {
+    if (!loggedin) {
+          // localStorage.setItem('guest_cart', JSON.stringify(cart));
+
+      //    const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+
+          setTotal(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
+
+    } else {
+      fetchUserCartFromDatabase()
+
+      if (JSON.parse(localStorage.getItem('guest_cart').length !== 0)) {
+        const products = JSON.parse(localStorage.getItem('guest_cart'))
+
+              try {
+                const response = fetch(process.env.REACT_APP_API_LINK + "add/carts-items", {
+                      method: "POST",
+                      credentials: "include",
+                      headers: { "Content-type": "application/json; charset=UTF-8", },
+                      body: JSON.stringify({
+                        products: products,
+        
+                      }),
+          
+                    }).then((res) => {
+                      if (res.status === 200) {
+                                  AlertSuccess('succesfully added to cart');
+                                  console.log(res);
+                                  // localStorage.removeItem('guest_cart');
+                                  
+                      } else {
+                                        AlertError('Error updating  cart:');
+        
+                      }
+                    })
+                // const updatedDbCart = await response.json();
+        
+                  AlertSuccess('succesfully added to cart');
+        
+                // setCart(updatedDbCart.items);
+              } catch (err) {
+                console.error('Error updating database cart:', err);
+                        AlertError('Error updating database cart:', err);
+        
+              }
+      }
+    }
+  }, [])
+  
+  // [   JSON.parse(localStorage.getItem('guest_cart')) || [] || total ]);
+
+  // 3. Add item logic (increments quantity if exists, or pushes a new item)
+  // const addToCart = (product) => {
+  //   setCart((prevCart) => {
+  //     const existingItem = prevCart.find((item) => item.id === product.id);
+
+  //     if (existingItem) {
+  //       // If item exists, increase its quantity safely
+  //       return prevCart.map((item) =>
+  //         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+  //       );
+  //     }
+
+  //     // If it's a new item, append it with a default quantity of 1
+  //     return [...prevCart, { ...product, quantity: 1 }];
+  //   });
+  // };
+
+
+
 
     return (
         <nav>
@@ -109,7 +223,23 @@ const Nav = () => {
 
         <div className={Style.rnav}>
 
-                   <Link className={Style.navr} to={"/cart"}><FontAwesomeIcon icon={faCartShopping}/> </Link>
+            <div className=""style={{position: 'relatie'}} >
+                 <Link className={Style.navr} to={"/cart"}><FontAwesomeIcon icon={faCartShopping}/> </Link>
+          {totalItems > 0 && (
+            <span style={{
+              position: 'absolute',
+              top: '9px',
+              right: '23px',
+              background: '#000',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '1px 3px',
+              fontSize: 'xx-small',
+              fontWeight: 'bolder'
+            }}>
+              {totalItems}
+            </span>  )}
+            </div>
           
                 <Link className={Style.navr}to={"/login"}  onClick={login} ><FontAwesomeIcon icon={faUser}/> </Link>
         

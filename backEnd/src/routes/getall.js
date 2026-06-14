@@ -57,7 +57,7 @@ const data = await Banner.find().sort([['updatedAt', 'desc']]);
 
 router.get('/category', async(req, res)=> {
 
-const data = await Category.find().sort([['name', 'asc']]);
+ const data = await Category.find().sort([['name', 'asc']]);
   if (data.length !== 0) {
 
     return  res.status(200).json({
@@ -118,6 +118,48 @@ router.get('/orders', async(req, res)=> {
     }
 })
 
+
+router.get('/orders/uncompleted', async(req, res)=> {
+
+    const data = await Order.find({delivered: false}) //.sort("name")
+    
+    if (data.length !== 0) {
+
+      return  res.status(200).json({
+       success: true,
+      data: data
+     })
+    }
+  
+    else {
+      return  res.status(404).json({
+      success: false,
+      data: "not found"
+      })
+    }
+})
+
+
+
+router.get('/orders/completed', async(req, res)=> {
+
+    const data = await Order.find({delivered: true}) //.sort("name")
+    
+    if (data.length !== 0) {
+
+      return  res.status(200).json({
+       success: true,
+      data: data
+     })
+    }
+  
+    else {
+      return  res.status(404).json({
+      success: false,
+      data: "not found"
+      })
+    }
+})
 
 
 

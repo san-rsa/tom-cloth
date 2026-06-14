@@ -198,19 +198,37 @@ function Hero() {
 
 
 
-function ProductSection() {
+function ProductSection({loggedin}) {
+
+      const [data, setData] = useState([])
+  
+
+
+  
+          useEffect(() => {
+              fetch(process.env.REACT_APP_API_LINK + "getall/clothes/" )
+              .then((res) =>  res.json())
+              .then((data) => setData(data.data));
+          }, []);
+
+
   return (
     <section className={Style.products}>
       <h2>Most Sales</h2>
 
       <div className={Style["product-grid"]}>
-        {products.map((product) => (
+        {data.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             name={product.name}
-            price={product.price}
-            image={product.image}
+            price={product.size[0]?.price}
+            image={product.img[0]?.url}
             link={'/product/' + product.name}
+            id={product._id}
+            color={product?.color[0]}
+            size={product.size[0]?._id}
+            loggedin={loggedin}
+            category={product?.categoryId[0]}
           />
         ))}
       </div>

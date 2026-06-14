@@ -82,7 +82,93 @@ const Inputs = ({label, type, name, onchange, value, disabled, placeholder, requ
 }
 
 
-const ProductCard = ({id, size, image, name, price, link} ) => {
+const ProductCard = ({id, color, size, image, name, price, link, loggedin, category} ) => {
+
+       
+  const [cart, setCart] = useState([]);
+
+
+
+
+  
+
+  // // Fetch from Mongoose via API
+  // const fetchUserCartFromDatabase = async () => {
+  //   try {
+  //     const response = await  fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
+  //                     method: 'GET',
+  //                     credentials: "include",
+  //                     headers: {'Content-Type': 'application/json'},});
+
+  //     const data = await response.json();
+  //     setCart(data.products || []);
+  //   } catch (err) {
+  //     console.error('Error fetching cart:', err);
+  //   }
+  // };
+
+  // 2. Add Item Function
+  const addToCart = async (product) => {
+    if (!loggedin) {
+      // GUEST LOGIC: Save to Session / LocalStorage
+      const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+      const existingItem = updatedCart?.find(item => item.productId === id);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+
+        AlertSuccess('succesfully added to cart');
+      } else {
+        updatedCart.push({ productId: id, quantity: 1, size: size, color: color, category: category });
+
+            AlertSuccess('succesfully added to cart');
+
+      }
+
+    //   setCart(updatedCart);
+
+
+
+      localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
+    } else {
+      // LOGGED IN LOGIC: Save to Mongoose via API
+      try {
+        const response = await fetch(process.env.REACT_APP_API_LINK + "add/cart", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-type": "application/json; charset=UTF-8", },
+              body: JSON.stringify({
+                productId: id,
+                quantity: 1,
+                size: size, 
+                color: color,
+                category: category,
+
+              }),
+  
+            }).then((res) => {
+              if (res.status === 200) {
+                          AlertSuccess('succesfully added to cart');
+              } else {
+                                AlertError('Error updating  cart:');
+
+              }
+            })
+        const updatedDbCart = await response.json();
+
+          AlertSuccess('succesfully added to cart');
+
+        setCart(updatedDbCart.items);
+      } catch (err) {
+        console.error('Error updating database cart:', err);
+                AlertError('Error updating database cart:', err);
+
+      }
+    }
+  };
+
+
+
   return (
     <div className={Style.product_card}>
 
@@ -94,9 +180,11 @@ const ProductCard = ({id, size, image, name, price, link} ) => {
       <p>{price}</p>
       </Link>
 
-      <button>Add to Cart</button>
+      <button onClick={() => addToCart({ id: id })} >Add to Cart</button>
     </div>
   );
+
+
 }
 
 
