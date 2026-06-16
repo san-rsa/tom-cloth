@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext  } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Style from "../../../styles/General.module.css"
 import { useParams, Link } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 
+// import { CartIcon } from '../../../context/Context-cart';
 
 
 
@@ -87,6 +88,9 @@ const ProductCard = ({id, color, size, image, name, price, link, loggedin, categ
        
   const [cart, setCart] = useState([]);
 
+//  const { addToCart } = useCart();
+
+  // const { total } = useContext(CartIcon);
 
 
 
@@ -109,6 +113,9 @@ const ProductCard = ({id, color, size, image, name, price, link, loggedin, categ
 
   // 2. Add Item Function
   const addToCart = async (product) => {
+
+              console.log(loggedin);
+
     if (!loggedin) {
       // GUEST LOGIC: Save to Session / LocalStorage
       const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
@@ -149,22 +156,36 @@ const ProductCard = ({id, color, size, image, name, price, link, loggedin, categ
             }).then((res) => {
               if (res.status === 200) {
                           AlertSuccess('succesfully added to cart');
+
+                        //  navcart(loggedin)
+
+
+                       
               } else {
                                 AlertError('Error updating  cart:');
 
               }
             })
-        const updatedDbCart = await response.json();
 
-          AlertSuccess('succesfully added to cart');
+        // const updatedDbCart = await response.json();
+                    
+          // AlertSuccess('succesfully added to cart');
 
-        setCart(updatedDbCart.items);
+        // setCart(updatedDbCart.items);
       } catch (err) {
         console.error('Error updating database cart:', err);
                 AlertError('Error updating database cart:', err);
 
       }
     }
+        // const event = new CustomEvent('cartUpdated');
+        //                window.dispatchEvent(event);
+
+
+      const event = new CustomEvent('cartUpdated', { detail: loggedin });
+      window.dispatchEvent(event);
+
+                       console.log(44);
   };
 
 

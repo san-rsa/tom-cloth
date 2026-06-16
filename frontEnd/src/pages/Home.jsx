@@ -59,7 +59,7 @@ function App() {
       <Category />
 
 
-      <ProductSection />
+      <ProductSection loggedin={isLoggedIn} />
       <Newsletter />
 
 

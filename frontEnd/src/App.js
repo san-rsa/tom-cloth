@@ -29,6 +29,7 @@ import { Categories, Category, Search, } from "./pages/ListsAll";
 import Description from "./pages/Description";
 
 
+// import { CartProvider } from './context/Context-cart';
 
 
 
@@ -130,12 +131,19 @@ function App() {
  
   return (
  
+
+
+ 
+
     <div >
           <Links />
 
 
-<ToastContainer />
+        <ToastContainer />
     </div>
+
+
+
 
  
  

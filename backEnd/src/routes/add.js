@@ -30,7 +30,7 @@ router.post("/cart", auth, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: user });
        // let productDetailss = await productById(productId);
-        const productDetails = await Product.findOne({ _id: productId });
+        const productDetails = await Cloth.findOne({ _id: productId });
         const prices = productDetails.size.findIndex(item => item._id == size);
 
              if (!productDetails) {

@@ -14,6 +14,8 @@ const Nav = ({loggedin}) => {
     const [burger, setburger] = useState(false)
     const navigate = useNavigate();
 
+        const [status, setstatus] = useState(loggedin)
+
 
     const handleChange = (event) => {
       const name = event.target.name;
@@ -85,26 +87,26 @@ const Nav = ({loggedin}) => {
     }
   };
       
+          console.log(loggedin);
+
+function updatedCart(event) {
+        // useEffect(() => {
 
 
 
 
 
-// export default function ShoppingCart() {
-//   // 1. Initialize state directly from localStorage (fallback to empty array)
-//   const [cart, setCart] = useState(() => {
-//     const savedCart = localStorage.getItem('cart');
-//     return savedCart ? JSON.parse(savedCart) : [];
-//   });
 
-  // 2. Automatically sync localStorage whenever the cart state changes
-  useEffect(() => {
+          console.log(loggedin, status, event, 6, event.detail);
+          
     if (!loggedin) {
           // localStorage.setItem('guest_cart', JSON.stringify(cart));
 
       //    const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
 
           setTotal(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
+
+          
 
     } else {
        const guest = JSON.parse(localStorage.getItem('guest_cart'))
@@ -153,7 +155,147 @@ const Nav = ({loggedin}) => {
 
 
     }
-  }, [ total ])  // total])
+  // }, [ total ])
+}
+
+function updatedCartAfterClick(event) {
+        // useEffect(() => {
+
+
+
+
+
+
+          console.log(loggedin, status, event, 6, event.detail);
+          
+    if (!event.detail) {
+          // localStorage.setItem('guest_cart', JSON.stringify(cart));
+
+      //    const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+
+          setTotal(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
+
+          
+
+    } else {
+       const guest = JSON.parse(localStorage.getItem('guest_cart'))
+
+
+       
+
+      if (guest !== null ) {
+        const products = JSON.parse(localStorage.getItem('guest_cart'))
+
+              try {
+                const response = fetch(process.env.REACT_APP_API_LINK + "add/carts-items", {
+                      method: "POST",
+                      credentials: "include",
+                      headers: { "Content-type": "application/json; charset=UTF-8", },
+                      body: JSON.stringify({
+                        products: products,
+        
+                      }),
+          
+                    }).then((res) => {
+                      if (res.status === 200) {
+                                  AlertSuccess('succesfully added to carts');
+                                  console.log(res);
+                                   localStorage.removeItem('guest_cart');
+        
+                      } 
+                      
+                      else {
+                                        AlertError('Error updating  cart:');
+        
+                      }
+                    })
+                // const updatedDbCart = await response.json();
+        
+                  AlertSuccess('succesfully added to cart');
+        
+                // setCart(updatedDbCart.items);
+              } catch (err) {
+                console.error('Error updating database cart:', err);
+                        AlertError('Error updating database cart:', err);
+        
+              }
+      }
+                  fetchUserCartFromDatabase()
+
+
+    }
+  // }, [ total ])
+}
+
+
+
+
+
+
+// export default function ShoppingCart() {
+//   // 1. Initialize state directly from localStorage (fallback to empty array)
+//   const [cart, setCart] = useState(() => {
+//     const savedCart = localStorage.getItem('cart');
+//     return savedCart ? JSON.parse(savedCart) : [];
+//   });
+
+  // 2. Automatically sync localStorage whenever the cart state changes
+  // useEffect(() => {
+  //   if (!loggedin) {
+  //         // localStorage.setItem('guest_cart', JSON.stringify(cart));
+
+  //     //    const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+
+  //         setTotal(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
+
+  //   } else {
+  //      const guest = JSON.parse(localStorage.getItem('guest_cart'))
+
+
+       
+
+  //     if (guest !== null ) {
+  //       const products = JSON.parse(localStorage.getItem('guest_cart'))
+
+  //             try {
+  //               const response = fetch(process.env.REACT_APP_API_LINK + "add/carts-items", {
+  //                     method: "POST",
+  //                     credentials: "include",
+  //                     headers: { "Content-type": "application/json; charset=UTF-8", },
+  //                     body: JSON.stringify({
+  //                       products: products,
+        
+  //                     }),
+          
+  //                   }).then((res) => {
+  //                     if (res.status === 200) {
+  //                                 AlertSuccess('succesfully added to carts');
+  //                                 console.log(res);
+  //                                  localStorage.removeItem('guest_cart');
+        
+  //                     } 
+                      
+  //                     else {
+  //                                       AlertError('Error updating  cart:');
+        
+  //                     }
+  //                   })
+  //               // const updatedDbCart = await response.json();
+        
+  //                 AlertSuccess('succesfully added to cart');
+        
+  //               // setCart(updatedDbCart.items);
+  //             } catch (err) {
+  //               console.error('Error updating database cart:', err);
+  //                       AlertError('Error updating database cart:', err);
+        
+  //             }
+  //     }
+  //                 fetchUserCartFromDatabase()
+
+
+  //   }
+  // }, [ total ])  // total])
   
   // [   JSON.parse(localStorage.getItem('guest_cart')) || [] || total ]);
 
@@ -173,6 +315,37 @@ const Nav = ({loggedin}) => {
   //     return [...prevCart, { ...product, quantity: 1 }];
   //   });
   // };
+
+
+//   window.addEventListener('cartUpdated', () => {
+//   // Fetch new count and update Navbar HTML
+//  // updateNavbarCartDOM();
+
+//  console.log(444);
+
+ 
+ 
+// });
+
+function cc() {
+  updatedCart()
+}
+
+  useEffect(() => {
+            window.addEventListener('cartUpdated',updatedCartAfterClick); // cc());
+
+       return () => {
+      window.removeEventListener('cartupdated', updatedCartAfterClick); // cc());
+    };
+  }, [ ])  
+
+
+    useEffect(() => {
+        setstatus((prevMessage) => loggedin);
+      updatedCart(loggedin)
+  }, [ loggedin ])  
+
+
 
 
 
