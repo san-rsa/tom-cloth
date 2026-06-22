@@ -32,6 +32,22 @@ const Category = require('../models/category')
 
 
 
+  // const User = mongoose.model('User');
+  
+  // return await User.aggregate([
+  //   {
+  //     $search: {
+  //       index: 'default', // The name of your Atlas search index
+  //       wildcard: {
+  //         query: `*${searchString}*`, // Wrapping in asterisks enables partial matching
+  //         path: { wildcard: '*' },    // Searches across all schema fields
+  //         allowAnalyzedField: true
+  //       }
+  //     }
+  //   }
+  // ]);
+
+
 
 router.get('/banner', async(req, res)=> {
 

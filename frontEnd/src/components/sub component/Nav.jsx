@@ -97,7 +97,7 @@ function updatedCart(event) {
 
 
 
-          console.log(loggedin, status, event, 6, event.detail);
+          console.log(loggedin, status, event, 6, event?.detail);
           
     if (!loggedin) {
           // localStorage.setItem('guest_cart', JSON.stringify(cart));
@@ -166,7 +166,7 @@ function updatedCartAfterClick(event) {
 
 
 
-          console.log(loggedin, status, event, 6, event.detail);
+          console.log(loggedin, status, event, 6, event?.detail);
           
     if (!event.detail) {
           // localStorage.setItem('guest_cart', JSON.stringify(cart));

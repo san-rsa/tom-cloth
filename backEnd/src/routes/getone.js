@@ -73,12 +73,15 @@ router.get('/category/:id',  async (req, res, next) => {
 
 
 router.get('/cloth/:id',  async (req, res, next) => {
-  console.log(req.params.id +2);
+  console.log(req.params.id +2, req.params.id.replaceAll('-', ' '));
   
 
 
         try {
+            // const data = await Cloth.findOne({name: req.params.id.replaceAll('-', ' ')})
+
             const data = await Cloth.findOne({name: req.params.id})
+
 
             if (data) {
                 

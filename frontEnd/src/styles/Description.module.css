@@ -18,17 +18,40 @@
   color: #1a1a1a;
   font-weight: 500;
 }
+/* other */
+.product-grid, .category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 25px;
+}
+
+.others {
+  text-align: left;
+}
+
+.others h3 {
+
+}
+
+
+/*  */
 
 .pdpGrid {
   display: grid;
-  grid-template-cols: 1fr;
-  gap: 32px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: 'Inter', sans-serif;
+  grid-auto-flow: column;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .pdpGrid {
-    grid-template-cols: repeat(12, minmax(0, 1fr));
     gap: 48px;
+    grid-template-columns: unset;
+    grid-auto-flow: unset;
   }
 }
 
@@ -96,6 +119,7 @@
   border: 1px solid #f3f4f6;
   border-radius: 8px;
   overflow: hidden;
+  height: 535px;
   position: relative;
   aspect-ratio: 3 / 4;
 }
@@ -542,148 +566,14 @@
 }
 
 
-.headline h1 span {
-    display: block;
-    text-shadow: 10px 4px 20px black;
-}
-
-
-.head .img {
-     /* display: flex; */
-    width: 100%;
-    text-align: right;
-    margin: 10px;
-    margin-left: auto;
-    padding: 20px;
-    right: 0;
-
-
-}
-
-
-
-.news {
-    position: relative;
-    width: 100%;
-    margin: 30px auto;
-    text-align: left;
-    display: grid;
-    grid-template-columns: auto 25%;
-    
-}
-
-.article {
-    margin-left: 20px;
-    white-space: break-spaces;  
-}
-
-.topics {
-    margin-top: 30px;
-    font-weight: bolder;
-}
-
-.relatedNews {
-    margin: 0 10px;
-    border: 2px gold solid;
-    padding: 0 5px;
-  /* background-color: #171818; */
-
-}
 
 
 
 
 
-@media (max-width: 900px) {
-
-.headline {
-    font-size: x-large;
-}
-
-.headline h1  {
-    left: 100px;
-    font-weight: bolder;
-    overflow: auto;
-    margin-left: 30px;
-}
-
-
-.headline h1 span {
-    width: 400px;
-}
 
 
 
- }
-
-
-
-
-
-     @media (max-width: 700px) {
-
-        .img img {
-            padding: 0px;
-        }
-        
-        .head {
-            width: 100%;
-            display: block;
-        }
-        
-        
-        .headline {
-            font-size: medium;
-            margin: auto;
-            padding-left: 0px;
-            overflow: visible;
-            justify-content: flex-start;
-        
-        
-        }
-        
-        .headline h1  {
-            /* background-color: rgb(41, 41, 37); */
-            margin-left: 20px;
-        }
-        
-        
-        .headline h1 span {
-            display: block;
-            width: auto;
-        }
-        
-        
-        .head .img {
-             /* display: flex; */
-            width: 100%;
-            text-align: center;
-            margin: 0px;
-            padding: 0;
-        }
-        
-        
-        
-        .news {
-            margin-top: 30px;
-            display: block;
-        }
-        
-        .article {
-            margin-left: 20px;
-        }
-        
-        .topics {
-            margin-top: 30px;
-            font-weight: bolder;
-        }
-
-        .relatedNews {
-            margin-top: 30px;
-        }
-        
-     }
-    
 
 
 
@@ -861,10 +751,6 @@
 }
 
 
-.details, .ingredient, .quan, .others {
-    margin: 4%
-}
-
 .cartB {
     width: 100%;
     margin: 10% 0%;
@@ -918,3 +804,337 @@
     padding:  3%;
     margin: 2% auto auto;
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Container Shell */
+
+
+/* Gallery Styles */
+.galleryWrapper {
+  position: relative;
+}
+
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  aspect-ratio: 3 / 4;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Micro-interaction on Desktop Images */
+.imageContainer:hover img {
+  transform: scale(1.05);
+}
+
+.mobilePagination {
+  display: none;
+}
+
+/* Commerce Grid Setup */
+.commercePanel {
+  position: relative;
+}
+
+.stickyContent {
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Typography & Headers */
+.brand {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin: 8px 0;
+  color: #18181b;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 500;
+  color: #27272a;
+}
+
+/* Selection Elements */
+.selectorSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #18181b;
+}
+
+.label span {
+  color: #71717a;
+  font-weight: 400;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.textLink {
+  background: none;
+  border: none;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #71717a;
+}
+
+.optionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Chip Mechanics */
+.colorChip {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e4e4e7;
+  cursor: pointer;
+  outline-offset: 2px;
+  transition: transform 0.1s ease;
+}
+
+.activeColor {
+  outline: 2px solid #18181b;
+}
+
+.sizeTile {
+  min-width: 48px;
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid #e4e4e7;
+  background: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.activeSize {
+  background: #18181b;
+  color: #ffffff;
+  border-color: #18181b;
+}
+
+/* Core Checkout Action Buttons */
+.btnPrimary {
+  width: 100%;
+  height: 54px;
+  background: #18181b;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #27272a;
+}
+
+.btnPrimary:disabled {
+  background: #e4e4e7;
+  color: #a1a1aa;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .pdpContainer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 0 100px 0; /* Extra clearance room for sticky layout bottom add to cart drawer */
+  }
+
+  .mediaGrid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0;
+    scrollbar-width: none; /* Hides horizontal bars */
+  }
+
+  .mediaGrid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .imageContainer {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  /* Carousel Indicators */
+  .mobilePagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e4e4e7;
+    transition: all 0.2s ease;
+  }
+
+  .activeDot {
+    background: #18181b;
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  .commercePanel {
+    padding: 0 16px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     @media (max-width: 750px) {
+
+        .img img {
+            padding: 0px;
+        }
+        
+        .head {
+            width: 100%;
+            display: block;
+        }
+        
+        
+        .headline {
+            font-size: medium;
+            margin: auto;
+            padding-left: 0px;
+            overflow: visible;
+            justify-content: flex-start;
+        
+        
+        }
+        
+        .headline h1  {
+            /* background-color: rgb(41, 41, 37); */
+            margin-left: 20px;
+        }
+        
+        
+        .headline h1 span {
+            display: block;
+            width: auto;
+        }
+        
+        
+        .head .img {
+             /* display: flex; */
+            width: 100%;
+            text-align: center;
+            margin: 0px;
+            padding: 0;
+        }
+        
+        
+        
+        .news {
+            margin-top: 30px;
+            display: block;
+        }
+        
+        .article {
+            margin-left: 20px;
+        }
+        
+        .topics {
+            margin-top: 30px;
+            font-weight: bolder;
+        }
+
+        .relatedNews {
+            margin-top: 30px;
+        }
+        
+
+
+
+
+        .heroWindow {
+          height: auto;
+        }
+     }
+    

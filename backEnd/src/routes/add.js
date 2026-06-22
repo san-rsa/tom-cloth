@@ -42,9 +42,71 @@ router.post("/cart", auth, async (req, res) => {
         //--If Cart Exists ----
 
 
-        if (cart) {
+        // if (cart) {
+        //     //---- Check if index exists ----
+        //     const indexFound = cart.products.findIndex(item => item.sizeId == size);
+        //     const existingProductIndex = cart.products.findIndex(
+        //         (item) =>
+        //             item.productId.toString() === productId.toString() &&
+        //             item.sizeId.toString() === size.toString() &&
+        //             item.color === color );
+
+
+
+        //     //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
+        //     if (indexFound !== -1 && quantity <= 0) {
+        //         cart.products.splice(indexFound, 1);
+        //         if (cart.products.length == 0) {
+        //             cart.totalCost = 0;
+        //         } else {
+        //             cart.totalCost = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
+        //         }
+        //     }
+        //     //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
+        //     else if (indexFound !== -1) {
+        //         cart.products[indexFound].quantity = cart.products[indexFound].quantity + quantity;
+        //         cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[prices].price;
+        //         cart.products[indexFound].price = productDetails.size[prices].price
+
+        //         cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+        //     }
+        //     //----Check if quantity is greater than 0 then add item to items array ----
+        //     else if (quantity > 0) {
+        //         cart.products.push({
+        //             productId: productId,
+        //             productModel: category,
+        //             sizeId: size,
+        //             color: color,
+        //             quantity: quantity,
+        //             price: productDetails.size[prices].price,
+        //             total: parseInt(productDetails.size[prices].price * quantity)
+        //         })
+        //         cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+        //     }
+        //     //----If quantity of price is 0 throw the error -------
+        //     else {
+        //         return res.status(400).json({
+        //             type: "Invalid",
+        //             msg: "Invalid request"
+        //         })
+        //     }
+        //     const data = await cart.save();
+        //     res.status(200).json({
+        //         type: "success",
+        //         mgs: "Process successful",
+        //         data: data
+        //     })
+        // }
+
+
+
+            if (cart) {
             //---- Check if index exists ----
-            const indexFound = cart.products.findIndex(item => item.sizeId == size);
+            const indexFound = cart.products.findIndex(
+                (item) =>
+                    item.productId.toString() === productId.toString() &&
+                    item.sizeId.toString() === size.toString() &&
+                    item.color === color );
 
 
 
@@ -57,6 +119,7 @@ router.post("/cart", auth, async (req, res) => {
                     cart.totalCost = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
                 }
             }
+
             //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
             else if (indexFound !== -1) {
                 cart.products[indexFound].quantity = cart.products[indexFound].quantity + quantity;
@@ -92,6 +155,7 @@ router.post("/cart", auth, async (req, res) => {
                 data: data
             })
         }
+
         //------------ This creates a new cart and then adds the item to the cart that has been created------------
         else {
 
@@ -198,8 +262,11 @@ router.post("/carts-items", auth, async (req, res) => {
 
         if (cart) {
             //---- Check if index exists ----
-            const indexFound = cart.products.findIndex(item => item.sizeId == size);
-
+            const indexFound = cart.products.findIndex(
+                (item) =>
+                    item.productId.toString() === productId.toString() &&
+                    item.sizeId.toString() === size.toString() &&
+                    item.color === color );
 
 
             //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------

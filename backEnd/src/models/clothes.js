@@ -21,6 +21,12 @@ const Schema = new mongoose.Schema({
 
     color: [{type: String},],
 
+//   basePrice: 28.00,
+//   specs: [
+//     { label: "Material", value: "85% Polyester / 15% Spandex" },
+//     { label: "Fit", value: "Athletic Slim Fit" },
+//     { label: "Care", value: "Machine wash cold, tumble dry low" }
+//   ],
 
 
 
@@ -30,9 +36,7 @@ const Schema = new mongoose.Schema({
 
     age: {type: String, required: true, trim: true, enum: [ 'adult', 'minor'],},
 
-
-
-    
+    available: {type: Number, required: true, default: 1},
 
     views: {type: Number, required: true, default: 0},
 
