@@ -16,6 +16,7 @@ import { faBars, faUser, faCartShopping, faSearch } from '@fortawesome/free-soli
 import { ShoppingCart, Heart, BarChart2, Star, Check, HelpCircle } from "lucide-react";
 import { ProductCard } from "../components/sub component/list/Generallist";
 import { Detailbuypanelinfo, Detailimages } from "../components/sub component/Descriptionview";
+import Footer from "../components/sub component/Footer";
 
 
 // const Description = ({}) => {
@@ -443,62 +444,62 @@ const productData = {
 //         } 
       
 
-//      useEffect(() => {
-//         fetch(process.env.REACT_APP_API_LINK  + "getone/wishlist/" + link, {
-//             credentials: "include",
-//             headers: { "Content-type": "application/json; charset=UTF-8", },
-//         }).then((res) =>  res.json())
-//         .then((data) =>  {
-//             if (data.data == "true") {
-//                 setwish(faX)
-//                 setset("active")
-//             } else {
-//                 setwish(faHeart)
-//                 setset("false")
-//             }
-//         } );
-//     }, []);
-//          function wish(e) {
-//             e.preventDefault()
-//             const  mood = wishlist.iconName
+    //  useEffect(() => {
+    //     fetch(process.env.REACT_APP_API_LINK  + "getone/wishlist/" + link, {
+    //         credentials: "include",
+    //         headers: { "Content-type": "application/json; charset=UTF-8", },
+    //     }).then((res) =>  res.json())
+    //     .then((data) =>  {
+    //         if (data.data == "true") {
+    //             setwish(faX)
+    //             setset("active")
+    //         } else {
+    //             setwish(faHeart)
+    //             setset("false")
+    //         }
+    //     } );
+    // }, []);
+    //      function wish(e) {
+    //         e.preventDefault()
+    //         const  mood = wishlist.iconName
 
 
-//             if (mood == "heart") {
-//                 fetch(process.env.REACT_APP_API_LINK + "add/wishlist", {
-//                 method: "POST",
-//                 credentials: "include",
-//                 headers: {
-//                   "Content-type": "application/json",
-//                 },
-//                 body: JSON.stringify({productId: info._id }),
-//              }).then((res) =>  res.json())
-//              .then( ()=> setwish(faX))
-
-
-
-//             } else {
-//                 fetch(process.env.REACT_APP_API_LINK + "del/wishlist", {
-//                     method: "DELETE",
-//                     credentials: "include",
-//                     headers: {
-//                       "Content-type": "application/json",
-//                     },
-//                     body: JSON.stringify({productId: info._id }),
-//                  }).then((res) =>  res.json())
-//                  .then( ()=> setwish(faHeart))
-//             }
+    //         if (mood == "heart") {
+    //             fetch(process.env.REACT_APP_API_LINK + "add/wishlist", {
+    //             method: "POST",
+    //             credentials: "include",
+    //             headers: {
+    //               "Content-type": "application/json",
+    //             },
+    //             body: JSON.stringify({productId: info._id }),
+    //          }).then((res) =>  res.json())
+    //          .then( ()=> setwish(faX))
 
 
 
-//        }
+    //         } else {
+    //             fetch(process.env.REACT_APP_API_LINK + "del/wishlist", {
+    //                 method: "DELETE",
+    //                 credentials: "include",
+    //                 headers: {
+    //                   "Content-type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({productId: info._id }),
+    //              }).then((res) =>  res.json())
+    //              .then( ()=> setwish(faHeart))
+    //         }
 
-//     //    useEffect(() => {
-//     //     fetch(process.env.REACT_APP_API_LINK  + "getone/wishlist/"+ link, {
-//     //         credentials: "include"}
-//     //     )
-//     //     .then((res) =>  res.json())
-//     //     .then((data) => setinfo(data));
-//     // }, []);
+
+
+    //    }
+
+    // //    useEffect(() => {
+    // //     fetch(process.env.REACT_APP_API_LINK  + "getone/wishlist/"+ link, {
+    // //         credentials: "include"}
+    // //     )
+    // //     .then((res) =>  res.json())
+    // //     .then((data) => setinfo(data));
+    // // }, []);
 
 
 
@@ -635,6 +636,10 @@ function Description() {
       const [info, setinfo] = useState()
       const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
       const [others, setotherproduct] = useState([])
+      const [wishlist, setwish] = useState()
+       const [set, setset] = useState('')
+  const [activeTab, setActiveTab] = useState("description");
+
 
 
     let link = useParams().id
@@ -653,7 +658,7 @@ function Description() {
                   useEffect(() => {
                       fetch(process.env.REACT_APP_API_LINK + "getall/clothes")
                       .then((res) =>  res.json())
-                      .then((data) => setotherproduct(data.data));
+                      .then((data) => setotherproduct(data.data?.filter(item => item.name !== link)));
                   }, [link]);
             
               // 1. Load initial cart on component mount  isloggedin
@@ -676,13 +681,14 @@ function Description() {
                        })    
                                 
                        },   []);
-  const [activeTab, setActiveTab] = useState("description");
+
+
 
 
 
   return (
 
-    <div >    
+    <div className={styles.app}>    
       
       <Nav loggedin={isLoggedIn}/>
 
@@ -700,7 +706,7 @@ function Description() {
 
         {/* Purchase Options */}
 
-             {info ? <Detailbuypanelinfo productData={info} loggedin={isLoggedIn}/> : null} 
+             {info ? <Detailbuypanelinfo productData={info} loggedin={isLoggedIn} /> : null} 
 
 
       </div>
@@ -720,17 +726,19 @@ function Description() {
         </div>
         <div className={styles.tabPanelContent}>
           {activeTab === "description" ? (
-            <p>{productData.description}</p>
-          ) : (
+          info?.description ?   <p>{info?.description}</p> :   <p>No description found</p>
+          ) : 
+            info?.specs.length !== 0 ?
             <div className={styles.specsTable}>
-              {productData.specs.map((item, index) => (
+              { info.specs?.map((item, index) => (
                 <div key={index} className={styles.specsRow}>
-                  <span className={styles.specLabel}>{item.label}</span>
-                  <span className={styles.specValue}>{item.value}</span>
+                  <span className={styles.specLabel}>{item?.label}</span>
+                  <span className={styles.specValue}>{item?.value}</span>
                 </div>
               ))}
-            </div>
-          )}
+            </div> : <p>No specs found</p> 
+          
+          }
         </div>
       </div>
 
@@ -739,12 +747,12 @@ function Description() {
           <div className={styles.others} >
 
             <h3 > Other Product</h3>
-            
+
             <div className={styles['product-grid']}>
 
 
                 
-        {others.map((product) => (
+        {others?.map((product) => (
           <ProductCard
             key={product._id}
             name={product.name}
@@ -770,9 +778,9 @@ function Description() {
 
 
 
-
-
     </div>
+
+    <Footer />
 
     </div>
 
@@ -780,131 +788,5 @@ function Description() {
   );
 }
 
-
-
-
-
-
-
-
-
-const PRODUCT_DATA = {
-  title: "Premium Trench Coat",
-  price: "€249.00",
-  colors: [
-    { id: 'beige', name: 'Classic Beige', hex: '#D2B48C' },
-    { id: 'black', name: 'Noir Black', hex: '#111111' }
-  ],
-  sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  images: [
-    "https://unsplash.com",
-    "https://unsplash.com",
-    "https://unsplash.com",
-    "https://unsplash.com"
-  ]
-};
-
-// function Description() {
-//   const [selectedColor, setSelectedColor] = useState(PRODUCT_DATA.colors[0]);
-//   const [selectedSize, setSelectedSize] = useState(null);
-//   const [activeSlide, setActiveSlide] = useState(0);
-  
-//   const galleryRef = useRef(null);
-
-//   // Tracks mobile carousel swiping to update indicator dots
-//   const handleScroll = () => {
-//     if (!galleryRef.current) return;
-//     const { scrollLeft, clientWidth } = galleryRef.current;
-//     const index = Math.round(scrollLeft / clientWidth);
-//     setActiveSlide(index);
-//   };
-
-//   return (
-//     <main className={styles.pdpContainer}>
-//       {/* Left Media Gallery */}
-//       <section className={styles.galleryWrapper}>
-//         <div 
-//           className={styles.mediaGrid} 
-//           ref={galleryRef}
-//           onScroll={handleScroll}
-//         >
-//           {PRODUCT_DATA.images.map((imgUrl, idx) => (
-//             <div key={idx} className={styles.imageContainer}>
-//               <img src={imgUrl} alt={`${PRODUCT_DATA.title} view ${idx + 1}`} />
-//             </div>
-//           ))}
-//         </div>
-        
-//         {/* Mobile Pagination Dots */}
-//         <div className={styles.mobilePagination}>
-//           {PRODUCT_DATA.images.map((_, idx) => (
-//             <span 
-//               key={idx} 
-//               className={`${styles.dot} ${activeSlide === idx ? styles.activeDot : ''}`}
-//             />
-//           ))}
-//         </div>
-//       </section>
-
-//       {/* Right Checkout Panel */}
-//       <section className={styles.commercePanel}>
-//         <div className={styles.stickyContent}>
-          
-//           {/* Header Info */}
-//           <header>
-//             <span className={styles.brand}>ATELIER STUDIO</span>
-//             <h1 className={styles.title}>{PRODUCT_DATA.title}</h1>
-//             <p className={styles.price}>{PRODUCT_DATA.price}</p>
-//           </header>
-
-//           {/* Color Selector */}
-//           <div className={styles.selectorSection}>
-//             <label className={styles.label}>
-//               Color: <span>{selectedColor.name}</span>
-//             </label>
-//             <div className={styles.optionsRow}>
-//               {PRODUCT_DATA.colors.map((color) => (
-//                 <button
-//                   key={color.id}
-//                   className={`${styles.colorChip} ${selectedColor.id === color.id ? styles.activeColor : ''}`}
-//                   style={{ backgroundColor: color.hex }}
-//                   onClick={() => setSelectedColor(color)}
-//                   aria-label={color.name}
-//                 />
-//               ))}
-//             </div>
-//           </div>
-
-//           {/* Size Selector */}
-//           <div className={styles.selectorSection}>
-//             <div className={styles.labelRow}>
-//               <label className={styles.label}>Size</label>
-//               <button className={styles.textLink}>Size Guide</button>
-//             </div>
-//             <div className={styles.optionsRow}>
-//               {PRODUCT_DATA.sizes.map((size) => (
-//                 <button
-//                   key={size}
-//                   className={`${styles.sizeTile} ${selectedSize === size ? styles.activeSize : ''}`}
-//                   onClick={() => setSelectedSize(size)}
-//                 >
-//                   {size}
-//                 </button>
-//               ))}
-//             </div>
-//           </div>
-
-//           {/* Action Call to Actions */}
-//           <div className={styles.actionsGroup}>
-//             <button className={styles.btnPrimary} disabled={!selectedSize}>
-//               {selectedSize ? 'ADD TO BAG' : 'SELECT A SIZE'}
-//             </button>
-//           </div >
-
-//         </div>
-//       </section>
-//     </main>
-//   )
-// } 
 
 export default Description

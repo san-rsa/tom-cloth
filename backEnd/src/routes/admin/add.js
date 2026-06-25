@@ -133,6 +133,8 @@ router.post('/cloth', async (req, res)=> {
     const data = JSON.parse(req.body.data)
     const color = JSON.parse(req.body.color)
     const size = JSON.parse(req.body.size)
+    const specs = JSON.parse(req.body.specs)
+
 
     const file = req.files?.img  
       
@@ -144,16 +146,16 @@ router.post('/cloth', async (req, res)=> {
     
 
     try {
-        const {name, description, gender, age, type,  categoryId,  } = data
+        const {name, description, gender, age, type,  categoryId, available, } = data
         const imgUrl = []
 
 
 
 
 
-        console.log(data, color, size, file)
+        console.log(data, color, size, file, specs, )
 
-		if (!name || !type, !description || !gender || !age || !categoryId ) {
+		if (!name || !type, !description || !gender || !age || !categoryId || !available ) {
 			return res.status(403).json({
 				success: false,
 				message: "All Fields are required",
@@ -220,7 +222,7 @@ router.post('/cloth', async (req, res)=> {
         }
 
         const db = await Cloth.create({
-           name, description, type, categoryId, img: imgUrl, gender, age, type, color: colors, size
+           name, description, type, available, categoryId, img: imgUrl, gender, age, type, color: colors, size, specs
         })
             // res.redirect("/login")
 

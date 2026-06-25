@@ -73,7 +73,6 @@ router.get('/category/:id',  async (req, res, next) => {
 
 
 router.get('/cloth/:id',  async (req, res, next) => {
-  console.log(req.params.id +2, req.params.id.replaceAll('-', ' '));
   
 
 
@@ -83,8 +82,12 @@ router.get('/cloth/:id',  async (req, res, next) => {
             const data = await Cloth.findOne({name: req.params.id})
 
 
+
             if (data) {
-                
+              data.views +=  1
+
+              data.save();
+
               res.status(200).json(data);
 
             } else {
@@ -405,28 +408,45 @@ router.get('/user/isloggedin', auth, async (req, res, next) => {
 
 
 
-router.get('/wishlist', auth, async (req, res, next) => {
+
+
+
+
+router.get('/wishlist/:id', auth, async (req, res, next) => {
 
         const user = req.userId
     
 
 
+        
         try {
-            const data = await Wishlist.findOne( {userId: user} ).populate("products.productId", "name img size ")
+            const data = await Wishlist.findOne( {userId: user} )
 
             if (data) {
+
+              const indexFound = data.products.findIndex(item => item.productId == req.params.id);
+
+              console.log(req.params.id, indexFound, '00');
+              
                 
-              res.status(200).json(data);
+
+                 if (indexFound == -1 ) {
+
+                return res.status(202).json(false)            }
+            //----If quantity of price is 0 throw the error -------
+            else if (indexFound !== -1) {
+                return res.status(200).json(true)
+            }
+
 
             } else {
-              res.status(404).json("not found");
+              res.status(404).json("you have no wishlist");
 
             }
         } catch (error) {
             return next(error);
         }
 })
-
 // router.get('/user/:id', auth,  async(req, res)=> {
 
 

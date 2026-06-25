@@ -1,13 +1,9 @@
-import Banner from "../components/sub component/Banner";
-import Coming from "../components/sub component/Coming";
 import Nav, { SearchNav } from "../components/sub component/Nav";
 //import "../styles/style.css"
-import { Mininews2, Mininews3 } from "../components/sub component/list/Newslist";
 import Footer from "../components/sub component/Footer";
-import {Competition, Team} from "../components/HCompetition";
 
 
-import {Hero,  ProductSection, Newsletter, Category} from "../components/sub component/Homeview";
+import {Hero,  ProductSection, Newsletter, Category, Categorygender} from "../components/sub component/Homeview";
 // import "../styles/Home.css";
 import Style from  "../styles/Home.module.css";
 import { ProductCard } from "../components/sub component/list/Generallist";
@@ -59,7 +55,11 @@ function App() {
       <Category />
 
 
+
       <ProductSection loggedin={isLoggedIn} />
+
+      <Categorygender />
+
       <Newsletter />
 
 
@@ -70,40 +70,5 @@ function App() {
 }
 
 
-// function App() {  football
-//   return (
-//     <div>
-           
-//         <Nav />
-//         <Coming/>
-
-//         <TopNews />
-
-//          {/* <Highlight /> */}
-//         {/* <Awards /> */}
-
-//         {/* <Homet /> */}
-
-        
-           
-       
-//                           {/* <Carousel /> */}
-
-// {/* 
-//             <Banner /> */}
-
-//               {/* <Category /> */}
-
-//               {/* <Slist /> */}
-
-//               <Competition />
-
-//               <Team />
-
-
-//               <Footer />
-//     </div>
-//   );
-// }
 
 export default App;

@@ -111,6 +111,7 @@ router.patch('/cloth/:id', async (req, res)=> {
     const update = JSON.parse(req.body.data)
     const updatecolor = JSON.parse(req.body.color)
     const updatesize = JSON.parse(req.body.size)
+    const updatespecs = JSON.parse(req.body.specs)
 
     const file = req.files?.img  
       
@@ -126,7 +127,7 @@ router.patch('/cloth/:id', async (req, res)=> {
 
         console.log(update, updatecolor, updatesize, file)
 
-        if (!name || !type, !description || !gender || !age || !categoryId ) {
+        if (!name || !type || !available || !description || !gender || !age || !categoryId ) {
             return res.status(403).json({
                 success: false,
                 message: "All Fields are required",
@@ -187,7 +188,7 @@ router.patch('/cloth/:id', async (req, res)=> {
 
 
             const save = await Cloth.findOneAndUpdate({name: req.params.id}, {
-                $set: update, imgUrl: imgUrl, color: colors, size: updatesize,
+                $set: update, imgUrl: imgUrl, color: colors, size: updatesize, specs: updatespecs, available
             }, { new: true });
             res.json(save);
             console.log(save, req.body, " updated successfully!", imgUrl.url);

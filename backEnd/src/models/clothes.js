@@ -10,6 +10,9 @@ const Schema = new mongoose.Schema({
     img: [{url: {type: String, required: true}, imgId: {type: String, required: true} }],
 
     description: {type: String, trim: true },
+    
+    specs: [{label: {type: String, trim: true}, value: {type: String, trim: true}, } ],
+
 
     type: {type: String, required: true, trim: true, enum: [ 'top', 'bottom', 'accesory'],},
 
@@ -20,16 +23,6 @@ const Schema = new mongoose.Schema({
     discount: { type: Number,  }  ,
 
     color: [{type: String},],
-
-//   basePrice: 28.00,
-//   specs: [
-//     { label: "Material", value: "85% Polyester / 15% Spandex" },
-//     { label: "Fit", value: "Athletic Slim Fit" },
-//     { label: "Care", value: "Machine wash cold, tumble dry low" }
-//   ],
-
-
-
 
 
     gender: {type: String, required: true, trim: true, enum: [ 'male', 'female', 'all'],},

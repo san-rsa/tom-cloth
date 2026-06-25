@@ -4,8 +4,7 @@
   margin: 0 auto;
   padding: 32px 16px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #1a1a1a;
-  background-color: #ffffff;
+  background-color: #181618;
 }
 
 .breadcrumb {
@@ -31,6 +30,7 @@
 
 .others h3 {
 
+  margin: 10px auto;
 }
 
 
@@ -38,7 +38,7 @@
 
 .pdpGrid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 0.2fr 0fr;
   gap: 48px;
   max-width: 1280px;
   margin: 0 auto;
@@ -86,7 +86,7 @@
 .thumbnailButton {
   width: 80px;
   height: 96px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #000;
   border-radius: 4px;
   overflow: hidden;
   flex-shrink: 0;
@@ -116,7 +116,7 @@
 .heroWindow {
   flex: 1;
   background-color: #f9fafb;
-  border: 1px solid #f3f4f6;
+  border: 1px solid #000;
   border-radius: 8px;
   overflow: hidden;
   height: 535px;
@@ -193,7 +193,7 @@
 }
 
 .priceSection {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #0a0a0a;
   padding-bottom: 16px;
   margin-bottom: 24px;
 }
@@ -218,7 +218,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #0a0a0a;
   padding-bottom: 24px;
   margin-bottom: 24px;
 }
@@ -266,7 +266,7 @@
 .sizeBox {
   min-width: 48px;
   height: 44px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #000;
   text-size: 14px;
   font-weight: 500;
   border-radius: 4px;
@@ -276,7 +276,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
-  color: #374151;
+  color: #000000;
 }
 
 .sizeBox:hover {
@@ -285,8 +285,8 @@
 
 .sizeBoxActive {
   border-color: #2563eb;
-  background-color: #eff6ff;
-  color: #1d4ed8;
+  background-color: #000;
+  color: #ffffff;
   font-weight: 700;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -345,7 +345,7 @@
 
 .qtyBtn {
   width: 33.333%;
-  background-color: #f9fafb;
+  /* background-color: #f9fafb; */
   border: none;
   color: #4b5563;
   cursor: pointer;
@@ -361,7 +361,7 @@
 }
 
 .qtyBtnLeft {
-  border-right: 1px solid #d1d5db;
+  border-right: 1px solid #000;
 }
 
 .qtyBtnRight {
@@ -376,7 +376,7 @@
   font-size: 14px;
   font-weight: 600;
   font-family: monospace;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 
 /* Core CTAs Callout Actions */
@@ -441,13 +441,13 @@
 /* Footer Tabbed Architecture */
 .tabsContainer {
   margin-top: 64px;
-  border-top: 1px solid #e5e7eb;
+  border-top:1px solid #0a0a0a;
   padding-top: 32px;
 }
 
 .tabHeaders {
   display: flex;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #0a0a0a;
   gap: 24px;
 }
 
@@ -459,7 +459,7 @@
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.05em;
-  color: #6b7280;
+  color: #ffff;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -478,7 +478,7 @@
 .tabPanelContent {
   padding: 24px 0;
   font-size: 14px;
-  color: #4b5563;
+  color: #fff;
   line-height: 1.625;
   max-width: 768px;
 }
@@ -492,7 +492,7 @@
   display: grid;
   grid-template-cols: repeat(3, minmax(0, 1fr));
   padding: 12px 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #000;
 }
 
 .specsRow:last-child {
@@ -501,20 +501,15 @@
 
 .specLabel {
   font-weight: 500;
-  color: #111827;
+  color: #ffff;
 }
 
 .specValue {
   grid-column: span 2 / span 2;
-  color: #4b5563;
+  color: #a5a5a5;
 }
 
 
-
-
-/* h3, h4 {
-    color: white;
-} */
 
 .app {
     text-align: left;
@@ -523,530 +518,6 @@
 }
 
 
-
-
-/* .img img {
-    width: 100%;
-    padding: 20px;
-} */
-
-
-.head {
-    position: relative;
-    border: 2px gold solid;
-    width: 100%;
-    display: grid;
-    margin: 10px auto;
-    grid-template-columns: auto 70%;
-    
-}
-
-
-.headline {
-    position: relative;
-    font-size: x-large;
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    padding-left: 10px;
-    overflow: hidden;
-    z-index: 2;
-
-
-}
-
-.headline h1  {
-
-    left: 100px;
-    /* background-color: rgb(41, 41, 37); */
-
-    font-weight: bolder;
-    overflow: auto;
-    margin-left: 30px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     /* video */
-
-     .vhead {
-        margin-top: 20px;
-     }
-
-     .vid {
-        width: 100%;
-     }
-
-     .vid img {
-        width: 100%;
-
-     }
-
-     .vidHeadline {
-        margin-top: 10px;
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-.rtea h1{
-    text-align: center;
-    margin-bottom: 0;
-    font-size: xx-large;
-}
- 
- .desc {
-    text-align: left;
-}
-
-
-
-.quan {
-
-}
-
-.tea {
-    display: grid;
-    grid-template-columns: auto 50%;
-}
-
-.count {
-    display: inline;
-   border: 1px #F2F2F2 solid;
-   border-radius: 9px;
-   padding: 19px 13px 0;
-   font-size: large;
-   text-align: center;
-
-
-}
-
-.weight h3 {
-    margin: 20px auto;
-}
-
-.count ::-webkit-outer-spin-button, .count ::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.count input {
-    width: 20%;    
-    color: #B8FFD0;
-    border: none;
- 
-    background-color: inherit;
-    text-align: center;
-    font-size: xxx-large;
-}
-
-
-
-
-.count button, .weightb {
-    padding: 0;
-    margin: 0;
-    background-color: inherit;
-    border: none;
-    box-shadow: none;
-    color: #B8FFD0;
-    font-weight: bolder;
-    font-size: xxx-large;
-    width: auto;
-    display: inline-flex;
-}
-
-
-/* price  & weight */
-
-.price {
-    color: #2DF064;
-    display: inline-flex;
-    margin:auto 25px;
-    font-size: xx-large;
-}
-
-.weightb {
-    margin: auto 5% auto auto;
-    border: 1px #F2F2F2 solid;
-    border-radius: 7px;
-    padding: 5px 10px;
-    width: 80px;
-
-}
-
-
-
-.active {
-    border: 2px #2bff00 solid;
-    border-radius: 10px;
-    background-color: #03200b;
-
-}
-
-/* pc */
-
-.imgD img {
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
-    border-radius: 15px;
-    /* object-fit: contain; */
-
-    min-height: 400px;
-    max-height: 500px;
-
-}
-
-.imgD {
-    margin: 5% 10%;
-    position: relative;
-    height:400px;    
-    overflow: hidden;
-
-}
-
-.imgD button {
-    background: inherit;
-    border: none;
-    position: absolute;
-    margin: 0;
-    font-size: xxx-large;
-    bottom: 30px;
-    background: rgb(29, 88, 27);
-    font-weight: lighter;
-    float: right;
-    color: #f2faf4;
-    right: 15px;
-
-}
-
-
-.cartB {
-    width: 100%;
-    margin: 10% 0%;
-    box-shadow: 2px 11px 4px rgba(0, 0, 0, 0.25); 
-    border-radius: 53px; 
-    border: 2px #00FF94 solid; 
-    padding-left: 0;
-}
-
-
-
-
-/* mobile */
-
-@media (max-width: 600px) {
-
-    .weight button {
-     font-size: x-large;
-    }
- 
- .imgD img{
-    width: 100%;
-}
-
-    .tea {
-        display: block;
-    }
-
-    .quan {
-        font-size: large;
-    }
-
-    .price, .count input , .count button  {
-        font-size: larger;
-    }
-
-    .count {
-        padding: 10px;
-    }
- }
-
-
- /* others */
-
- .others h3 {
-    margin-bottom: 0;
- }
-
- .card {
-    display: inline-grid;
-    padding:  3%;
-    margin: 2% auto auto;
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Container Shell */
-
-
-/* Gallery Styles */
-.galleryWrapper {
-  position: relative;
-}
-
-.mediaGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.imageContainer {
-  position: relative;
-  overflow: hidden;
-  background-color: #f5f5f5;
-  aspect-ratio: 3 / 4;
-}
-
-.imageContainer img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-/* Hover Micro-interaction on Desktop Images */
-.imageContainer:hover img {
-  transform: scale(1.05);
-}
-
-.mobilePagination {
-  display: none;
-}
-
-/* Commerce Grid Setup */
-.commercePanel {
-  position: relative;
-}
-
-.stickyContent {
-  position: sticky;
-  top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-/* Typography & Headers */
-.brand {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: #71717a;
-  text-transform: uppercase;
-}
-
-.title {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  font-weight: 400;
-  margin: 8px 0;
-  color: #18181b;
-}
-
-.price {
-  font-size: 20px;
-  font-weight: 500;
-  color: #27272a;
-}
-
-/* Selection Elements */
-.selectorSection {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.label {
-  font-size: 13px;
-  font-weight: 500;
-  color: #18181b;
-}
-
-.label span {
-  color: #71717a;
-  font-weight: 400;
-}
-
-.labelRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.textLink {
-  background: none;
-  border: none;
-  font-size: 13px;
-  text-decoration: underline;
-  cursor: pointer;
-  color: #71717a;
-}
-
-.optionsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Chip Mechanics */
-.colorChip {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #e4e4e7;
-  cursor: pointer;
-  outline-offset: 2px;
-  transition: transform 0.1s ease;
-}
-
-.activeColor {
-  outline: 2px solid #18181b;
-}
-
-.sizeTile {
-  min-width: 48px;
-  height: 48px;
-  padding: 0 12px;
-  border: 1px solid #e4e4e7;
-  background: #ffffff;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.activeSize {
-  background: #18181b;
-  color: #ffffff;
-  border-color: #18181b;
-}
-
-/* Core Checkout Action Buttons */
-.btnPrimary {
-  width: 100%;
-  height: 54px;
-  background: #18181b;
-  color: #ffffff;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.btnPrimary:hover:not(:disabled) {
-  background: #27272a;
-}
-
-.btnPrimary:disabled {
-  background: #e4e4e7;
-  color: #a1a1aa;
-  cursor: not-allowed;
-}
-
-/* Mobile Responsive Adjustments */
-@media (max-width: 768px) {
-  .pdpContainer {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 0 0 100px 0; /* Extra clearance room for sticky layout bottom add to cart drawer */
-  }
-
-  .mediaGrid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 0;
-    scrollbar-width: none; /* Hides horizontal bars */
-  }
-
-  .mediaGrid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .imageContainer {
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-  }
-
-  /* Carousel Indicators */
-  .mobilePagination {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 12px;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #e4e4e7;
-    transition: all 0.2s ease;
-  }
-
-  .activeDot {
-    background: #18181b;
-    width: 18px;
-    border-radius: 3px;
-  }
-
-  .commercePanel {
-    padding: 0 16px;
-  }
-}
 
 
 

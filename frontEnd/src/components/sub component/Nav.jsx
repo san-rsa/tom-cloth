@@ -92,12 +92,6 @@ const Nav = ({loggedin}) => {
 function updatedCart(event) {
         // useEffect(() => {
 
-
-
-
-
-
-          console.log(loggedin, status, event, 6, event?.detail);
           
     if (!loggedin) {
           // localStorage.setItem('guest_cart', JSON.stringify(cart));
@@ -331,13 +325,13 @@ function cc() {
   updatedCart()
 }
 
-  useEffect(() => {
-            window.addEventListener('cartUpdated',updatedCartAfterClick); // cc());
+    useEffect(() => {
+              window.addEventListener('cartUpdated',updatedCartAfterClick); // cc());
 
-       return () => {
-      window.removeEventListener('cartupdated', updatedCartAfterClick); // cc());
-    };
-  }, [ ])  
+        return () => {
+        window.removeEventListener('cartUpdated', updatedCartAfterClick); // cc());
+      };
+    }, [ ])  
 
 
     useEffect(() => {

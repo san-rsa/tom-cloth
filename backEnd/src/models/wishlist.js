@@ -7,7 +7,7 @@ const wishlistSchema = new mongoose.Schema({
     },
 
     products: [{
-        productId: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true
+        productId: {type: mongoose.Schema.Types.ObjectId, ref: 'Cloth', required: true
         },
 
         name: {type: String, required: true

@@ -1197,6 +1197,8 @@ const AdminProduct = ({event, regionId, typeId,  }) => {
   const [color, setColor] = useState([{color: ''}]);
   // Initialize the sub-form tracking structure with one empty entry
   const [size, setSize] = useState([{ size: '', price: '' }]);
+  const [specs, setSpec] = useState([{ label: '', value: '' }]);
+
   const [data, setInputs] = useState({})
   const [category, setCategory] = useState([])
   const [img, setFile] = useState([]);
@@ -1213,11 +1215,8 @@ const AdminProduct = ({event, regionId, typeId,  }) => {
 
 
     const handleColorChange = (index, event) => {
-    // const { name, value } = event.target;
-    // const updated = [...color];
-    // updated[index][name] = value;
 
-    const { value, name } = event.target;
+      const { value, name } = event.target;
     const updated = [...color];
     updated[index][name] = value;
     console.log(event.target, index,  updated, value, updated[index]) ;
@@ -1230,6 +1229,14 @@ const AdminProduct = ({event, regionId, typeId,  }) => {
             // setColor(values => ([  value]))
 
   };
+  
+
+    const handleSpecChange = (index, event) => {
+    const { name, value } = event.target;
+    const updated = [...specs];
+    updated[index][name] = value;
+    setSpec(updated);
+  };
 
 
   // Append a brand new object element to the array state
@@ -1240,6 +1247,17 @@ const AdminProduct = ({event, regionId, typeId,  }) => {
   // Evict an object element by target index
   const removeSizeField = (index) => {
     const updatedSkills = size.filter((_, i) => i !== index);
+    setSize(updatedSkills);
+  };
+
+
+    const addSpecField = () => {
+    setSize([...specs, { label: '', value: '' }]);
+  };
+
+  // Evict an object element by target index
+  const removeSpecField = (index) => {
+    const updatedSkills = specs.filter((_, i) => i !== index);
     setSize(updatedSkills);
   };
 
@@ -1286,11 +1304,6 @@ const AdminProduct = ({event, regionId, typeId,  }) => {
 function editinput(data) {
   setSize(data.size)
 
-    // data.size.forEach(e => {
-    //       setSize([...size, { size: e.size, price: e.price }]);
-    //       console.log(e);
-
-    // });
 
              setInputs({
 
@@ -1300,6 +1313,7 @@ function editinput(data) {
               gender: data.gender ,
               age: data.age ,
               categoryId: data.categoryId[0],
+              available: data.available,
 
               
            }) 
@@ -1311,6 +1325,9 @@ function editinput(data) {
                       setColor(data.color.map(value => ({color: value}   )));
 
                       setSize(data.size.map(value => ({size: value.size, price: value.price}   )));
+
+                      setSpec(data.specs.map(value => ({label: value.label, value: value.value }   )));
+
 
 
 
@@ -1577,7 +1594,7 @@ function editinput(data) {
         </div>
 
 
-               <div className={Style.select} >
+          <div className={Style.select} >
 
 
         <label rel="select" htmlFor="select" > category </label>
@@ -1596,7 +1613,7 @@ function editinput(data) {
 
         </div>
 
-            <div className={Style.size} >
+          <div className={Style.size} >
                       <h3>Size</h3>
         {size?.map((skill, index) => (
           <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
@@ -1618,7 +1635,26 @@ function editinput(data) {
             </div>
 
 
+          <div className={Style.specs} >
+                      <h3>specs</h3>
+        {specs?.map((skill, index) => (
+          <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
 
+              <Inputs label={'label'} type={'text'} name={'label'} onchange={(e) => handleSpecChange(index, e)} value={specs[index].label}  placeholder={'label for spec '} disabled={false} required={true}  />
+              <Inputs label={'value'} type={'text'} name={'value'} onchange={(e) => handleSpecChange(index, e)} value={specs[index].value}  placeholder={'value for the spec '} disabled={false} required={true}  />
+
+            {size.length > 1 && (
+              <button type="button" onClick={() => removeSpecField(index)} style={{ marginTop: '5px', color: 'red' }}>
+                Remove size
+              </button>
+            )}
+          </div>
+        ))}
+
+        <button type="button" onClick={addSpecField} style={{ marginRight: '10px' }}>
+          + Add Another spec
+        </button>
+            </div>
 
 
           <div className={Style.color} >
@@ -1653,7 +1689,10 @@ function editinput(data) {
         </button>
             </div>
 
+
       
+            <Inputs label={'Available '} type={'text'} name={'available '} onchange={handleChange} value={data.available}  placeholder={'number of item available '} disabled={false} required={true}  />
+
 
 
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 

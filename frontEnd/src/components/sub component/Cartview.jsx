@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // import Style from "../styles/Description.module.css"
-import styles from "../../styles/Description.module.css"
+import styles from "../../styles/Cart.module.css"
 
 import { useParams, Link } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -195,18 +195,7 @@ function Detailbuypanelinfo({productData, loggedin}) {
 
         AlertSuccess('succesfully added to cart');
       } else {
-        updatedCart.push({ productId: productData._id, 
-          quantity: quantity, 
-          size: selectedSize._id, 
-          color: selectedColor, 
-          category: productData.categoryId[0],
-          name: product.name,
-          price: selectedSize.price,
-          image: product.img[0]?.url,
-          c: selectedSize.size
-
-        
-        });
+        updatedCart.push({ productId: productData._id, quantity: quantity, size: selectedSize._id, color: selectedColor, category: productData.categoryId[0] });
 
             AlertSuccess('succesfully added to cart');
 
@@ -262,7 +251,7 @@ function Detailbuypanelinfo({productData, loggedin}) {
         //                window.dispatchEvent(event);
 
 
-      const event = new CustomEvent('cartUpdated', { detail: loggedin });
+      const event = new CustomEvent('cart-updated', { detail: loggedin });
       window.dispatchEvent(event);
 
   };

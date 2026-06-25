@@ -279,15 +279,35 @@ const Categories = ({}) => {
 const Category = ({}) => {
 
     const [data, setdata] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
 
         
         const title = useParams().id
     
         const link =title.replaceAll('-',' ')
 
+                    useEffect(() => {
+          
+            
+                            fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
+                                method: 'GET',
+                                credentials: "include",
+                                headers: {'Content-Type': 'application/json'},
+                                 }).then((res) => {
+                                if (res.status === 200) {
+                                    setIsLoggedIn( true)
+                
+                                } else  if (res.status === 403) {
+                                    setIsLoggedIn( false)
+                
+                                } 
+                     })    
+                              
+                     },   []);
+
 
         useEffect(() => {
-            fetch(process.env.REACT_APP_API_LINK + "getall/teams")
+            fetch(process.env.REACT_APP_API_LINK + "getall/clothes/category/" + title)
             .then((res) =>  res.json())
             .then((data) => setdata(data.data));
         }, []);
@@ -299,19 +319,27 @@ const Category = ({}) => {
          <Nav />
          <SearchNav />
 
-         <h3 > Category: {link} </h3>
+         <h3 >  {link} </h3>
             <div className={Style.cat}>
-
-
-                
-            {products?.map((p) => (
+      
+            { data === 'not found' ? <p> no clothes available </p> :
+            
+            
+            
+            data.length !== 0  ? data?.map((product) => (
 
             <ProductCard 
-                key={p.id}
-                    name={p.name}
-                    price={p.price}
-                    image={p.image}
-                    link={'/product/' + p.name}
+            key={product._id}
+            name={product.name}
+            price={product?.size[0]?.price}
+            image={product?.img[0]?.url}
+            link={'/product/' + product.name}
+            id={product._id}
+            color={product?.color[0]}
+            size={product?.size[0]?._id}
+            loggedin={isLoggedIn}
+            category={product?.categoryId[0]}
+            c={product.size[0]?.size}
 
                     />  
 
@@ -319,7 +347,7 @@ const Category = ({}) => {
   
 
 
-            )   )   }
+            )   ) : <p> no clothes available </p>  }
 
 
 

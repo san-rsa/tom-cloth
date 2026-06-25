@@ -6,46 +6,39 @@ import Style from "../../styles/Home.module.css"
 
 
 
- const products = [
+ const filter = [
   {
-    id: 1,
-    name: "Casual Jacket",
-    price: "$79",
+    name: "top",
     image:
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
   },
   {
-    id: 2,
-    name: "Summer Shirt",
-    price: "$45",
+    name: "bottom",
     image:
       "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f",
   },
   {
-    id: 3,
-    name: "Classic Hoodie",
-    price: "$60",
+    name: "accessory",
     image:
       "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
   },
 
-  {    id: 1,
-    name: "Oversized Hoodie",
-    price: "$59",
+];
+
+ const gender = [
+
+  {   
+    name: "male",
     image:
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
   },
   {
-    id: 2,
-    name: "Classic Jacket",
-    price: "$89",
+    name: "female",
     image:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b",
   },
   {
-    id: 3,
-    name: "Premium Shirt",
-    price: "$45",
+    name: "unisex",
     image:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
   },
@@ -78,14 +71,15 @@ const Category = () => {
 
     <div className={Style["category-grid"]}>
 
-    {products.map((project) => (
+    {filter.map((project) => (
 
         <div className='' key={project._id}> 
 
         <CatList
             name={project.name}
-            img={project.image}
+            img={project?.imgUrl?.url}
             link={"/category/" + project.name}
+
             />    
             </div>
 
@@ -94,13 +88,65 @@ const Category = () => {
  
 
  </div>
-         <Link to={"/category"}> <button className={'more'} >SHOW ALL</button></Link>
+         {/* <Link to={"/category"}> <button className={'more'} >SHOW ALL</button></Link> */}
 
 
    </div>
 
   )}
 
+
+
+  const Categorygender = () => {
+
+
+
+ 
+
+   const [cat, setcat] = useState([])
+
+
+    console.log( process.env.REACT_APP_API_LINK)
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_API_LINK + "getall/category")
+        .then((res) =>  res.json())
+        .then((data) => setcat(data.data));
+    }, []);
+
+
+
+
+
+    return (
+    <div className={Style.categories}>  
+       <h1>GENDER</h1>
+
+    <div className={Style["category-grid"]}>
+
+    {gender.map((project) => (
+
+        <div className='' key={project._id}> 
+
+        <CatList
+            name={project.name}
+            img={project?.imgUrl?.url}
+            link={"/category/" + project.name}
+
+            />    
+            </div>
+
+
+        )   )   }
+ 
+
+ </div>
+         {/* <Link to={"/category"}> <button className={'more'} >SHOW ALL</button></Link> */}
+
+
+   </div>
+
+  )}
 
 // function Hero() {
 //   return (
@@ -206,7 +252,7 @@ function ProductSection({loggedin}) {
 
   
           useEffect(() => {
-              fetch(process.env.REACT_APP_API_LINK + "getall/clothes/" )
+              fetch(process.env.REACT_APP_API_LINK + "getall/clothes/most-order" )
               .then((res) =>  res.json())
               .then((data) => setData(data.data));
           }, []);
@@ -229,6 +275,8 @@ function ProductSection({loggedin}) {
             size={product.size[0]?._id}
             loggedin={loggedin}
             category={product?.categoryId[0]}
+             c={product.size[0]?.size}
+
           />
         ))}
       </div>
@@ -267,4 +315,4 @@ function Newsletter() {
 
 
 
-export  {Hero, Category, ProductSection, Newsletter,  };
+export  {Hero, Category, ProductSection, Newsletter,  Categorygender};

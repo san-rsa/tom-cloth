@@ -27,6 +27,7 @@ import AdminAdd from "./pages/user/admin/AdminAdd";
 import AdminList from "./pages/user/admin/List";
 import { Categories, Category, Search, } from "./pages/ListsAll";
 import Description from "./pages/Description";
+import Cart from "./pages/Cart";
 
 
 // import { CartProvider } from './context/Context-cart';
@@ -83,6 +84,9 @@ function Links() {
 
 
         <Route path="/product/:id" element={<Description />}/>
+
+        <Route path="/cart" element={<Cart />}/>
+
 
 
 

@@ -84,7 +84,7 @@ function Trending({loggedin}) {
 
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_API_LINK + "getall/clothes")
+        fetch(process.env.REACT_APP_API_LINK + "getall/clothes/most-recent")
         .then((res) =>  res.json())
         .then((data) => setproduct(data.data));
     }, []);
@@ -127,6 +127,7 @@ function Trending({loggedin}) {
             size={product.size[0]?._id}
             loggedin={loggedin}
             category={product?.categoryId[0]}
+            c={product.size[0]?.size}
         /> 
               </div>
 
