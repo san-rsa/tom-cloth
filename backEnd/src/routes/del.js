@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const Wishlist = require("../models/wishlist");
 const {auth} = require("../middleware/mid");
+const mongoose = require('mongoose');
+const Cart = require("../models/cart");
 
 
 
@@ -19,6 +21,8 @@ router.delete("/cart", auth, async (req, res) => {
         
     
     
+    
+    console.log(req.body);
     
 
     if (!size && !color && !productId ) {

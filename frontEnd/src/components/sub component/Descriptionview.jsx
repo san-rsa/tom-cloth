@@ -200,9 +200,9 @@ function Detailbuypanelinfo({productData, loggedin}) {
           size: selectedSize._id, 
           color: selectedColor, 
           category: productData.categoryId[0],
-          name: product.name,
+          name: productData.name,
           price: selectedSize.price,
-          image: product.img[0]?.url,
+          image: productData.img[0]?.url,
           c: selectedSize.size
 
         

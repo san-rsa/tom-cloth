@@ -201,14 +201,6 @@ function Description() {
 }
 
 
-
-// Mock initial data
-const INITIAL_ITEMS = [
-  { id: 1, name: 'Premium Wireless Headphones', price: 129.99, quantity: 1, image: 'https://placeholder.com' },
-  { id: 2, name: 'Ergonomic Mechanical Keyboard', price: 89.50, quantity: 2, image: 'https://placeholder.com' },
-  { id: 3, name: 'Smart Fitness Watch', price: 199.00, quantity: 1, image: 'https://placeholder.com' },
-];
-
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
 const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
@@ -216,14 +208,14 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
 
 
-      const fetchUserCartFromDatabase =  () => {
+      const fetchUserCartFromDatabase = async () => {
     try {
-        fetch(process.env.REACT_APP_API_LINK + 'getall/user-cart', {
+       await fetch(process.env.REACT_APP_API_LINK + 'getall/user-cart', {
                       method: 'GET',
                       credentials: "include",
                       headers: {'Content-Type': 'application/json'},
                     }).then((res) =>  res.json())
-              .then((data) =>  setCartItems(data.data.products ) );
+              .then((data) => setCartItems(data.data?.products ) );
 
       // const data = await response.json();
      
@@ -252,34 +244,24 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
                          },   []);
 
 
-                         function updatedCartAfterClick(event) {
-                                 // useEffect(() => {
-                         
-                         
-                         
-                         
-                         
+                        async function updatedCartAfterClick(event) {
+   
+                          console.log(event);
+                          
                                                             
                              if (!event.detail) {
-                                   // localStorage.setItem('guest_cart', JSON.stringify(cart));
-                         
-                               //    const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
-                         
+                 
+                              
                                    setCartItems(   JSON.parse(localStorage.getItem('guest_cart')) || [] )
                          
                                    
                          
                              } else {
-                                const guest = JSON.parse(localStorage.getItem('guest_cart'))
-                         
+                        
     
-                                fetchUserCartFromDatabase()
+                              await  fetchUserCartFromDatabase()
 
-        
-                         
-                         
                              }
-                           // }, [ total ])
                          }
 
 
@@ -289,6 +271,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
                                 return () => {
                                window.removeEventListener('cart-updated', updatedCartAfterClick); // cc());
                              };
+
                            }, [ ]) 
 
 
@@ -330,7 +313,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
   const shipping = subtotal > 200 || subtotal === 0 ? 0 : 15.00;
   const total = subtotal + shipping;
 
-  if (cartItems?.length === 0) {
+  if (cartItems?.length === 0 || !cartItems) {
     return (
       <div className={styles.app}> 
         <Nav />
@@ -363,6 +346,8 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
         {/* Cart Items List */}
         <div className={styles.cartList}>
           {cartItems?.map((product, key) => (
+
+  
             // <div key={item.id} className={styles.cartItem}>
             //   <img src={item.image} alt={item.name} className={styles.itemImage} />
               
@@ -398,18 +383,18 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
               isLoggedIn ? <CartCard 
                         key={key}
-                        name={product.name}
-                        price={product?.size[0]?.price}
-                        image={product?.img[0]?.url}
+                        name={product.productId.name}
+                        price={product?.price}
+                        image={product.productId?.img[0]?.url}
                         link={'/product/' + product.name}
-                        id={product._id}
-                        color={product?.color[0]}
-                        size={product?.size[0]?._id}
+                        id={product.productId._id}
+                        color={product?.color}
+                        size={ product.sizeId}
                         loggedin={isLoggedIn}
-                        category={product?.categoryId[0]}
+                        // category={product?.categoryId[0]}
 
                         quantity={product.quantity}
-                        c={product.c}
+                        c={product.productId.size.find((item => item._id === product.sizeId) )?.size}
 
             
                                 />  :  
@@ -439,17 +424,17 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
           
           <div className={styles.summaryRow}>
             <span>Subtotal</span>
-            <span>€{subtotal.toFixed(2)}</span>
+            <span>€{subtotal?.toFixed(2)}</span>
           </div>
           
           <div className={styles.summaryRow}>
             <span>Shipping</span>
-            <span>{shipping === 0 ? 'Free' : `€${shipping.toFixed(2)}`}</span>
+            <span>{shipping === 0 ? 'Free' : `€${shipping?.toFixed(2)}`}</span>
           </div>
           
           <div className={`${styles.summaryRow} ${styles.totalRow}`}>
             <span>Total</span>
-            <span>€{total.toFixed(2)}</span>
+            <span>€{total?.toFixed(2)}</span>
           </div>
 
           <button className={styles.checkoutButton}>

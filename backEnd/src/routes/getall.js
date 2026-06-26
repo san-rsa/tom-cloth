@@ -1,4 +1,6 @@
 require('dotenv').config()
+const mongoose = require('mongoose')
+
 const Banner = require('../models/news/banner')
 const express = require('express')
 const router = express.Router()
@@ -290,9 +292,21 @@ router.get('/user-cart', auth, async(req, res)=> {  // all
 
       const user = req.userId
 
-      const data = await Cart.findOne({userId: user}).populate("products.productId", "name img size ")
+      const data = await Cart.findOne({userId: user}).populate({path: "products.productId",  model: "Cloth", select: "name img size"
+});  //.populate("products.productModel", "name img size ")
       
-      if (data.length !== 0) {
+  // let b = await Cloth.findById(data.products[0].productId)
+
+// console.log(data,)// b );
+
+// console.log(data.products[0].productId instanceof mongoose.Types.ObjectId);
+// console.log(mongoose.version);
+// console.log(mongoose.modelNames());
+
+// console.log(JSON.stringify(data, null, 2));
+
+
+      if (data) {
 
         return  res.status(200).json({
          success: true,

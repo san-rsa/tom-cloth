@@ -216,133 +216,7 @@ const ProductCard = ({id, color, size, image, name, price, link, loggedin, categ
 
 const CartCard = ({id, color, size, image, c, name, price, link, loggedin, category, quantity,updateQuantityAdd, updateQuantitySub, } ) => {
 
-       
-  const [cart, setCart] = useState([]);
-
-//  const { addToCart } = useCart();
-
-  // const { total } = useContext(CartIcon);
-
-
-
-  
-
-  // // Fetch from Mongoose via API
-  // const fetchUserCartFromDatabase = async () => {
-  //   try {
-  //     const response = await  fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
-  //                     method: 'GET',
-  //                     credentials: "include",
-  //                     headers: {'Content-Type': 'application/json'},});
-
-  //     const data = await response.json();
-  //     setCart(data.products || []);
-  //   } catch (err) {
-  //     console.error('Error fetching cart:', err);
-  //   }
-  // };
-
-  // 2. Add Item Function
-  const addToCart = async (product) => {
-
-              console.log(loggedin);
-
-    if (!loggedin) {
-      // GUEST LOGIC: Save to Session / LocalStorage
-      const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
-      const existingItem = updatedCart?.find(item => item.productId === id);
-
-      if (existingItem) {
-        existingItem.quantity += 1;
-
-        AlertSuccess('succesfully added to cart');
-      } else {
-        updatedCart.push({ productId: id, quantity: 1, size: size, color: color, category: category });
-
-            AlertSuccess('succesfully added to cart');
-
-      }
-
-    //   setCart(updatedCart);
-
-
-
-      localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
-    } else {
-      // LOGGED IN LOGIC: Save to Mongoose via API
-      try {
-        const response = await fetch(process.env.REACT_APP_API_LINK + "add/cart", {
-              method: "POST",
-              credentials: "include",
-              headers: { "Content-type": "application/json; charset=UTF-8", },
-              body: JSON.stringify({
-                productId: id,
-                quantity: 1,
-                size: size, 
-                color: color,
-                category: category,
-
-              }),
-  
-            }).then((res) => {
-              if (res.status === 200) {
-                          AlertSuccess('succesfully added to cart');
-
-                        //  navcart(loggedin)
-
-
-                       
-              } else {
-                                AlertError('Error updating  cart:');
-
-              }
-            })
-
-        // const updatedDbCart = await response.json();
-                    
-          // AlertSuccess('succesfully added to cart');
-
-        // setCart(updatedDbCart.items);
-      } catch (err) {
-        console.error('Error updating database cart:', err);
-                AlertError('Error updating database cart:', err);
-
-      }
-    }
-        // const event = new CustomEvent('cartUpdated');
-        //                window.dispatchEvent(event);
-
-
-      const event = new CustomEvent('cartUpdated', { detail: loggedin });
-      window.dispatchEvent(event);
-
-  };
-
-
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
-    const [cartItems, setCartItems] = useState();
-  
-  
-  
-                          useEffect(() => {
-                
-                  
-                                  fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
-                                      method: 'GET',
-                                      credentials: "include",
-                                      headers: {'Content-Type': 'application/json'},
-                                       }).then((res) => {
-                                      if (res.status === 200) {
-                                          setIsLoggedIn( true)
-                      
-                                      } else  if (res.status === 403) {
-                                          setIsLoggedIn( false)
-                      
-                                      } 
-                           })    
-                                    
-                           },   []);
+    
     
   
     // Update item quantity
@@ -357,11 +231,8 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
       const existingItem = updatedCart?.find(item => item.productId === id && item?.color === color && item?.size === size );
 
       
-      console.log(existingItem );
-
       if (existingItem) {
         existingItem.quantity += amount;
-      console.log(id, amount );
 
         AlertSuccess('succesfully added to cart');
       } 
@@ -371,7 +242,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
     } else {
       // LOGGED IN LOGIC: Save to Mongoose via API
       try {
-        const response = fetch(process.env.REACT_APP_API_LINK + "add/cart", {
+          fetch(process.env.REACT_APP_API_LINK + "add/cart", {
               method: "POST",
               credentials: "include",
               headers: { "Content-type": "application/json; charset=UTF-8", },
@@ -391,7 +262,8 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
 
                         //  navcart(loggedin)
 
-
+      const event = new CustomEvent('cart-updated', { detail: loggedin });
+      window.dispatchEvent(event);
                        
               } else {
                                 AlertError('Error updating  cart:');
@@ -399,11 +271,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
               }
             })
 
-        // const updatedDbCart = await response.json();
-                    
-          // AlertSuccess('succesfully added to cart');
-
-        // setCart(updatedDbCart.items);
+      
       } catch (err) {
         console.error('Error updating database cart:', err);
                 AlertError('Error updating database cart:', err);
@@ -419,7 +287,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
     };
   
     // Remove item from cart
-    const removeItem = (id) => {
+    const removeItem = () => {
 
             
       console.log(id, size, color, );
@@ -429,7 +297,13 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
       const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
 
 
-      const existingItem = updatedCart?.filter(item => item.productId !== id && item?.color !== color && item?.size !== size );
+      const existingItem = updatedCart?.filter(item => 
+            !(
+        item.productId === id &&
+        item.color === color &&
+        item.size === size
+    ) )
+    //item.productId !== id && item?.color !== color && item?.size !== size );
             
       
       console.log(updatedCart, existingItem );
@@ -497,10 +371,11 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
               <img src={image} alt={name} className={styles.itemImage} />
               
               <div className={styles.itemDetails}>
-                <h3 className={styles.itemName}>{name}</h3>
+                <h3 className={styles.itemName}>{name} </h3>
                 <p className={styles.itemPrice}>€{price?.toFixed(2)}</p>
-                <span> color: <p className={styles.itemPrice} style={{color: color}}>{color}</p> </span>
-                <span> size: <p className={styles.itemPrice}>{c}</p> </span>
+                <span style={{}} > color: <span style={{color: color}}> {color} </span>
+ </span>
+                <span style={{color: color}}> size: {c} </span>
 
 
 
@@ -523,7 +398,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
               </div>
 
               <button 
-                onClick={() => removeItem(id)} 
+                onClick={() => removeItem()} 
                 className={styles.removeBtn}
                 aria-label="Remove item"
               >

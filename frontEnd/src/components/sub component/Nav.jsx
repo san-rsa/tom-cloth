@@ -78,7 +78,7 @@ const Nav = ({loggedin}) => {
                       credentials: "include",
                       headers: {'Content-Type': 'application/json'},
                     }).then((res) =>  res.json())
-              .then((data) =>  setTotal(data.data.products ) );
+              .then((data) =>  setTotal(data?.data?.products ) );
 
       // const data = await response.json();
      

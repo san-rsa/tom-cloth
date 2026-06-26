@@ -19,6 +19,7 @@ router.post("/cart", auth, async (req, res) => {
 
         
     
+        console.log(req.body);
     
     
 
@@ -32,8 +33,10 @@ router.post("/cart", auth, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: user });
        // let productDetailss = await productById(productId);
-        const productDetails = await Cloth.findOne({ _id: productId });
-        const prices = productDetails.size.findIndex(item => item._id == size);
+        const productDetails = await Cloth.findById( productId );
+
+        console.log(productDetails);
+        
 
              if (!productDetails) {
             return res.status(500).json({
@@ -41,6 +44,8 @@ router.post("/cart", auth, async (req, res) => {
                 msg: "Invalid request"
             })
         }
+              const prices = productDetails.size.findIndex(item => item._id == size);
+  
         //--If Cart Exists ----
 
             if (cart) {
@@ -53,24 +58,32 @@ router.post("/cart", auth, async (req, res) => {
 
 
 
-            //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
-            if (indexFound !== -1 && quantity <= 0) {
-                cart.products.splice(indexFound, 1);
-                if (cart.products.length == 0) {
-                    cart.totalCost = 0;
-                } else {
-                    cart.totalCost = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
-                }
-            }
+
 
             //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
-            else if (indexFound !== -1) {
+             if (indexFound !== -1) {
                 cart.products[indexFound].quantity = cart.products[indexFound].quantity + quantity;
                 cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[prices].price;
                 cart.products[indexFound].price = productDetails.size[prices].price
 
-                cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+            
+            
+            
+                if (indexFound !== -1 && cart.products[indexFound].quantity <= 0) {
+                cart.products.splice(indexFound, 1);
+                if (cart.products.length == 0) {
+                    cart.totalCost = 0;
+                } 
             }
+            
+                            
+                cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+
+            }
+
+            //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
+
+
             //----Check if quantity is greater than 0 then add item to items array ----
             else if (quantity > 0) {
                 cart.products.push({
