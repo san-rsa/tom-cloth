@@ -28,6 +28,7 @@ import AdminList from "./pages/user/admin/List";
 import { Categories, Category, Search, } from "./pages/ListsAll";
 import Description from "./pages/Description";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 
 // import { CartProvider } from './context/Context-cart';
@@ -87,6 +88,8 @@ function Links() {
 
         <Route path="/cart" element={<Cart />}/>
 
+
+        <Route path="/checkout" element={<Checkout />}/>
 
 
 

@@ -305,9 +305,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
     ) )
     //item.productId !== id && item?.color !== color && item?.size !== size );
             
-      
-      console.log(updatedCart, existingItem );
-
+  
 
       if (existingItem) {
 
@@ -319,7 +317,7 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
     } else {
       // LOGGED IN LOGIC: Save to Mongoose via API
       try {
-        const response = fetch(process.env.REACT_APP_API_LINK + "delete/cart", {
+          fetch(process.env.REACT_APP_API_LINK + "delete/cart", {
               method: "DELETE",
               credentials: "include",
               headers: { "Content-type": "application/json; charset=UTF-8", },
@@ -327,7 +325,6 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
               productId: id,
                 size: size, 
                 color: color,
-                category: category,
                 // color: selectedColor,
 
               }),
@@ -336,7 +333,8 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
               if (res.status === 200) {
                           AlertSuccess('succesfully removed cart');
 
-                        //  navcart(loggedin)
+                const event = new CustomEvent('cart-updated', { detail: loggedin });
+                window.dispatchEvent(event);
 
 
                        
@@ -405,6 +403,178 @@ const CartCard = ({id, color, size, image, c, name, price, link, loggedin, categ
                 ✕
               </button>
             </div>
+  );
+
+
+}
+
+
+
+
+const CheckoutCard = ({id, color, size, image, c, name, price, link, loggedin, category, quantity,updateQuantityAdd, total, } ) => {
+
+    
+    
+  
+    // Update item quantity
+    const updateQuantity = (id, amount) => {
+
+      console.log(id, amount, size, color, );
+      
+
+          if (!loggedin) {
+      // GUEST LOGIC: Save to Session / LocalStorage
+      const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+      const existingItem = updatedCart?.find(item => item.productId === id && item?.color === color && item?.size === size );
+
+      
+      if (existingItem) {
+        existingItem.quantity += amount;
+
+        AlertSuccess('succesfully added to cart');
+      } 
+
+
+      localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
+    } else {
+      // LOGGED IN LOGIC: Save to Mongoose via API
+      try {
+          fetch(process.env.REACT_APP_API_LINK + "add/cart", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-type": "application/json; charset=UTF-8", },
+              body: JSON.stringify({
+                productId: id,
+                quantity: amount,
+                size: size, 
+                color: color,
+                category: category,
+                // color: selectedColor,
+
+              }),
+  
+            }).then((res) => {
+              if (res.status === 200) {
+                          AlertSuccess('succesfully added to cart');
+
+                        //  navcart(loggedin)
+
+      const event = new CustomEvent('cart-updated', { detail: loggedin });
+      window.dispatchEvent(event);
+                       
+              } else {
+                                AlertError('Error updating  cart:');
+
+              }
+            })
+
+      
+      } catch (err) {
+        console.error('Error updating database cart:', err);
+                AlertError('Error updating database cart:', err);
+
+      }
+    }
+        // const event = new CustomEvent('cartUpdated');
+        //                window.dispatchEvent(event);
+
+
+      const event = new CustomEvent('cart-updated', { detail: loggedin });
+      window.dispatchEvent(event);
+    };
+  
+    // Remove item from cart
+    const removeItem = () => {
+
+            
+      console.log(id, size, color, );
+
+      if (!loggedin) {
+      // GUEST LOGIC: Save to Session / LocalStorage
+      const updatedCart =   JSON.parse(localStorage.getItem('guest_cart')) || [] ;
+
+
+      const existingItem = updatedCart?.filter(item => 
+            !(
+        item.productId === id &&
+        item.color === color &&
+        item.size === size
+    ) )
+    //item.productId !== id && item?.color !== color && item?.size !== size );
+            
+  
+
+      if (existingItem) {
+
+        AlertSuccess('succesfully removed cart');
+      } 
+
+
+      localStorage.setItem('guest_cart', JSON.stringify(existingItem));
+    } else {
+      // LOGGED IN LOGIC: Save to Mongoose via API
+      try {
+          fetch(process.env.REACT_APP_API_LINK + "delete/cart", {
+              method: "DELETE",
+              credentials: "include",
+              headers: { "Content-type": "application/json; charset=UTF-8", },
+              body: JSON.stringify({
+              productId: id,
+                size: size, 
+                color: color,
+                // color: selectedColor,
+
+              }),
+  
+            }).then((res) => {
+              if (res.status === 200) {
+                          AlertSuccess('succesfully removed cart');
+
+                const event = new CustomEvent('cart-updated', { detail: loggedin });
+                window.dispatchEvent(event);
+
+
+                       
+              } else {
+                                AlertError('Error updating  cart:');
+
+              }
+            })
+
+        // const updatedDbCart = await response.json();
+                    
+          // AlertSuccess('succesfully added to cart');
+
+        // setCart(updatedDbCart.items);
+      } catch (err) {
+        console.error('Error updating database cart:', err);
+                AlertError('Error updating database cart:', err);
+
+      }
+    }
+        // const event = new CustomEvent('cartUpdated');
+        //                window.dispatchEvent(event);
+
+
+      const event = new CustomEvent('cart-updated', { detail: loggedin });
+      window.dispatchEvent(event);
+    };
+
+
+  return (
+ 
+              <li key={id} className={Style.item}>
+
+                <div style={{alignItems: 'center', display: 'flex'}} >
+                <img src={image} alt={name} className={styles.itemImage} />
+                
+                <span className={Style.name}>  {name} :  <span className={Style.qty} style={{color: color}}> X{quantity} </span>
+ </span> 
+                </div>
+
+                <strong>€{total?.toFixed(2)}</strong>
+              </li>
+
   );
 
 
@@ -787,4 +957,4 @@ const AlertError = (message ) => {
 
 
 
-export {CardList, CartCard, CatList, ProductCard, OrderCard, PlayerBio, OrderCardAdmin, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }
+export {CardList, CartCard, CatList, ProductCard, OrderCard, PlayerBio, CheckoutCard, OrderCardAdmin, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }

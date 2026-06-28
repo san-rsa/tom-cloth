@@ -103,6 +103,7 @@
   .formlist {
     display: inline-block;
     margin: 10px;
+    width: -webkit-fill-available;
     
   }
 
@@ -334,6 +335,45 @@
 
 .trend {
     margin: 20px;
+}
+
+
+
+
+/* checkout card */
+
+
+.qty {
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 0.95rem;
+}
+
+.totals {
+  border-top: 2px solid #e5e5e5;
+  padding-top: 1rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.grandTotal {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
 }
 
 

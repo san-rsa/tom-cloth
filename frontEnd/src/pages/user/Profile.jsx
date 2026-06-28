@@ -16,6 +16,7 @@ const Profile = ({}) => {
     const [mode, setInputs] = useState({overview: true, wishlist: false, orders: false, results: false, squad: false, transfer: false, official: false, admin: false });
 
     const [user, setUser] = useState({admin: false, team: false, })
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
 
 
     const [data, setData] = useState({})
@@ -53,18 +54,6 @@ const Profile = ({}) => {
          })    
 
 
-         fetch(process.env.REACT_APP_API_LINK + 'getaccess/team', {
-            method: 'GET',
-            credentials: "include",
-            headers: {'Content-Type': 'application/json'},
-             }).then((res) => {
-            if (res.status === 200) {
-                setUser({team: true})
-
-            } 
-
- })  
-
 
 
           fetch(process.env.REACT_APP_API_LINK + 'getone/user/', {
@@ -77,6 +66,27 @@ const Profile = ({}) => {
             
               
          },   []);
+
+
+
+                               useEffect(() => {
+            
+              
+                              fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
+                                  method: 'GET',
+                                  credentials: "include",
+                                  headers: {'Content-Type': 'application/json'},
+                                   }).then((res) => {
+                                  if (res.status === 200) {
+                                      setIsLoggedIn( true)
+                  
+                                  } else  if (res.status === 403) {
+                                      setIsLoggedIn( false)
+                  
+                                  } 
+                       })    
+                                
+                       },   []);
 
 
 
@@ -159,7 +169,7 @@ const Profile = ({}) => {
 
     return (
         <div>
-         <Nav />
+         <Nav loggedin={isLoggedIn} />
             <div className={Style.app}>
 
 

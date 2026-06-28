@@ -208,9 +208,9 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
 
 
-      const fetchUserCartFromDatabase = async () => {
+      const fetchUserCartFromDatabase = () => {
     try {
-       await fetch(process.env.REACT_APP_API_LINK + 'getall/user-cart', {
+        fetch(process.env.REACT_APP_API_LINK + 'getall/user-cart', {
                       method: 'GET',
                       credentials: "include",
                       headers: {'Content-Type': 'application/json'},
@@ -244,7 +244,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
                          },   []);
 
 
-                        async function updatedCartAfterClick(event) {
+                         function updatedCartAfterClick(event) {
    
                           console.log(event);
                           
@@ -259,7 +259,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
                              } else {
                         
     
-                              await  fetchUserCartFromDatabase()
+                               fetchUserCartFromDatabase()
 
                              }
                          }
@@ -437,9 +437,9 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
             <span>€{total?.toFixed(2)}</span>
           </div>
 
-          <button className={styles.checkoutButton}>
+          <Link to={'/checkout'}> <button className={styles.checkoutButton}>
             Proceed to Checkout
-          </button>
+          </button></Link>
         </div>
       </div>
     </div>

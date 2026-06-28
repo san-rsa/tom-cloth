@@ -19,6 +19,84 @@ const Fixture = require("../models/competition/fixture");
 const Competition = require("../models/competition/competition");
 const { io } = require("../../server");
 
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
+
+
+
+              function send_mail(guest, data, send_email) {
+                
+                const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  type: 'gmail',
+                  user: process.env.EMAIL,
+                  pass: process.env.PASS_EMAIL
+               }
+              });
+              
+              const handlebarOptions = {
+                  viewEngine: {
+                      partialsDir: path.resolve('./email'),
+                      defaultLayout: false,
+                  },
+                  viewPath: path.resolve('./email'),
+              };
+              
+              
+              const handlebarOptions2 = {
+                viewEngine: {
+                  // extname: '.hbs',
+                  layoutsDir: path.resolve('./email'),
+                  defaultLayout: false,
+                  partialsDir: path.resolve('./email'),
+                },
+                viewPath: path.resolve('./email'),
+                // extName: '.hbs',
+              };
+     
+              // use a template file with nodemailer
+              transporter.use('compile', hbs(handlebarOptions))
+
+
+
+              const mailOptions = {
+                from: process.env.EMAIL,
+                to: process.env.EMAIL,
+                subject: 'NEW ORDER AVAILABLE',
+                template: "email",
+                
+                context: {
+                          address: guest.address, fname: guest.name.first, 
+                          lname: guest.name.last, email:guest.email, 
+                          phone: guest.phone, products: send_email, total:data.totalCost,
+                          fullname: guest.name.first + " " + guest.name.last, 
+                },
+              
+                // html: ,
+                
+              
+                // attachments: [{ filename: "id card", path: file?.tempFilePath}, {filename: "signature", path: signature }],
+              
+              };
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+              
+                  
+                          return res.status(200).json({
+                              success: true,
+                              message: " created successfully ✅"
+                             
+                          }) 
+                }
+              });
+              }
+
 
 
 const auth = async (req, res, next)  =>  {
@@ -746,4 +824,4 @@ const checkLineUp = async (starting, sub, res ) => {
 
 
 
-module.exports = {  auth, role, checkLineUp, hasDuplicatesInAllLineUp, hasDuplicatesInLineUp, deleteFixture, updateStanding, updateCupStanding, firstHalf, secondHalf, extraTimeFirstHalf, extraTimeSecondHalf};
+module.exports = {  auth, role, checkLineUp, hasDuplicatesInAllLineUp, send_mail, hasDuplicatesInLineUp, deleteFixture, updateStanding, updateCupStanding, firstHalf, secondHalf, extraTimeFirstHalf, extraTimeSecondHalf};

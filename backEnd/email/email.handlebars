@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+
+    <style>
+        body {
+            text-align: center;
+            background-color: rgb(187, 87, 20);
+            color: rgb(0, 0, 0);
+        }
+        img{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        
+        form *{
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    margin: 1% auto;
+    transition: 2s;
+    color: beige;
+}
+.form {
+    text-align: center;
+    position: relative;
+    background-color: #a1e0a7;
+    margin: 1% auto;
+    padding: 40px;
+    margin: 5% 6%;
+    border: 1px;
+    box-shadow: 0px 5px 4px rgba(7, 7, 7, 0.25);
+    transition: 2s;
+}
+
+
+
+.logo {
+    width: 50%;
+    height: fit-content;
+    background-color: wheat;
+
+}
+
+br {
+    height: 2px;
+    color: aliceblue;
+    width: 75%;
+}
+
+    </style>
+</head>
+<body>
+    <h1>You Have A New Order</h1>
+
+    <h2>DETAILS</h2>
+    <div class="form">
+    <h3> {{ fullname }} </h3>
+    <h3> first name: {{fname}}</h3>
+    <h3> last name: {{lname}}</h3>
+    <h3> email: {{email}}</h3>
+    <h3> phone no: {{phone}}</h3>    
+
+    <h3> address: {{address}}</h3>
+    <br>
+
+
+<h2> Summary</h2>
+
+
+<ol style="padding-left:20px;">
+                                <table >
+                                <tr>
+                                    <th>img</th>
+                                    <th>name</th>
+                                    <th>category</th>
+                                    <th>size</th>
+                                    <th>quantity</th>
+                                    <th>price</th>
+                                    <th>total</th>
+
+                                </tr>
+  {{#each products}}
+   <li style="margin-bottom:15px;">
+
+
+                            <tr>
+                                <td width="90" valign="top">
+                                <img
+                                    src="{{img}}"
+                                    width="50"
+                                    height="50"
+                                    alt="{{name}}"
+                                    style="display:block; "
+                                />
+                                </td>
+                                <td  style="font-weight: bolder;">
+                                {{name}}
+
+                                </td> 
+
+                                <td> {{productModel}} </td>
+
+                                <td>  {{sizeId}} </td>
+                                <td> {{quantity}} </td>
+                                <td> €{{price}} </td>
+                                <td> €{{total}} </td>
+
+
+                            </tr>
+                        </li>
+
+  {{/each}}
+
+                            <tr>
+                                <td width="50" valign="top">
+                               
+                               
+                                </td>
+                                <td style="font-weight: bolder;">
+                                TOTAL
+
+                                </td> 
+
+                                <td>  </td>
+
+                                <td>   </td>
+                                <td> </td>
+                                <td>  </td>
+                                <td style="font-weight: bolder;"> €{{total}} </td>
+
+
+                            </tr>
+                              </table>
+
+</ol>
+    {{!-- <h3 > cloths: {{products}}  </h3> --}}
+
+
+
+
+
+        
+
+    </div>
+
+
+</body>
+</html>

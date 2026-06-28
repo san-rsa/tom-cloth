@@ -384,6 +384,28 @@ router.get('/user', auth, async (req, res, next) => {
 })
 
 
+router.get('/user/order-details', auth, async (req, res, next) => {
+
+        const user = req.userId
+    
+
+
+        try {
+            const data = await User.findOne( {_id: user} ).select('name email phone address paymentId')
+
+            if (data) {
+                
+              res.status(200).json(data);
+
+            } else {
+              res.status(404).json("not found");
+
+            }
+        } catch (error) {
+            return next(error);
+        }
+})
+
 router.get('/user/isloggedin', auth, async (req, res, next) => {
 
         const user = req.userId

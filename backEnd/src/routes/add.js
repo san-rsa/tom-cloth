@@ -1,12 +1,19 @@
 const express = require("express");
 const router = new express.Router();
 const Wishlist = require("../models/wishlist");
-const {auth} = require("../middleware/mid");
+const {auth, send_mail} = require("../middleware/mid");
 const Guest = require("../models/guest");
 const Cart = require("../models/cart");
 const Cloth = require("../models/clothes");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const mongoose = require('mongoose');
+const Order = require("../models/order");
+const User = require("../models/user");
+// const _ = require("lodash");
+// const _ = require("lodash");
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
 
 
 
@@ -309,6 +316,338 @@ router.post("/carts-items", auth, async (req, res) => {
             return res.status(201).send(newCart);
 
         }
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+});
+
+router.post("/order", auth, async (req, res) => {
+
+    const user = req.userId;
+        // const user = new mongoose.Types.ObjectId(String(req.userId));
+
+    const {phone, street, city, county, zipcode,} = req.body
+    //     const {data} = req.body
+
+    // const quantity = Number.parseInt(req.body.quantity );
+    // const size = req.body.weight
+    // const price = Number(req.body.price)
+
+        
+    
+        console.log(req.body,  process.env.EMAIL, process.env.PASS_EMAIL);
+    
+    
+
+    try {
+        const order = await Order.findOne({ userId: user });
+        const cart = await Cart.findOne({ userId: user });
+        const product = await Cloth.find();
+        const userInfo = await User.findById(user );
+        const send_email = []
+
+
+
+        // const product = await Cloth.findOne({ userId: user });
+
+       // let productDetailss = await productById(productId);
+
+
+        //--If Cart Exists ----
+
+            if (cart) {
+            //---- Check if index exists ----
+            // const indexFound = cart.products.findIndex(
+            //     (item) =>
+            //         item.productId.toString() === productId.toString() &&
+            //         item.sizeId.toString() === size.toString() &&
+            //         item.color === color );
+
+            for (let i = 0; i < cart.products.length; i++) {
+
+
+        const {productId, size, quantity, color,  } = cart.products[i]
+
+
+       // let productDetailss = await productById(productId);
+        const productDetails = await Cloth.findById( productId );
+
+
+
+        send_email.push({
+                   
+                      name: productDetails.name, productModel: productDetails.categoryId[0],
+                      img: productDetails.img[0].url,
+                
+                      sizeId: productDetails.size.find((item => item._id == size) )?.size, 
+                      quantity: quantity, color,
+                
+
+                      price: productDetails.size.find((item => item._id == size) )?.price,
+                
+                      total: productDetails.size.find((item => item._id == size) )?.price * quantity,
+        })
+            
+        productDetails.ordered +=  1
+
+
+        productDetails.save()
+
+
+
+        } 
+
+
+
+        if (userInfo) {
+
+            if (phone ) {
+                userInfo.phone = phone
+                userInfo.address.street =  street
+                userInfo.address.city =  city
+                userInfo.address.county =  county
+                userInfo.address.zipcode = zipcode
+
+                userInfo.save()
+
+                    if (cart.products.length !== 0) {
+                const data = await Order.create({
+                userId: userInfo._id,
+                products: cart.products,
+                // transactionId, paymentStatus, Delivered,                 
+                totalCost: cart.totalCost
+
+              });
+              
+
+
+
+              send_mail(userInfo, data, send_email )
+
+              cart.products = []
+
+              cart.save()
+
+            res.status(200).json({
+                type: "success",
+                mgs: "Process successful",
+                data: data
+            })
+            
+        }
+            
+
+
+        }
+        }
+
+        }
+
+        //------------ This creates a new cart and then adds the item to the cart that has been created------------
+
+                      
+        else {
+                return res.status(400).json({
+                    type: "Invalid",
+                    msg: "Invalid request no cart found"
+                })
+            }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+});
+
+
+
+router.post("/order-from-session", async (req, res) => {
+
+
+
+    // const user = new mongoose.Types.ObjectId(String(req.userId));
+        const { data, cart} = req.body
+
+        
+    const {productId, quantity, size, color, products, category, name, price, c} = req.body
+
+    console.log(req.body );
+
+
+    
+    if (!cart ) {
+        return res.status(500).json({
+            type: "Not Found",
+            msg: "no cart items"
+        })
+    }
+
+        if (!data ) {
+        return res.status(500).json({
+            type: "Not Found",
+            msg: "please fill in all required details "
+        })
+    }
+    try {
+                    
+        // const cart = await Cart.findOne({ userId: user });
+
+        // const order = await Order.findOne({ userId: user });
+
+
+        console.log(cart);
+        
+        const cart_items = [];
+        const send_email = []
+
+
+        if (cart) {
+                    
+            
+            for (let i = 0; i < cart.length; i++) {
+
+
+        const {productId, category, quantity, size, color, products, name, price, c} = cart[i]
+
+
+       // let productDetailss = await productById(productId);
+        const productDetails = await Cloth.findById( productId );
+
+
+          if (!productDetails) {
+            return res.status(500).json({
+                type: "Not Found",
+                msg: "no product found"
+            })
+        }
+
+        cart_items.push({
+                   
+                      productId: productDetails._id, productModel: productDetails.categoryId[0],
+                
+                      sizeId: size, quantity: quantity, color,
+                
+
+                      price: productDetails.size.find((item => item._id == size) )?.price,
+                
+                      total: productDetails.size.find((item => item._id == size) )?.price * quantity,
+        })
+
+
+                send_email.push({
+                   
+                      name: productDetails.name, productModel: productDetails.categoryId[0],
+                      img: productDetails.img[0].url,
+                
+                      sizeId: productDetails.size.find((item => item._id == size) )?.size, 
+                      quantity: quantity, color,
+                
+
+                      price: productDetails.size.find((item => item._id == size) )?.price,
+                
+                      total: productDetails.size.find((item => item._id == size) )?.price * quantity,
+        })
+                
+        productDetails.ordered +=  1
+
+
+        productDetails.save()
+   
+        }
+        //--If Cart Exists ----
+
+            //----If quantity of price is 0 throw the error -------
+
+     
+        //------------ This creates a new cart and then adds the item to the cart that has been created------------
+
+
+        
+
+            if (data ) {
+
+                const {email, fname, lname, phone,  street, county, city, zipcode, } = data
+                const name = {first: fname, last: lname}
+
+                const guest = await Guest.findOne({ email });
+
+                console.log(cart_items, cart_items.map(item => item.total).reduce((acc, next) => acc + next));
+                
+
+
+                if (guest ) {
+
+                if (cart_items.length !== 0) {
+
+                const data = await Order.create({
+                guestId: guest._id,
+                products: cart_items,
+                // transactionId, paymentStatus, Delivered,                 
+                totalCost: cart_items.map(item => item.total).reduce((acc, next) => acc + next)
+
+
+              })
+
+
+                send_mail(guest, data, send_email)
+
+
+
+              
+              
+
+
+
+            }
+                } else {
+                const guest = await Guest.create({
+                name,  email, phone,
+                address:{street, city, county, zipCode: zipcode }
+
+              });
+                    
+                if (cart_items.length !== 0) {
+                const data = await Order.create({
+                userId: guest._id,
+                products: cart_items,
+                // transactionId, paymentStatus, Delivered,                 
+                totalCost: cart_items.map(item => item.total).reduce((acc, next) => acc + next)
+
+
+              });
+
+                send_mail(guest, data, send_email)
+
+
+            }
+                
+              
+            
+        }
+            
+            res.status(200).json({
+                type: "success",
+                mgs: "Process successful",
+                
+            })
+
+        }
+       
+        // cart.save()
+        //       return res.status(201).send(cart);
+
+
+        } 
 
 
     } catch (err) {

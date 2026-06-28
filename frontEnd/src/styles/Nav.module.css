@@ -78,6 +78,7 @@ nav img {
 .searchNav {
     text-align: center;
     margin: 10px auto;
+    display: flex;
 
  
 }

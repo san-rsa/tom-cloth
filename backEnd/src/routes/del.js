@@ -4,6 +4,7 @@ const Wishlist = require("../models/wishlist");
 const {auth} = require("../middleware/mid");
 const mongoose = require('mongoose');
 const Cart = require("../models/cart");
+const Cloth = require("../models/clothes");
 
 
 
@@ -68,7 +69,7 @@ router.delete("/cart", auth, async (req, res) => {
 
             //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
             else if (indexFound !== -1) {
-                cart.products.pull({productId, sizeId: size, color})
+                cart.products.pull({_id:cart.products[indexFound]._id })
                
                 cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
             }
