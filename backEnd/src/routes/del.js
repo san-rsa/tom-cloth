@@ -58,21 +58,27 @@ router.delete("/cart", auth, async (req, res) => {
 
 
             //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
-            if (indexFound !== -1 && quantity <= 0) {
-                cart.products.splice(indexFound, 1);
-                if (cart.products.length == 0) {
-                    cart.totalCost = 0;
-                } else {
-                    cart.totalCost = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
-                }
-            }
+
 
             //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
-            else if (indexFound !== -1) {
+            if (indexFound !== -1) {
                 cart.products.pull({_id:cart.products[indexFound]._id })
-               
-                cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
-            }
+
+
+
+                            
+  
+                if (cart.products.length !== 0) {
+                cart.products[indexFound].total = cart.products[indexFound].quantity * productDetails.size[prices].price;
+                cart.products[indexFound].price = productDetails.size[prices].price
+
+                                
+                    cart.totalCost = cart.products.map(item => item.total).reduce((acc, next) => acc + next);
+                } else {
+                    cart.totalCost = 0
+                } 
+            
+                           }
 
             //----Check if quantity is greater than 0 then add item to items array ----
             else  {

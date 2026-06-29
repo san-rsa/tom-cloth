@@ -306,6 +306,7 @@ router.get('/user-cart', auth, async(req, res)=> {  // all
 // console.log(JSON.stringify(data, null, 2));
 
 
+
       if (data) {
 
         return  res.status(200).json({
@@ -326,7 +327,8 @@ router.get('/user-orders', auth, async(req, res)=> {  // all
 
       const user = req.userId
 
-      const data = await Order.find({userId: user})
+      const data = await Order.find({userId: user}).populate({path: "products.productId",  model: "Cloth", select: "name img size"
+});
       
       if (data.length !== 0) {
 
@@ -371,14 +373,14 @@ router.get('/news', async(req, res)=> {
 
 
 
-    router.get('/wishlists', auth, async (req, res, next) => {
+    router.get('/user-wishlists', auth, async (req, res, next) => {
     
             const user = req.userId
         
     
     
             try {
-                const data = await Wishlist.findOne( {userId: user} ).populate("products.productId", "name img size ")
+                const data = await Wishlist.findOne( {userId: user} ).populate("products.productId", "name categoryId img color size ")
     
                 if (data) {
                     

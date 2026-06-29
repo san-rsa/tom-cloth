@@ -223,6 +223,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
       console.error('Error fetching cart:', err);
     }
   };
+                          console.log(cartItems);
 
                         useEffect(() => {
               
@@ -246,7 +247,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
                          function updatedCartAfterClick(event) {
    
-                          console.log(event);
                           
                                                             
                              if (!event.detail) {
@@ -385,7 +385,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
                         key={key}
                         name={product.productId.name}
                         price={product?.price}
-                        image={product.productId?.img[0]?.url}
+                        image={product?.productId?.img[0]?.url}
                         link={'/product/' + product.name}
                         id={product.productId._id}
                         color={product?.color}

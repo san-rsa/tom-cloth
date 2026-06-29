@@ -105,14 +105,17 @@ function updatedCart(event) {
     } else {
        const guest = JSON.parse(localStorage.getItem('guest_cart'))
 
+       console.log(guest);
+       
+
 
        
 
-      if (guest !== null ) {
+      if (guest !== null || guest?.length === 0 ) {
         const products = JSON.parse(localStorage.getItem('guest_cart'))
 
               try {
-                const response = fetch(process.env.REACT_APP_API_LINK + "add/carts-items", {
+                fetch(process.env.REACT_APP_API_LINK + "add/carts-items", {
                       method: "POST",
                       credentials: "include",
                       headers: { "Content-type": "application/json; charset=UTF-8", },

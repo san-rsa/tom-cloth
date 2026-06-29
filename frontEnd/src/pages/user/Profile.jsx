@@ -222,7 +222,7 @@ const Profile = ({}) => {
 
             { mode.overview && <Overview info={data}  user={user } />}
 
-            { mode.wishlist ? <ProfileWishlist />  : null }
+            { mode.wishlist ? <ProfileWishlist isLoggedIn={isLoggedIn} />  : null }
 
             { mode.orders ? <ProfileOrder />  : null }
 

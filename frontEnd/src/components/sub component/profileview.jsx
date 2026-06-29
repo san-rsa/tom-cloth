@@ -199,25 +199,20 @@ const ProfileNews = () => {
 }
 
 
-const ProfileWishlist = () => {
+const ProfileWishlist = ({isLoggedIn}) => {
     
-    const [news, setnews] = useState([])
         const [data, setData] = useState([])
 
      
-          fetch(process.env.REACT_APP_API_LINK + 'getone/wishlist/', {
+
+                     useEffect(() => {
+          fetch(process.env.REACT_APP_API_LINK + 'getall/user-wishlists/', {
             method: 'GET',
             credentials: "include",
             headers: {'Content-Type': 'application/json'},
              }).then((res) =>  res.json())
-             .then((data) => setData(data));
-
-
-                  
-                     useEffect(() => {
-                         fetch(process.env.REACT_APP_API_LINK + "getall/news")
-                         .then((res) =>  res.json())
-                         .then((data) => setnews(data.data));
+             .then((data) => setData(data?.products));
+                        
                      }, []);
 
 
@@ -228,17 +223,19 @@ const ProfileWishlist = () => {
 
 
       <div className={Style["product-grid"]}>
-        {news.map((p) => (
+        {data?.map((product) => (
           <ProductCard
-            // key={p.id}
-            // name={p.name}
-            // price={p.price}
-            // image={p.image}
-
-            name={p.head}
-            image={p.imgUrl[0].url}
-            price={50}
-            link={'/product/' + p.name}
+            key={product._id}
+            name={product?.productId.name}
+            price={product?.productId?.size[0]?.price}
+            image={product?.productId?.img[0]?.url}
+            link={'/product/' + product?.productId.name}
+            id={product._id}
+            color={product?.productId?.color[0]}
+            size={product?.productId?.size[0]?._id}
+            loggedin={isLoggedIn}
+            category={product?.productId?.categoryId[0]}
+            c={product?.productId.size[0]?.size}
           />
         ))}
       </div>
@@ -254,23 +251,18 @@ const ProfileWishlist = () => {
 
 const ProfileOrder = () => {
     
-    const [news, setnews] = useState([])
         const [data, setData] = useState([])
 
      
-          fetch(process.env.REACT_APP_API_LINK + 'getone/wishlist/', {
-            method: 'GET',
-            credentials: "include",
-            headers: {'Content-Type': 'application/json'},
-             }).then((res) =>  res.json())
-             .then((data) => setData(data));
 
-
-                  
                      useEffect(() => {
-                         fetch(process.env.REACT_APP_API_LINK + "getall/news")
+                         fetch(process.env.REACT_APP_API_LINK + "getall/user-orders", {
+                            method: 'GET',
+                            credentials: "include",
+                            headers: {'Content-Type': 'application/json'},
+                         })
                          .then((res) =>  res.json())
-                         .then((data) => setnews(data.data));
+                         .then((data) => setData(data.data));
                      }, []);
 
 
@@ -281,7 +273,7 @@ const ProfileOrder = () => {
 
 
       <div className={Style["product-grid"]}>
-        {news.map((p) => (
+        {data?.map((p) => (
           <OrderCard
             // key={p.id}
             // name={p.name}

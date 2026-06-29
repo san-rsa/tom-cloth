@@ -585,8 +585,9 @@ function Checkout() {
       setInputs(values => ({...values, [name]: value}))
     }
   
-  const subtotal = !isLoggedIn ? cartItems.reduce((acc, item) => acc + item.total, 0) : cartItems.reduce((acc, item) => acc + item.total, 0);
+  const subtotal = !isLoggedIn ? cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) : cartItems.reduce((acc, item) => acc + item.total, 0);
   const shipping = 5.00;
+
   const total = subtotal + shipping;
 
 //   const handleInputChange = (e) => {
