@@ -20,6 +20,7 @@ const Stat = require('../models/competition/stats')
 const Wishlist = require('../models/wishlist')
 const Category = require('../models/category')
 const Cloth = require('../models/clothes')
+const Order = require('../models/order')
 
 
 
@@ -270,6 +271,47 @@ router.get('/news/:id', async (req, res, next) => {
 })
 
 
+router.get('/order/:id', auth, async (req, res, next) => {
+
+
+          try {
+              const data = await Order.findOne({_id: req.params.id}).populate({path: "products.productId",  model: "Cloth", select: "name img size"})
+  
+              if (data) {
+                
+                res.status(200).json(data);
+  
+              } else {
+                res.status(404).json("not found");
+  
+              }
+             } catch (error) {
+              res.status(500).json(error);
+          }
+})
+
+
+
+router.get('/admin/order/:id', auth, async (req, res, next) => {
+
+
+          try {
+              const data = await Order.findOne({_id: req.params.id}).populate({path: "products.productId",  model: "Cloth", select: "name img size"}).
+              populate({path: "userId", select: "name email phone"}).populate({path: "guestId", select: "name email phone"
+})
+  
+              if (data) {
+                
+                res.status(200).json(data);
+  
+              } else {
+                res.status(404).json("not found");
+  
+              }
+             } catch (error) {
+              res.status(500).json(error);
+          }
+})
 router.get('/player/:id', async(req, res)=> {
 
 

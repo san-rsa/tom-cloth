@@ -3,8 +3,7 @@ import Style from "../../../styles/Team.module.css"
 import Nav from "../../../components/sub component/Nav"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/sub component/Footer";
-import { AdminAddAdmin, AdminAddUserToTeam, AdminBanner, AdminCategory, AdminCodeOfConduct, AdminNews, AdminProduct,  AdminTeam } from "../../../components/sub component/Profileadminview";
-import { TeamAdminNews, TeamAdminPlayer } from "../../../components/sub component/TeamAdminview";
+import { AdminAddAdmin, AdminBanner, AdminCategory, AdminNews, AdminProduct,  } from "../../../components/sub component/Profileadminview";
 
 
 
@@ -89,14 +88,6 @@ const Add = ({}) => {
             { mode2.banner && <AdminBanner event={mode1} typeId={typeId} />}
 
 
-            { mode2["code-of-conduct"] && <AdminCodeOfConduct event={mode1} typeId={typeId} />}
-
-
-            { mode2.news ? user.admin ? <AdminNews  event={mode1} typeId={typeId} /> : user.team ?  team ? <TeamAdminNews teamid={team} event={mode1} typeId={typeId} /> : null : null : null}
-
-            { mode2.player ? user.admin ? <AdminNews  event={mode1} typeId={typeId} /> : user.team ? team ?  <TeamAdminPlayer teamid={team} event={mode1} typeId={typeId} /> : null : null : null}
-
-
             {/* { mode2.region && <AdminRegion event={mode1} typeId={typeId} />} */}
 
             { mode2["product"] && <AdminProduct event={mode1} typeId={typeId} />}
@@ -104,12 +95,6 @@ const Add = ({}) => {
            { mode2.category &&  <AdminCategory event={mode1} typeId={typeId} /> } 
 
 
-
-            { mode2.results && <AdminNews  event={mode1} typeId={typeId} />}
-
-            { mode2.team &&  <AdminTeam event={mode1} regionId={typeId} typeId={typeId}/> } 
-
-            { mode2.user &&  <AdminAddUserToTeam event={mode1} regionId={typeId} /> } 
 
             { mode2.admin &&  <AdminAddAdmin event={mode1} regionId={typeId} /> } 
 

@@ -18,6 +18,9 @@ const Standing = require('../../models/competition/standing/standing')
 const Codeofconduct = require('../../models/news/codesofconduct')
 const CupStanding = require('../../models/competition/standing/cup')
 const Live = require('../../models/competition/live')
+const Cloth = require('../../models/clothes')
+const Order = require('../../models/order')
+const Category = require('../../models/category')
 
 
 
@@ -38,182 +41,6 @@ router.patch('/admin' , auth, role(process.env.ADMIN), async (req, res, next) =>
 });
 
 
-
-
-
-router.patch('/add-team-to-competition', async (req, res)=> {
-
-    const data = JSON.parse(req.body.data)
-     
-
-    try {
-        const {competitionId, team, }= data
-
-
-
-		if (!team || !competitionId ) {
-			return res.status(403).json({
-				success: false,
-				message: "All Fields are required",
-			});
-		}
-
- 
-      
-        //check if use already exists?
-        const existingItem = await Competition.findOne({name: competitionId})
-        const existingTeam = await Team.findOne({name: team})
-
-
-
-        if(!existingItem || !existingTeam){
-            return res.status(400).json({
-                success: false,
-                message: "region or team not found"
-            })
-        }
-
-
-
-
-        existingItem.teams.pull(existingTeam.name)
-        existingTeam.regionId.pull(existingItem.name)
-
-
-
-
-
-        existingItem.save()
-        existingTeam.save()
-
-
-        console.log(existingItem, existingTeam);
-        
-
-
-
-
-
-
-
-
-
-            // res.redirect("/login")
-
-        return res.status(200).json({
-            success: true,
-   
-            message: "successfully ✅ added"
-           
-        })  
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success: false,
-            message : "registration failed"
-        })
-       
-   }  
-})
-
-
-
-
-
-
-router.patch('/add-user-to-team', async (req, res)=> {
-
-    const data = JSON.parse(req.body.data)
-     
-
-    try {
-        const {user, teamId, }= data
-
-
-
-        if (!teamId || !user ) {
-            return res.status(403).json({
-                success: false,
-                message: "All Fields are required",
-            });
-        }
-
- 
-      
-        //check if use already exists?
-        const existingUser = await User.findOne({_id: user})
-        const existingTeam = await Team.findOne({name: teamId})
-
-
-
-        if(!existingUser || !existingTeam){
-            return res.status(400).json({
-                success: false,
-                message: "region or team not found"
-            })
-        }
-
-
-        if(!existingUser.teamId ){
-            return res.status(400).json({
-                success: false,
-                message: "user has no team"
-            })
-        }
-
-
-        if(existingTeam.userId.length < 0){
-            return res.status(400).json({
-                success: false,
-                message: "team has no user"
-            })
-        }
-        
-
-
-
-
-        existingUser.teamId = null
-        existingUser.role = "user"
-        
-        existingTeam.userId.pull(existingUser._id)
-
-
-
-
-
-        existingUser.save()
-        existingTeam.save()
-
-
-        console.log(existingUser, existingTeam);
-        
-
-
-
-
-
-
-
-
-
-            // res.redirect("/login")
-
-        return res.status(200).json({
-            success: true,
-   
-            message: "successfully ✅ added"
-           
-        })  
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success: false,
-            message : "registration failed"
-        })
-       
-   }  
-})
 
 
 
@@ -315,8 +142,135 @@ router.delete('/banner', auth, role(process.env.ADMIN), async (req, res, next) =
 
 
 
+router.delete('/category/:id', auth, role(process.env.ADMIN), async (req, res, next) => {
+    // const id = req.body.productId
+
+    try {
+
+        const data = await Category.findById(req.params.id);
+
+        console.log(data);
+        
+
+        // await cloudinary.uploader.destroy(data.img.imgId);
+
+        if (data) {
+                const del = await Category.findByIdAndDelete(req.params.id)
+
+                        console.log(del);
+
+                      res.status(200).json({
+            msg: del,
+        });  
+        } else {
+            
+        }
 
 
+
+    } catch (error) {
+        return next(error);
+    }
+});
+
+router.delete('/cloth/:id', auth, role(process.env.ADMIN), async (req, res, next) => {
+    // const id = req.body.productId
+
+    try {
+
+        const data = await Cloth.findById(req.params.id);
+
+        console.log(data);
+        
+
+        // await cloudinary.uploader.destroy(data.img.imgId);
+
+        if (data) {
+                const del = await Cloth.findByIdAndDelete(req.params.id)
+
+                        console.log(del);
+
+                      res.status(200).json({
+            msg: del,
+        });  
+        } else {
+            
+        }
+
+
+
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+
+
+
+
+router.delete("/order/:id", auth, async (req, res) => {  // complete order
+    const user = req.userId
+    const deliver = req.body.deliver
+
+
+    try {
+        const order = await Order.findOne({ _id: req.params.id });
+       // let productDetailss = await productById(productId);
+
+             if (!deliver) {
+            return res.status(500).json({
+                type: "Not Found",
+                msg: "Invalid request"
+            })
+        }
+        //--If Cart Exists ----
+
+
+        if (order) {
+
+            
+        console.log( user, order,  "2222" , )
+
+
+            //----Check if quantity is greater than 0 then add item to items array ----
+            if (order.Delivered !== false ) {
+               order.Delivered = false
+                
+            }
+            //----If quantity of price is 0 throw the error -------
+            else {
+                return res.status(400).json({
+                type: "product added",
+                msg: "this product has not been delivered "
+                })
+            }
+            const data = await order.save();
+            res.status(200).json({
+                type: "success",
+                mgs: "Process successful",
+                data: data
+            })
+        }
+        //------------ This creates a new cart and then adds the item to the cart that has been created------------
+        else {
+
+            return res.status(500).json({
+                type: "Not Found",
+                msg: "Invalid request"
+            })
+        
+            
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+});
 
 
 

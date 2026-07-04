@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Style from "../../../styles/admin/Profile.module.css"
 import { MininewsEdit } from "./Newslist";
-import { CardList4, CatList, ProductCard } from "./Generallist";
+import { CardList4, CatList, OrderCard, OrderCardAdmin, ProductCard } from "./Generallist";
 import { FixtureToEdit } from "./Tournamentlist";
+import Footer from "../Footer";
+import Nav from "../Nav";
 
 
 
@@ -615,65 +617,202 @@ const AdminMatchFixtureList = ({regionid}) => {
 
 
 const AdminTeamList = () => {
+    const [mode, setInputs] = useState({uncompleted: true, completed: false, });
+    const [status, setStatus] = useState('uncompleted');
+
+
+    // const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
+
 
     const [data, setData] = useState([])
-   
+
+    
+//   let navigate = useNavigate()
+
+
 
 
 
         useEffect(() => {
-            fetch(process.env.REACT_APP_API_LINK + "getall/teams/" )
-            .then((res) =>  res.json())
-            .then((data) => setData(data.data));
-        }, []);
+
+
+          fetch(process.env.REACT_APP_API_LINK + 'getall/orders/' + status , {
+            method: 'GET',
+            credentials: "include",
+            headers: {'Content-Type': 'application/json'},
+             }).then((res) =>  res.json())
+             .then((data) => setData(data.data));
+                 
+            
+              
+         },   [status]);
 
 
 
+
+
+         console.log('====================================');
+         console.log(data);
+         console.log('====================================');
+
+
+
+
+        const handleChange = (event) => {
+            const name = event.target.innerHTML.toLowerCase();
+    
+            setInputs({complete: false, uncomplete: false, });
+
+            
+            setInputs(values => ({...values, [name]: true}))
+
+
+            console.log('====================================');
+            console.log(name);
+            console.log('====================================');
+            setStatus(name)
+          }
+            
+    
     
 
+         
+        
+
+        // useEffect(() => {
+        //     fetch(process.env.REACT_APP_API_LINK  + "getall/product")
+        //     .then((res) =>  res.json())
+        //     .then((data) => setproduct(data.data));
+        // }, []);
+    
+ 
+
+    //  useEffect(() => {
+    //     fetch(process.env.REACT_APP_API_LINK  + "getone/wishlist/" + link, {
+    //         credentials: "include",
+    //         headers: { "Content-type": "application/json; charset=UTF-8", },
+    //     }).then((res) =>  res.json())
+    //     .then((data) =>  {
+    //         if (data.data == "true") {
+    //             setwish(faX)
+    //             setset("active")
+    //         } else {
+    //             setwish(faHeart)
+    //             setset("false")
+    //         }
+    //     } );
+    // }, []);
+    //      function wish(e) {
+    //         e.preventDefault()
+    //         const  mood = wishlist.iconName
+
+
+    //         if (mood == "heart") {
+    //             fetch(process.env.REACT_APP_API_LINK + "add/wishlist", {
+    //             method: "POST",
+    //             credentials: "include",
+    //             headers: {
+    //               "Content-type": "application/json",
+    //             },
+    //             body: JSON.stringify({productId: data._id }),
+    //          }).then((res) =>  res.json())
+    //          .then( ()=> setwish(faX))
+
+
+
+    //         } else {
+    //             fetch(process.env.REACT_APP_API_LINK + "del/wishlist", {
+    //                 method: "DELETE",
+    //                 credentials: "include",
+    //                 headers: {
+    //                   "Content-type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({productId: data._id }),
+    //              }).then((res) =>  res.json())
+    //              .then( ()=> setwish(faHeart))
+    //         }
+
+
+
+    //    }
 
 
 
     return (
-        <div className={Style.app}>
+        <div>
+         {/* <Nav loggedin={isLoggedIn} /> */}
+            <div className={Style.app}>
 
 
-
-            <div className={Style.list}  >  
-
-
-            {data.map((project) => (
-
-                        
-            <CardList4
-                name={project.name}
-                logo={project.logo[0]?.url}
-                category={"team"}
-                link={"./../" + project.name}
-
-                />  
-
-
-            )   )   }
-
-
-         
-                      
-
-  </div>
-
-                    
+                <div className={Style.top}>
 
 
 
 
+                        <div className={Style.list}>
+            
+                    <ul >
+                        <li onClick={handleChange} >Uncompleted</li>
+                        <li onClick={handleChange}  >Completed</li>
+    
+                    </ul>
+    
+            
+                </div>
+                <hr/>
+
+                <br/>
+                </div>
+
+         <div className={Style.section} >
+
+            { mode.uncompleted ?     data === 'not found' ? <p> no order found </p>   : <div className={Style["product-grid"]}>
+        {data?.map((p) => (
+          <OrderCardAdmin
+            key={p._id}
+            name={p.userId?.name ? p.userId?.name.first + ' ' + p.userId?.name.last : p.guestId?.name.first + ' ' + p.guestId?.name.last }
+            order={p._id}
+            price={p.totalCost}
+            images={p.products}
+            link={'/admin/order/' + p._id}
+            delivery={p.Delivered ? 'Delivered' : 'Not yet delivered'}
+          />
+        ))}
+         </div> : null }
+
+
+
+        { mode.completed ?   data === 'not found' ? <p> no order found </p> :  <div className={Style["product-grid"]}>
+        {data?.map((p) => (
+          <OrderCardAdmin
+            key={p._id}
+            name={p.userId?.name ? p.userId?.name.first + ' ' + p.userId?.name.last : p.guestId?.name.first + ' ' + p.guestId?.name.last }
+            order={p._id}
+            price={p.totalCost}
+            images={p.products}
+            link={'/admin/order/' + p._id}
+            delivery={p.Delivered ? 'Delivered' : 'Not yet delivered'}
+          />
+        ))}
+         </div>  :null }
+            {/* { mode.wishlist ? <ProfileWishlist isLoggedIn={isLoggedIn} />  : null }
+
+            { mode.orders ? <ProfileOrder />  : null }
+
+            { mode.admin ? user.admin ? <ProfileAdmin  /> : user.team ? <TeamAdmin  /> : null : null } */}
+
+
+
+         </div>
 
 
 
 
-                    </div>
 
- 
+
+     </div>
+
+        </div>
 
     )
 }

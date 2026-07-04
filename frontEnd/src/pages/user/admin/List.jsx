@@ -141,7 +141,7 @@ const List = ({}) => {
 
 
 
-           { mode2.team &&  <AdminTeamList /> } 
+           { mode2.order &&  <AdminTeamList /> } 
 
 
 

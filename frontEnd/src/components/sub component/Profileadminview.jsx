@@ -4,9 +4,12 @@ import Style from "../../styles/admin/Team.module.css"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { AlertError, Inputs } from "./list/Generallist";
+import { AlertError, AlertSuccess, Inputs } from "./list/Generallist";
 
 
+import styles from '../../styles/Order.module.css'; // Import styles as a JS object
+import Nav, { SearchNav } from './Nav';
+import { CheckoutCard } from './list/Generallist';
 
 
 const AdminBanner = ({ event, typeId }) => {
@@ -188,156 +191,6 @@ const AdminBanner = ({ event, typeId }) => {
     )
 }
 
-
-const AdminCodeOfConduct = ({ event, typeId }) => {
-  const [data, setInputs] = useState({})
-  const [img, setFile] = useState({});
-  const [submitbtn, setSubmitBtn] = useState(false)
-
-  const [fetchs, setFetch] = useState({link: "", method: ""})
-
-
-
-  let navigate = useNavigate()
-        
-
-
-
-        useEffect(() => {
-          if (typeId) {
-            fetch(process.env.REACT_APP_API_LINK  + "getone/code-of-conduct/" + typeId)
-            .then((res) =>  res.json())
-            .then((data) =>  setInputs({
-              title:data.title,
-              body: data.body,
-             
-              
-            })
-          ); 
-
-          }       
-
-        if (event.add ) {
-      setFetch({link: 'admin/add/code-of-conduct/', method: 'POST'  })
-    } else if (event.edit) {
-      setFetch({link: 'admin/edit/code-of-conduct/' + typeId, method: 'PATCH'  })
-
-    }
-
-      }, []);
-        
-
-
-
-    const h1 = (event.add) ? "Add Code Of Conduct" : (event.edit) ? "Edit Code Of Conduct" : "please try again later" ;  
-    
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
-
-      }
-       
-
-
-      const HandleSubmit = async (event) => {
-        event.preventDefault();
-        setSubmitBtn(!submitbtn)
-    
-        const formData = new FormData();
-      
-    
-            formData.append('data',  JSON.stringify(data));
-    
-    
-    
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
-        })
-        
-        .then((res) => {           
-
-           if (res.status == 200) {
-
-         
-
-          
-                navigate("/user"); 
-
-           } else {
-            setSubmitBtn(false);
-       
-           }
-
-           return res.json()
-        }).then(
-          data => {
-            console.log(data.message, 'llk')       
-
-           
-            if (data.success == false) {
-               AlertError(data.message)
-
-               setSubmitBtn(false);
-               
-            } else {
-              //  navigate("/user"); 
-
-            }
-          }).catch((e) => {
-          console.log(e);
-          setSubmitBtn(false)
-          AlertError("error try again later")
-
-        })
-
-
-        
-    
-    
-     
-      
-      }
-
-
-
-    return (            
-      <div className={Style.app}>
-
-
-      <div className={Style.top} >
-        <h1 > {h1} </h1>
-      </div>
-
-        <form className={Style.form} onSubmit={HandleSubmit}>
-
-        <Inputs label={'title'} type={'text'} name={'title'} onchange={handleChange} value={data.title}  placeholder={'title'} disabled={false} required={true}  />
-
-        
-       <div className={Style.textarea} >
-
-
-        <label rel="textarea" htmlFor="textarea" >article</label>
-
-        <textarea value={data.body} onChange={handleChange} name="body" placeholder="type your article here"  rows={7}> </textarea>
-
-
-        </div>
-
-
-
-        <button className="submit" type="submit"  disabled={submitbtn}> Submit</button> 
-
-        </form>
-
-    </div>
-
-    )
-}
 
 
 const AdminNews = ({event, typeId }) => {
@@ -602,7 +455,7 @@ const AdminCategory = ({event, typeId }) => {
             fetch(process.env.REACT_APP_API_LINK  + "getone/category/" + typeId)
             .then((res) =>  res.json())
             .then((data) =>  setInputs({
-              name:data.name, img: data?.imgUrl?.url,
+              name:data.name, img: data?.imgUrl?.url, _id: data._id
             
             })
           );
@@ -700,193 +553,8 @@ const AdminCategory = ({event, typeId }) => {
         })
 
 
-        
-    
-    
-     
-      
-      }
 
-    return (            
-      <div className={Style.app}>
 
-
-      <div className={Style.top} >
-        <h1 > {h1} </h1>
-      </div>
-
-
-      <div className={Style.pimg} >
-
-{        data.img &&    <img src={data.img } /> }    
-
-      </div>
-
-
-        <form className={Style.form} onSubmit={HandleSubmit}>
-
-        <Inputs label={'name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name'} disabled={false} required={true}  />
-        
-
-
-        <Inputs label={'logo'} type={'file'} name={'logo'} onchange={handleFileChange} value={data.logo}  placeholder={'first name'} disabled={false}  />
-
-
-        <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
-
-
-
-        </form>
-
-
-
-
-
-
-
-    </div>
-
-    )
-}
-
-
-
-const AdminSubRegion = ({event, typeId }) => {
-  const [data, setInputs] = useState({})
-  const [region, settRegion] = useState([])
-
-
-  const [img, setFile] = useState({});
-  const [submitbtn, setSubmitBtn] = useState(false)
-
-  const [fetchs, setFetch] = useState({link: "", method: ""})
-
-
-
-  let navigate = useNavigate()
-
-
-          useEffect(() => {
-          fetch(process.env.REACT_APP_API_LINK  + "getall/competition/" )
-          .then((res) =>  res.json())
-          .then((data) =>  settRegion(data.data))
-        
-
-      }, []);
-
-
-
-
-
-
-        useEffect(() => {
-
-          if (typeId) {
-            fetch(process.env.REACT_APP_API_LINK  + "getone/sub-competition/" + typeId.replaceAll('-',' '))
-            .then((res) =>  res.json())
-            .then((data) =>  setInputs({
-              name:data.name,
-              region: data.regionId,
-              bio: data.bio,
-              img: data?.pictures[0]?.url
-              
-              
-            })
-          );
-          }       
-
-        if (event.add ) {
-      setFetch({link: 'admin/add/sub-competition/', method: 'POST'  })
-    } else if (event.edit) {
-      setFetch({link: 'admin/edit/sub-competition/' + typeId.replaceAll('-',' '), method: 'PATCH'  })
-
-    }
-
-      }, []);
-        
-
-
-
-    const h1 = (event.add) ? "Add Sub Region" : (event.edit) ? "Edit Sub Region" : "please try again later" ;  
-    
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
-
-      }
-    
-      const handleFileChange = (event) => {
-        setFile(event.target.files)
-      };
-
-
-
-          console.log(data, img);
-    
-
-
-      const HandleSubmit = async (event) => {
-        event.preventDefault();
-        setSubmitBtn(!submitbtn)
-    
-        const formData = new FormData();
-      
-    
-        Array.from(img).forEach(imgs => {
-    
-          formData.append('img', imgs);
-    
-      });
-    
-            formData.append('data',  JSON.stringify(data));
-    
-    
-    
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
-        })
-        
-        .then((res) => {
-           if (res.status == 200) {
-          
-                navigate("/user"); 
-
-           } else {
-            setSubmitBtn(false);
-       
-           }
-
-           return res.json()
-        }).then(
-          data => {
-
-           
-            if (data.success == false) {
-               AlertError(data.message)
-
-               console.log(data.message);
-               
-            } else {
-                            // navigate("admin"); 
-
-            }
-          })
-
-
-        
-        .catch((e) => {
-          console.log(e);
-          setSubmitBtn(!submitbtn)
-          AlertError("error try again later")
-
-
-          let msg = "fail"
-        })
 
 
         
@@ -896,171 +564,7 @@ const AdminSubRegion = ({event, typeId }) => {
       
       }
 
-
-      console.log(data.type);
-
-
-    return (            
-      <div className={Style.app}>
-
-
-      <div className={Style.top} >
-        <h1 > {h1} </h1>
-      </div>
-
-
-      <div className={Style.pimg} >
-
-{        data.img &&    <img src={data.img } /> }    
-
-      </div>
-
-
-        <form className={Style.form} onSubmit={HandleSubmit}>
-
-        <Inputs label={'name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name'} disabled={false} required={true}  />
-        
-
-
-           <div className={Style.select} >
-
-
-        <label rel="select" htmlFor="select" >region</label>
-
-          <select id="region" name={"region"} onChange={handleChange} title="region" value={data.region} required > 
-          { data.region ?  null : <option value={""} > select a region  </option> }
-
-
-          {region.map((props) => (
-
-                        
-        <option key={props._id} name={"region"} value={props.name} > {props.name}  </option>
- 
-
-
-                )   )   }
-    
-
-
-          </select>
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <Inputs label={'logo'} type={'file'} name={'logo'} onchange={handleFileChange} value={data.logo}  placeholder={'first name'} disabled={false}  />
-
-
-
-       <div className={Style.textarea} >
-
-
-        <label rel="textarea" htmlFor="textarea" >bio</label>
-
-        <textarea value={data.bio} onChange={handleChange} name="bio" placeholder="biography of the area"  rows={7}> </textarea>
-
-
-        </div>
-
-        <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
-
-        </form>
-
-
-
-
-
-
-
-    </div>
-
-    )
-}
-
-
-
-const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
-  const [data, setInputs] = useState({})
-  const [team, setTeam] = useState([])
-
-
-  const [submitbtn, setSubmitBtn] = useState(false)
-
-  const [fetchs, setFetch] = useState({link: "", method: "", get: ""})
-
-
-
-  let navigate = useNavigate()
-
-
-    useEffect(() => {
-     
-
-      if (event.add ) {
-        setFetch({link: 'admin/add/add-team-to-competition/', method: 'POST',  })
-        fetch(process.env.REACT_APP_API_LINK  + 'getall/teams/'  )
-        .then((res) =>  res.json())
-        .then((data) =>  setTeam(data.data))
-
-    } else if (event.delete) {
-      setFetch({link: 'admin/delete/add-team-to-competition/', method: 'PATCH',  })
-
-      fetch(process.env.REACT_APP_API_LINK  + 'getall/teams/' + regionId  )
-      .then((res) =>  res.json())
-      .then((data) =>  setTeam(data.data))
-
-    }
-        fetch(process.env.REACT_APP_API_LINK  + "getone/competition/" + regionId)
-        .then((res) =>  res.json())
-        .then((data) =>  setInputs({
-          name:data.name,
-          competitionId: data.name,
-          img: data?.logo[0]?.url
-          
-          
-        })
-      );
-
-
-
-
-      }, []);
-
-      // fetch(process.env.REACT_APP_API_LINK  + fetchs.get )
-      // .then((res) =>  res.json())
-      // .then((data) =>  setTeam(data.data))
-      
-      
-  
-
-        
-
-
-
-    const h1 = (event.add) ? "Add Team to Region" : (event.delete) ? "Delete Team in Region" : "please try again later" ;  
-    
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
-
-      }
-
-
-
-
-          console.log(data, );
-    
-
-
-      const HandleSubmit = async (event) => {
+         const HandleDelete = async (event) => {
         event.preventDefault();
         setSubmitBtn(!submitbtn)
     
@@ -1068,16 +572,23 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
       
     
 
+      //                 Array.from(color).forEach(p => {
+    
+      //     formData.append('color', p);
+    
+      // });
     
         formData.append('data',  JSON.stringify(data));
+
+        // formData.append('data',  JSON.stringify(data));
+
     
     
     
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
+       const api = fetch(process.env.REACT_APP_API_LINK + 'admin/delete/category/' + data._id, {
+        method: 'DELETE',
+        credentials: "include",
+       headers: {'Content-Type': "application/json", },
         })
         
         .then((res) => {
@@ -1097,6 +608,8 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
            
             if (data.success == false) {
                AlertError(data.message)
+                setSubmitBtn(false)
+
 
                console.log(data.message);
                
@@ -1110,7 +623,7 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
         
         .catch((e) => {
           console.log(e);
-          setSubmitBtn(!submitbtn)
+          setSubmitBtn(false)
           AlertError("error try again later")
 
 
@@ -1123,12 +636,7 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
     
      
       
-      }
-
-
-      console.log(data.type);
-
-
+      }   
     return (            
       <div className={Style.app}>
 
@@ -1147,35 +655,18 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
 
         <form className={Style.form} onSubmit={HandleSubmit}>
 
-        <Inputs label={'region Id'} type={'text'} name={'competitionId'} value={data.competitionId} disabled={true} required={true}  />
+        <Inputs label={'name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name'} disabled={false} required={true}  />
         
 
 
-           <div className={Style.select} >
+        <Inputs label={'logo'} type={'file'} name={'logo'} onchange={handleFileChange} value={data.logo}  placeholder={'first name'} disabled={false}  />
 
-
-        <label rel="select" htmlFor="select" >team</label>
-
-          <select id="team" name={"team"} onChange={handleChange} title="team" value={data.team} required > 
-          { data.team ?  null : <option value={""} > select a team  </option> }
-
-
-          {team.map((props) => (
-
-                        
-        <option key={props._id} name={"team"} value={props.name} > {props.name}  </option>
- 
-
-
-                )   )   }
-    
-
-
-          </select>
-
-        </div>
 
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
+
+        {event.edit ? <button className="delete" onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
+
+
 
         </form>
 
@@ -1189,6 +680,8 @@ const AdminAddTeamToRegion = ({event, regionId, typeId }) => {
 
     )
 }
+
+
 
 
 const AdminProduct = ({event, regionId, typeId,  }) => {
@@ -1314,6 +807,7 @@ function editinput(data) {
               age: data.age ,
               categoryId: data.categoryId[0],
               available: data.available,
+              _id: data._id
 
               
            }) 
@@ -1432,7 +926,7 @@ function editinput(data) {
         formData.append('data',  JSON.stringify(data));
         formData.append('color',  JSON.stringify(color));
         formData.append('size',  JSON.stringify(size));
-        // formData.append('data',  JSON.stringify(data));
+        formData.append('specs',  JSON.stringify(specs));
 
     
     
@@ -1490,6 +984,83 @@ function editinput(data) {
      
       
       }
+
+
+
+      const HandleDelete = async (event) => {
+        event.preventDefault();
+        setSubmitBtn(!submitbtn)
+    
+        const formData = new FormData();
+      
+    
+
+      //                 Array.from(color).forEach(p => {
+    
+      //     formData.append('color', p);
+    
+      // });
+    
+        formData.append('data',  JSON.stringify(data));
+
+        // formData.append('data',  JSON.stringify(data));
+
+    
+    
+    
+       const api = fetch(process.env.REACT_APP_API_LINK + 'admin/delete/cloth/' + data._id, {
+        method: 'DELETE',
+        credentials: "include",
+       headers: {'Content-Type': "application/json", },
+        })
+        
+        .then((res) => {
+           if (res.status == 200) {
+          
+                navigate("/user"); 
+
+           } else {
+            setSubmitBtn(false);
+       
+           }
+
+           return res.json()
+        }).then(
+          data => {
+
+           
+            if (data.success == false) {
+               AlertError(data.message)
+                setSubmitBtn(false)
+
+
+               console.log(data.message);
+               
+            } else {
+                            // navigate("admin"); 
+
+            }
+          })
+
+
+        
+        .catch((e) => {
+          console.log(e);
+          setSubmitBtn(false)
+          AlertError("error try again later")
+
+
+          let msg = "fail"
+        })
+
+
+        
+    
+    
+     
+      
+      }
+
 
 
       console.log(data.type);
@@ -1691,11 +1262,14 @@ function editinput(data) {
 
 
       
-            <Inputs label={'Available '} type={'text'} name={'available '} onchange={handleChange} value={data.available}  placeholder={'number of item available '} disabled={false} required={true}  />
+            <Inputs label={'Available'} type={'text'} name={'available'} onchange={handleChange} value={data.available}  placeholder={'number of item available '} disabled={false} required={true}  />
 
 
 
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
+
+
+        {event.edit ? <button className="delete" onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
 
 
 
@@ -1715,421 +1289,196 @@ function editinput(data) {
 
 
 
-const AdminTeam = ({event, typeId }) => {
-  const [data, setInputs] = useState({})
-  const [region, settRegion] = useState([])
-
-
-  const [img, setFile] = useState({});
-  const [submitbtn, setSubmitBtn] = useState(false)
-
-  const [fetchs, setFetch] = useState({link: "", method: ""})
 
 
 
-  let navigate = useNavigate()
+// Mock data simulating an API response
 
+function AdminOrder() {
 
-
-
-
-        useEffect(() => {
-          fetch(process.env.REACT_APP_API_LINK  + "getall/competition/" )
-          .then((res) =>  res.json())
-          .then((data) =>  settRegion(data.data))
-        
-
-      }, []);
-
-
-
-        useEffect(() => {
-
-          if (typeId) {
-            fetch(process.env.REACT_APP_API_LINK  + "getone/team/" + typeId?.replaceAll('-',' '))
-            .then((res) =>  res.json())
-            .then((data) =>  setInputs({
-              name:data.name,
-              regionId: data?.regionId[0], 
-              img: data?.logo[0]?.url
-              
-              
-            })
-          );
-          }       
-
-        if (event.add ) {
-      setFetch({link: 'admin/add/team/', method: 'POST'  })
-    } else if (event.edit) {
-      setFetch({link: 'admin/edit/team/' + typeId.replaceAll('-',' '), method: 'PATCH'  })
-
-    }
-
-      }, []);
-        
-
-
-
-    const h1 = (event.add) ? "Add Team" : (event.edit) ? "Edit Team" : "please try again later" ;  
+    const [data, setData] = useState()
     
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
+    const [order, setOrder] = useState(false)
 
-      }
-    
-      const handleFileChange = (event) => {
-        setFile(event.target.files)
-      };
+    let link = useParams().id
 
 
 
-          console.log(data, img);
-    
-
-
-      const HandleSubmit = async (event) => {
-        event.preventDefault();
-        setSubmitBtn(!submitbtn)
-    
-        const formData = new FormData();
-      
-    
-        Array.from(img).forEach(imgs => {
-    
-          formData.append('img', imgs);
-    
-      });
-    
-            formData.append('data',  JSON.stringify(data));
-    
-    
-    
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
-        })
-        
-        .then((res) => {
-           if (res.status == 200) {
-          
-                navigate("/user"); 
-
-           } else {
-            setSubmitBtn(false);
-       
-           }
-
-           return res.json()
-        }).then(
-          data => {
-            console.log(data.message, 'llk')       
-
-           
-            if (data.success == false) {
-               AlertError(data.message)
-
-               console.log(data.message);
-               
-            } else {
-                            // navigate("admin"); 
-
-            }
-          })
-
-
-        
-        .catch((e) => {
-          console.log(e);
-          setSubmitBtn(!submitbtn)
-          AlertError("error try again later")
-
-
-          let msg = "fail"
-        })
-
-
-        
-    
-    
-     
-      
-      }
 
 
 
-    return (            
-      <div className={Style.app}>
-
-
-      <div className={Style.top} >
-        <h1 > {h1} </h1>
-      </div>
-
-
-      <div className={Style.pimg} >
-
-{        data.img &&    <img src={data.img } /> }    
-
-      </div>
-
-
-        <form className={Style.form} onSubmit={HandleSubmit}>
-
-        <Inputs label={'name'} type={'text'} name={'name'} onchange={handleChange} value={data.name}  placeholder={'name'} disabled={false} required={true}  />
-        
-
-       <div className={Style.select} >
-
-
-        <label rel="select" htmlFor="select" >region</label>
-
-          <select id="region" name={"regionId"} onChange={handleChange} title="region" Value={data.regionId} > 
-          { data.region ? null : <option value={""} > select a region  </option> }
-
-
-          {region.map((props) => (
-
+                 useEffect(() => {
+                      
                         
-        <option key={props._id} name={"region"} value={props.name} > {props.name}  </option>
- 
+            fetch(process.env.REACT_APP_API_LINK + 'getone/admin/order/' + link, {
+                          method: 'GET',
+                          credentials: "include",
+                          headers: {'Content-Type': 'application/json'},
+                        }).then((res) =>  res.json())
+                  .then((data) => setData(data ) ); 
+                                          
+                                 },   [order]);
 
 
-                )   )   }
-    
 
 
-          </select>
+
+                               function submitorder(e) {
+                                  e.preventDefault()
+                      
+                      
+                                  if (order === false) {
+                                      fetch(process.env.REACT_APP_API_LINK + "admin/add/order/" + link, {
+                                      method: "POST",
+                                      credentials: "include",
+                                      headers: {
+                                        "Content-type": "application/json",
+                                      },
+                                      body: JSON.stringify({deliver: true }),
+                                   }).then((res) =>  res.json())
+                                   .then( ()=> setOrder(true), AlertSuccess('successfully completed to order '))
+                      
+                      
+                      
+                                  } else if (order === true) {
+                                      fetch(process.env.REACT_APP_API_LINK + "admin/delete/order/" + link, {
+                                          method: "DELETE",
+                                          credentials: "include",
+                                          headers: {
+                                            "Content-type": "application/json",
+                                          },
+                                          body: JSON.stringify({deliver: false }),
+                                       }).then((res) =>  res.json())
+                                       .then( ()=> setOrder(false), AlertSuccess('successfully removed order from complete list '))
+                      
+                                  }
+                      
+                      
+                      
+                             }
+
+
+
+
+  return (
+    <div className={styles.app} >
+        <Nav />
+        <SearchNav />
+
+        <div className={styles.container}>
+      {/* Page Header */}
+      <header className={styles.header}>
+        <div>
+          <h1 className={styles.title}>Order Details</h1>
+          <p className={styles.subtitle}>
+            Order ID: <span className={styles.boldText}>{link}</span>     {/*  • Placed on {order.date} */}
+          </p>
+        </div>
+        <span className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'yellow'}} >
+          {data?.Delivered ? 'Delievred' : 'Shipment on the way'}
+        </span>
+      </header>
+
+
+      <div className={styles.metaGrid}>
+        {/* Shipping Info Card */}
+        {data?.userId ?  <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Personal Info </h2>
+          <h3 className={styles.addressLine}> name: {data?.userId ? data.userId?.name.first + ' ' + data.userId?.name.last : data.guestId?.name.first + ' ' + data.guestId?.name.last } </h3>
+          <p className={styles.addressLine}> email: {data?.userId ?  data.userId?.email : data.guestId?.email }</p>
+          <p className={styles.addressLine}> phone: {data?.userId ?  data.userId?.phone : data.guestId?.phone }</p>
+
+
+        </div> :         <div className={styles.card}>
+          <h2 className={styles.cardTitle}> Personal Info </h2>
+          <p className={styles.addressLine}> No Personal Info found </p>
+         
+        </div> }
+
+        {/* Payment Info Card */}
+        {/* <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Payment Information</h2>
+          <p className={styles.infoText}>{order.paymentMethod}</p>
+          <p className={styles.subtext}>Billed & authorized securely</p>
+        </div>
+       */}
+</div>
+      {/* Grid Layout for Metadata split */}
+      <div className={styles.metaGrid}>
+        {/* Shipping Info Card */}
+        {data?.address ?         <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Shipping Address</h2>
+          <p className={styles.addressLine}>{data?.address.street}</p>
+          <p className={styles.addressLine}>{data?.address.city}</p>
+          <p className={styles.addressLine}>
+            {data?.address.county}, {data?.address.zipCode}
+          </p>
+          <p className={styles.addressLine}>Ireland</p>
+        </div> :         <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Shipping Address</h2>
+          <p className={styles.addressLine}> No address found </p>
+         
+        </div> }
+
+        {/* Payment Info Card */}
+        {/* <div className={styles.card}>
+          <h2 className={styles.cardTitle}>Payment Information</h2>
+          <p className={styles.infoText}>{order.paymentMethod}</p>
+          <p className={styles.subtext}>Billed & authorized securely</p>
+        </div>
+       */}
+</div>
+      {/* Items Table Section */}
+      <div className={styles.card}>
+        <h2 className={styles.cardTitle}>Items Ordered</h2>
+        <div className={styles.tableResponsive}>
+
+              {data?.products?.map((item) => (
+            <CheckoutCard
+                name={item.productId.name}
+                image={item.productId?.img[0].url}
+                quantity={item.quantity}
+                color={item.color}
+                c={item.productId.size.find((items => items._id === item.sizeId) )?.size}
+                total={item.total}
+
+                 /> 
+              ))}
+          
+        </div>
+      </div>
+
+      {/* Financial Summary Section */}
+      <div className={styles.summaryWrapper}>
+        <div className={styles.summaryCard}>
+          {/* <div className={styles.summaryLine}>
+            <span>Subtotal</span>
+            <span>€{order.subtotal.toFixed(2)}</span>
+          </div>
+          <div className={styles.summaryLine}>
+            <span>Estimated Shipping</span>
+            <span>€{order.shipping.toFixed(2)}</span>
+          </div>
+          <div className={styles.summaryLine}>
+            <span>VAT / Tax</span>
+            <span>€{order.tax.toFixed(2)}</span>
+          </div> */}
+
+
+          <div className={`${styles.summaryLine} ${styles.totalLine}`}>
+            <span>Total</span>
+            <span>€{data?.totalCost?.toFixed(2)}</span>
+          </div>
+
+
+          <button onClick={submitorder} > {data?.Delivered ? 'Remove from order completed' : 'Complete Order' }  </button>
+
 
         </div>
-
-
-        <Inputs label={'picture'} type={'file'} name={'logo'} onchange={handleFileChange} value={data.logo}  placeholder={'logo'} disabled={false} required={data.img ? false  : true}  />
-
-
-        
-
-        <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
-
-        
-        </form>
-
-
-
-
-
-
-
-    </div>
-
-    )
-}
-
-
-
-
-
-
-
-
-
-
-
-const AdminAddUserToTeam = ({event, regionId, typeId }) => {
-  const [data, setInputs] = useState({})
-  const [user, setUser] = useState([])
-
-
-  const [submitbtn, setSubmitBtn] = useState(false)
-
-  const [fetchs, setFetch] = useState({link: "", method: "", get: ""})
-
-
-
-  let navigate = useNavigate()
-
-
-    useEffect(() => {
-     
-
-      if (event.add ) {
-        setFetch({link: 'admin/add/add-user-to-team/', method: 'POST',  })
-        fetch(process.env.REACT_APP_API_LINK  + 'getall/user/', {
-          method: "GET",
-          credentials: "include",
-          headers: {'Content-Type': 'application/json'},
-        }  )
-        .then((res) =>  res.json())
-        .then((data) =>  setUser(data.data))
-
-    } else if (event.delete) {
-      setFetch({link: 'admin/delete/add-user-to-team/', method: 'PATCH',  })
-
-      fetch(process.env.REACT_APP_API_LINK  + 'getall/user/team/' + regionId, {
-        method: "GET",
-        credentials: "include",
-        headers: {'Content-Type': 'application/json'},
-      })
-      .then((res) =>  res.json())
-      .then((data) =>  setUser(data.data))
-
-    }
-        fetch(process.env.REACT_APP_API_LINK  + "getone/team/" + regionId)
-        .then((res) =>  res.json())
-        .then((data) =>  setInputs({
-          name:data.name,
-          teamId: data.name,
-          img: data?.logo[0]?.url
-          
-          
-        })
-      );
-
-
-
-
-      }, []);
-
-
-
-
-    const h1 = (event.add) ? "Add User to Team" : (event.delete) ? "Delete User At Of Team" : "please try again later" ;  
-    
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
-
-      }
-
-
-
-
-          console.log(data, );
-    
-
-
-      const HandleSubmit = async (event) => {
-        event.preventDefault();
-        setSubmitBtn(!submitbtn)
-    
-        const formData = new FormData();
-      
-    
-
-    
-        formData.append('data',  JSON.stringify(data));
-    
-    
-    
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
-        })
-        
-        .then((res) => {
-           if (res.status == 200) {
-          
-                navigate("/user"); 
-
-           } else {
-            setSubmitBtn(false);
-       
-           }
-
-           return res.json()
-        }).then(
-          data => {
-
-           
-            if (data.success == false) {
-               AlertError(data.message)
-
-               console.log(data.message);
-               
-            } else {
-                            // navigate("admin"); 
-
-            }
-          })
-
-
-        
-        .catch((e) => {
-          console.log(e);
-          setSubmitBtn(!submitbtn)
-          AlertError("error try again later")
-        })
-
-      }
-
-
-    return (            
-      <div className={Style.app}>
-
-
-      <div className={Style.top} >
-        <h1 > {h1} </h1>
       </div>
-
-
-      <div className={Style.pimg} >
-
-{        data.img &&    <img src={data.img } /> }    
-
-      </div>
-
-
-        <form className={Style.form} onSubmit={HandleSubmit}>
-
-        <Inputs label={'team Id'} type={'text'} name={'teamId'} value={data.teamId} disabled={true} required={true}  />
-        
-
-
-           <div className={Style.select} >
-
-
-        <label rel="select" htmlFor="select" >user</label>
-
-          <select id="user" name={"user"} onChange={handleChange} title="user" value={data.user} required > 
-          { data.user ?  null : <option value={""} > select a user  </option> }
-
-
-          {user.map((props) => (
-
-                        
-        <option key={props._id} value={props._id} > {props.name.first + ' ' + props.name.last}  </option>
- 
-
-
-                )   )   }
-    
-
-
-          </select>
-
-        </div>
-
-        <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
-
-        </form>
-
-
-
-
-
-
-
     </div>
-
-    )
+    </div>
+  );
 }
 
 
@@ -2278,4 +1627,4 @@ const AdminAddAdmin = ({event, regionId, typeId }) => {
     )
 }
 
-export {AdminTeam, AdminCodeOfConduct, AdminNews, AdminBanner, AdminCategory, AdminSubRegion, AdminAddTeamToRegion, AdminProduct, AdminAddAdmin, AdminAddUserToTeam}
+export {AdminNews, AdminOrder, AdminBanner, AdminCategory, AdminProduct, AdminAddAdmin, }

@@ -855,6 +855,7 @@ const handleSubmit =  (event) => {
                 image={item.productId?.img[0].url}
                 quantity={item.quantity}
                 color={item.color}
+                c={item.productId.size.find((items => items._id === item.sizeId) )?.size}
                 total={item.total}
 
                  /> :
@@ -864,6 +865,8 @@ const handleSubmit =  (event) => {
                     quantity={item.quantity}
                     color={item.color}
                     total={item.price * item.quantity}
+                    c={item.c}
+
 
                  />                  
             ))}

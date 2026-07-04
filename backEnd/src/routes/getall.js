@@ -245,7 +245,8 @@ router.get('/orders', async(req, res)=> {
 
 router.get('/orders/uncompleted', async(req, res)=> {
 
-    const data = await Order.find({delivered: false}) //.sort("name")
+    const data = await Order.find({Delivered: false}).populate({path: "products.productId",  model: "Cloth", select: "name img size"
+}).populate({path: "userId", select: "name"}).populate({path: "guestId", select: "name"}).sort({createdAt: 'desc'}); //.sort("name")
     
     if (data.length !== 0) {
 
@@ -267,7 +268,9 @@ router.get('/orders/uncompleted', async(req, res)=> {
 
 router.get('/orders/completed', async(req, res)=> {
 
-    const data = await Order.find({delivered: true}) //.sort("name")
+    const data = await Order.find({Delivered: true}).populate({path: "products.productId",  model: "Cloth", select: "name img size"
+}).populate({path: "userId", select: "name"}).populate({path: "guestId", select: "name"
+}).sort({createdAt: 'desc'}); //.sort("name")
     
     if (data.length !== 0) {
 
@@ -328,7 +331,7 @@ router.get('/user-orders', auth, async(req, res)=> {  // all
       const user = req.userId
 
       const data = await Order.find({userId: user}).populate({path: "products.productId",  model: "Cloth", select: "name img size"
-});
+}).sort({createdAt: 'desc'});
       
       if (data.length !== 0) {
 

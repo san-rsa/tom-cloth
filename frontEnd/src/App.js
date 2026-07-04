@@ -29,6 +29,8 @@ import { Categories, Category, Search, } from "./pages/ListsAll";
 import Description from "./pages/Description";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Order from "./pages/Order";
+import { AdminOrder } from "./components/sub component/Profileadminview";
 
 
 // import { CartProvider } from './context/Context-cart';
@@ -92,6 +94,10 @@ function Links() {
         <Route path="/checkout" element={<Checkout />}/>
 
 
+        <Route path="/order/:id" element={<Order />}/>
+        
+
+        <Route path="/admin/order/:id" element={<AdminOrder />}/>
 
 
 
@@ -105,7 +111,6 @@ function Links() {
         <Route path="/payment" element={<Payment />}/>
 
 
-        <Route path="/admin" element={<Admin />}/>
 
         
         <Route path="/admin/addtea/" element={<Addtea />}/>

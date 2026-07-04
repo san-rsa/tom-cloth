@@ -569,7 +569,8 @@ const CheckoutCard = ({id, color, size, image, c, name, price, link, loggedin, c
                 <img src={image} alt={name} className={styles.itemImage} />
                 
                 <span className={Style.name}>  {name} :  <span className={Style.qty} style={{color: color}}> X{quantity} </span>
- </span> 
+                 <p> size: ({c}) </p>
+</span> 
                 </div>
 
                 <strong>€{total?.toFixed(2)}</strong>
@@ -581,69 +582,72 @@ const CheckoutCard = ({id, color, size, image, c, name, price, link, loggedin, c
 }
 
 
-const OrderCard = ({id, size, image, name, price, link} ) => {
+const OrderCard = ({id, size, image, images, name, price, link, delivery} ) => {
   return (
     <div className={Style.order_card}>
 
       <Link to={link}>
-            <img src={image} alt={name} />
+        <div className={Style.order_card_img} >
 
-      <h4>{name}</h4>
+          {images?.slice(0,4)?.map((p) => (
+              <img src={p.productId?.img[0].url} alt={name} />
 
-      <p>{price}</p>
-      </Link>
+          ))}
 
-    <div className={Style.orderbtn}>
-            <button>View Order</button>    </div>
+        </div>
+      <h4> order no: {name}</h4>
+
+      <p> € {price}</p>
+        <h5> status: {delivery} </h5>
+
+            <button>View Order</button>   
+
+
+    
+            
+    </Link>
+
     </div>
   );
 }
 
 
 
-const OrderCardAdmin = ({id, size, image, name, price, link, style, status, } ) => {
+const OrderCardAdmin = ({id, size, image, name, price, link, style, status, images, delivery, order,  } ) => {
   return (
     <div className={Style.order_card}>
 
       <Link to={link}>
-            <img src={image} alt={name} />
+        <div className={Style.order_card_img} >
 
-      <h4>{name}</h4>
+          {images?.slice(0,4)?.map((p) => (
+              <img src={p.productId?.img[0].url} alt={name} />
 
-      <p>{price}</p>
-      </Link>
+          ))}
 
-    <div className={Style.orderbtn}>
+        </div>
+        <h3> name: {name}</h3>
+
+      <h4> order no: {order}</h4>
+
+      <p> € {price}</p>
+        <h5> status: {delivery} </h5>
+
+ {/* <div className={Style.orderbtn}>
             <button className={Style.view}>View Order</button>
         <button style={style} className={Style.status}> {status} </button>
-    </div>
+    </div> */}
+            <button>View Order</button>   
+
+
+    
+            
+    </Link>
+
     </div>
   );
 }
 
-const CatList2 = ({name,  img, id}) => {
-
-
-
-
-    return (
-
- 
-       <div className="cat">
-            <Link to={"/category/" + id}>
-              <div className="img">
-                    <img src={img} alt="" />
-              </div>
-              
-              <div className="cardText">
-                <h2>{name}</h2>
-              </div>
-
-            </Link>
-  
-        </div>
-    )
-}
 
 
 

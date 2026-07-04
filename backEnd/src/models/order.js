@@ -9,6 +9,8 @@ const orderSchema = new mongoose.Schema({
     guestId : {type: mongoose.Schema.Types.ObjectId, ref: 'Guest'
     },
 
+      address: { street: String, city: String, county: String, zipCode: String },
+
         products: [{
           productId: {type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'productModel' }, // Tells Mongoose to look at the 'itemModel' property
           productModel: {type: String, required: true, }, // Restricts allowed models

@@ -275,15 +275,12 @@ const ProfileOrder = () => {
       <div className={Style["product-grid"]}>
         {data?.map((p) => (
           <OrderCard
-            // key={p.id}
-            // name={p.name}
-            // price={p.price}
-            // image={p.image}
-
-            name={p.head}
-            image={p.imgUrl[0].url}
-            price={50}
-            link={'/order/' + p.name}
+            key={p._id}
+            name={p._id}
+            price={p.totalCost}
+            images={p.products}
+            link={'/order/' + p._id}
+            delivery={p.Delivered ? 'Delivered' : 'Shipmnt on the way'}
           />
         ))}
       </div>
@@ -303,21 +300,6 @@ const ProfileAdmin = ({}) => {
     return (
         <div className={Style.teamAdmin}>
 
-        <div className={Style.teamadminmenu} >
-
-            <h2 > Banner</h2>
-
-            <div className={Style.teamadminmenulist} >
-                <CardList3 name={"Banner"} to={"add"} category={"add"} link={"banner"} logo={faPlus} />  
-                <CardList3Edit name={"Banner"} to={"edit"} category={"edit"} link={"banner"} logo={faPenToSquare} id={"list"} />  
-                {/* <CardList3 name={"ebuawa"} to={"region"} category={"delete"} link={"ebuawa"} logo={faTrash} />   */}
-      
-            </div>
-        </div>
-
-
-
-
                 
         <div className={Style.teamadminmenu} >
 
@@ -327,7 +309,6 @@ const ProfileAdmin = ({}) => {
             <div className={Style.teamadminmenulist} >
                 <CardList3 name={"Product"} to={"add"} category={"add"} link={"product"} logo={faPlus} />  
                 <CardList3Edit name={"Product"} to={"edit"} category={"edit"} link={"product"} logo={faPenToSquare} id={"list"} />  
-                <CardList3 name={"Product"} to={"region"} category={"delete"} link={"product"} logo={faTrash} />  
       
             </div>
             
@@ -356,8 +337,7 @@ const ProfileAdmin = ({}) => {
             <h2 > Orders </h2>
 
             <div className={Style.teamadminmenulist} >
-            <CardList3 name={"Team"} to={"add"} category={"add"} link={"team"} logo={faPlus} />  
-            <CardList3Edit name={"Team "} to={"edit"} category={"edit"} link={"team"} logo={faPenToSquare} id={"list"} />  
+            <CardList3Edit name={"Order "} to={"edit"} category={"edit"} link={"order"} logo={faPenToSquare} id={"list"} />  
                 {/* <CardList3 name={"ebuawa"} to={"region"} category={"delete"} link={"ebuawa"} logo={faTrash} />   */}
       
             </div>
