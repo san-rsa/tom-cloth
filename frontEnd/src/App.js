@@ -31,6 +31,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Order from "./pages/Order";
 import { AdminOrder } from "./components/sub component/Profileadminview";
+import CheckoutContainer from "./pages/Payment";
 
 
 // import { CartProvider } from './context/Context-cart';
@@ -100,13 +101,13 @@ function Links() {
         <Route path="/admin/order/:id" element={<AdminOrder />}/>
 
 
+        <Route path="/payment" element={<CheckoutContainer />}/>
 
 
         {/* 
         <Route path="/list" element={<Menu />}/>
 
 
-        <Route path="/cart" element={<Cart />}/>
         <Route path="/checkout" element={<Checkout />}/>
         <Route path="/payment" element={<Payment />}/>
 

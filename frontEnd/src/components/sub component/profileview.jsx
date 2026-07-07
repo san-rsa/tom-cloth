@@ -218,9 +218,6 @@ const ProfileWishlist = ({isLoggedIn}) => {
 
 
     return (
-        <div className={Style.teamNews}>
-
-
 
       <div className={Style["product-grid"]}>
         {data?.map((product) => (
@@ -240,9 +237,6 @@ const ProfileWishlist = ({isLoggedIn}) => {
         ))}
       </div>
 
-                    </div>
-
- 
 
     )
 }
@@ -279,6 +273,7 @@ const ProfileOrder = () => {
             name={p._id}
             price={p.totalCost}
             images={p.products}
+            
             link={'/order/' + p._id}
             delivery={p.Delivered ? 'Delivered' : 'Shipmnt on the way'}
           />

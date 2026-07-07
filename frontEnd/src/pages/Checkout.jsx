@@ -17,6 +17,10 @@ import { ShoppingCart, Heart, BarChart2, Star, Check, HelpCircle } from "lucide-
 import { AlertError, AlertSuccess, CartCard, CheckoutCard, Inputs, ProductCard } from "../components/sub component/list/Generallist";
 import { Detailbuypanelinfo, Detailimages } from "../components/sub component/Descriptionview";
 import Footer from "../components/sub component/Footer";
+import { Elements } from "@stripe/react-stripe-js";
+import { CheckoutForms } from "./Payment";
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 
 const productData = {
@@ -458,7 +462,22 @@ function Checkout() {
       const [data, setInputs] = useState({});
       const [submitbtn, setSubmitBtn] = useState(false)    
     
-    
+
+
+        const [clientSecret, setClientSecret] = useState('');
+        console.log(clientSecret);
+        
+      
+        const startCheckout = async () => {
+          const res = await fetch(process.env.REACT_APP_API_LINK +'payment/pay', {
+            method: 'POST',
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: 'user_99', productId: 'prod_456', amount: 29.99 })
+          });
+          const data = await res.json();
+          setClientSecret(data.clientSecret);
+        };
     
           const fetchUserCartFromDatabase = () => {
         try {
@@ -491,7 +510,10 @@ function Checkout() {
                                             setIsLoggedIn( false)
                         
                                         } 
-                             })    
+                             }) 
+                             
+                             
+                              startCheckout()
                                       
                              },   []);
 
@@ -605,129 +627,129 @@ function Checkout() {
 
 
 
-const handleSubmit =  (event) => {
-            event.preventDefault();
-            setSubmitBtn(!submitbtn)
+// const handleSubmit =  (event) => {
+//           event.preventDefault();
+//           setSubmitBtn(!submitbtn)
+      
+//           const formData = new FormData();
         
-            const formData = new FormData();
           
-            
-        
-                formData.append('data',  JSON.stringify(data));
+      
+//               formData.append('data',  JSON.stringify(data));
 
-                console.log(data, formData);
-                
-
-
-        
-        
-            if (isLoggedIn) {
-
-                
-                           fetch(process.env.REACT_APP_API_LINK + 'add/order/', {
-            method: 'POST',
-            credentials: "include",
-              headers: { "Content-type": "application/json; charset=UTF-8", },
-            body: JSON.stringify(data)
-            })
-            
-            .then((res) => {           
-    
-               if (res.status == 200) {
-    
-             
-                AlertSuccess('order successful ')
+//               console.log(data, formData);
               
-                    navigate("/"); 
-    
-               } else {
-                setSubmitBtn(false);
-           
-               }
-    
-               return res.json()
-            }).then(
-              data => {
-                console.log(data.message, 'llk')       
-    
-               
-                if (data.success == false) {
-                   AlertError(data.message)
-    
-                   setSubmitBtn(false);
-                   
-                } else {
-                  //  navigate("/user"); 
-    
-                }
-              }).catch((e) => {
-              console.log(e);
-              setSubmitBtn(false)
-              AlertError("error try again later")
-    
-            })
-            } else {
 
 
-
-                const cart = JSON.parse(localStorage.getItem('guest_cart')) || [] 
-
-                console.log(cart, data);
-                
-                fetch(process.env.REACT_APP_API_LINK + 'add/order-from-session/', {
-            method: 'POST',
-            credentials: "include",
-              headers: { "Content-type": "application/json; charset=UTF-8", },
-            body: JSON.stringify({data: data, cart: cart}, )
-            })
-            
-            .then((res) => {           
-    
-               if (res.status == 200) {
-    
-             
-                AlertSuccess('order successful ')
-
-                    localStorage.removeItem('guest_cart');
+      
+      
+//           if (isLoggedIn) {
 
               
-                    navigate("/"); 
-    
-               } else {
-                setSubmitBtn(false);
-           
-               }
-    
-               return res.json()
-            }).then(
-              data => {
-                console.log(data.message, 'llk')       
-    
-               
-                if (data.success == false) {
-                   AlertError(data.message)
-    
-                   setSubmitBtn(false);
-                   
-                } else {
-                  //  navigate("/user"); 
-    
-                }
-              }).catch((e) => {
-              console.log(e);
-              setSubmitBtn(false)
-              AlertError("error try again later")
-    
-            })
-            }
-    
-    
-            
-        
-        
-         
+//                           fetch(process.env.REACT_APP_API_LINK + 'add/order/', {
+//           method: 'POST',
+//           credentials: "include",
+//             headers: { "Content-type": "application/json; charset=UTF-8", },
+//           body: JSON.stringify(data)
+//           })
           
-          }
+//           .then((res) => {           
+  
+//               if (res.status == 200) {
+  
+            
+//               AlertSuccess('order successful ')
+            
+//                   navigate("/"); 
+  
+//               } else {
+//               setSubmitBtn(false);
+          
+//               }
+  
+//               return res.json()
+//           }).then(
+//             data => {
+//               console.log(data.message, 'llk')       
+  
+              
+//               if (data.success == false) {
+//                   AlertError(data.message)
+  
+//                   setSubmitBtn(false);
+                  
+//               } else {
+//                 //  navigate("/user"); 
+  
+//               }
+//             }).catch((e) => {
+//             console.log(e);
+//             setSubmitBtn(false)
+//             AlertError("error try again later")
+  
+//           })
+//           } else {
+
+
+
+//               const cart = JSON.parse(localStorage.getItem('guest_cart')) || [] 
+
+//               console.log(cart, data);
+              
+//               fetch(process.env.REACT_APP_API_LINK + 'add/order-from-session/', {
+//           method: 'POST',
+//           credentials: "include",
+//             headers: { "Content-type": "application/json; charset=UTF-8", },
+//           body: JSON.stringify({data: data, cart: cart}, )
+//           })
+          
+//           .then((res) => {           
+  
+//               if (res.status == 200) {
+  
+            
+//               AlertSuccess('order successful ')
+
+//                   localStorage.removeItem('guest_cart');
+
+            
+//                   navigate("/"); 
+  
+//               } else {
+//               setSubmitBtn(false);
+          
+//               }
+  
+//               return res.json()
+//           }).then(
+//             data => {
+//               console.log(data.message, 'llk')       
+  
+              
+//               if (data.success == false) {
+//                   AlertError(data.message)
+  
+//                   setSubmitBtn(false);
+                  
+//               } else {
+//                 //  navigate("/user"); 
+  
+//               }
+//             }).catch((e) => {
+//             console.log(e);
+//             setSubmitBtn(false)
+//             AlertError("error try again later")
+  
+//           })
+//           }
+  
+  
+          
+      
+      
+        
+        
+//         }
 
   return (
     <div> 
@@ -737,7 +759,7 @@ const handleSubmit =  (event) => {
                     <div className={styles.container}>
       <h1 className={styles.title}>Checkout</h1>
       
-      <form onSubmit={handleSubmit} className={styles.grid}>
+      {/* <form onSubmit={handleSubmit} className={styles.grid}> */}
         {/* Left Side: Shipping & Payment Forms */}
         <div>
           <h2 className={styles.sectionTitle}>Shipping Information</h2>
@@ -887,11 +909,25 @@ const handleSubmit =  (event) => {
             </div>
           </div>
 
-          <button type="submit"  className={styles.submitBtn}>
+          {/* <button type="submit"  className={styles.submitBtn}>
             Place Order
-          </button>
+          </button> */}
+
+              <div>
+                {!clientSecret ? (
+                  <button onClick={startCheckout}>Buy Now </button>
+                ) : (
+                  <Elements stripe={stripePromise} options={{ clientSecret, appearance: {theme: 'stripe'}  }}>
+                    <CheckoutForms />
+                  </Elements>
+                )}
+              </div>
+
         </div>
-      </form>
+      {/* </form>           */}
+      {/* <Link to={'/payment'} >           <button className={styles.submitBtn}>
+            Place 
+          </button> </Link> */}
     </div>
     </div>
   );

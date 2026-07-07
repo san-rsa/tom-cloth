@@ -181,12 +181,23 @@
 
 
 
+.edit {
+    border: 1px #ffffff solid; 
+    color: white;
+    margin: 10px;
+    background: black;
+}
+
+.edit * {
+    color: white;
+}
 /* logout */
 
 .logout {
     background: rgb(252, 79, 79);
-    border: 3px #ff0000 solid; 
+    border: 1px #ff0000 solid; 
     color: rgb(255, 255, 255);
+    margin: 10px;
 }
 
 

@@ -173,7 +173,7 @@
 }
 
 .product_card p {
-  color: #ff4d4d;
+  color: green;
   font-weight: bold;
   margin: 10px 0;
 }
@@ -182,7 +182,7 @@
   width: 100%;
   padding: 10px;
   border: none;
-  background: black;
+  background: #0066cc;
   color: white;
   border-radius: 5px;
 }
@@ -220,6 +220,7 @@
 
 .order_card_img {
   width: 100%;
+  overflow: hidden;
   height: 200px;
   border-radius: 10px;  
 
@@ -259,7 +260,7 @@
 
 
 .order_card p {
-  color: #ff4d4d;
+  color: green;
   font-weight: bold;
   margin: 10px 0;
 }

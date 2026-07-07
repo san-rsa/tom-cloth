@@ -43,19 +43,28 @@ const orderSchema = new mongoose.Schema({
         },
     
 
-      // address: {type: String, required: true,
-      // },
+      stripePaymentIntentId: { 
+        type: String, 
+        required: true, 
+        unique: true // Prevents duplicate orders from webhook retries
+      },
+      paymentStatus: { 
+        type: String, 
+        enum: ['pending', 'completed', 'failed'], 
+        default: 'pending' 
+      },
 
-       transactionId: {type: String, required: false,
-       },
+  expireAt: { type: Date, default: undefined },
 
-       paymentStatus: {type: String, required: false,
-       },
 
       Delivered: {type: Boolean, default: false,  },
 }, {
     timestamps: true
 })
+
+
+orderSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
+
 
 const Order = mongoose.model('Order', orderSchema)
 

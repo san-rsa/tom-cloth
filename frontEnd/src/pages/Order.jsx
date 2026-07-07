@@ -5,37 +5,11 @@ import { CheckoutCard } from '../components/sub component/list/Generallist';
 import { useParams } from 'react-router-dom';
 
 // Mock data simulating an API response
-const MOCK_ORDER = {
-  id: "ORD-98721A",
-  date: "June 29, 2026",
-  status: "Delivered",
-  shippingAddress: {
-    name: "Alex Mercer",
-    street: "123 Innovation Way, Suite 400",
-    city: "Dublin",
-    postalCode: "D04 X2K3",
-    country: "Ireland"
-  },
-  paymentMethod: "Visa ending in 4242",
-  items: [
-    { id: 1, name: "Mechanical Wireless Keyboard", sku: "KB-MX80", quantity: 1, price: 129.99 },
-    { id: 2, name: "Ergonomic Vertical Mouse", sku: "MS-ERGO", quantity: 1, price: 79.50 },
-    { id: 3, name: "Premium Desk Mat (Extra Large)", sku: "DM-XL01", quantity: 2, price: 24.99 }
-  ],
-  subtotal: 259.47,
-  shipping: 15.00,
-  tax: 54.49,
-  total: 328.96
-};
 
 export default function Order() {
 
     const [data, setData] = useState()
     let link = useParams().id
-
-
-
-
 
 
                  useEffect(() => {
@@ -49,7 +23,6 @@ export default function Order() {
                   .then((data) => setData(data ) ); 
                                           
                                  },   []);
-  const order = MOCK_ORDER;
 
   return (
     <div className={styles.app} >
@@ -65,9 +38,15 @@ export default function Order() {
             Order ID: <span className={styles.boldText}>{link}</span>     {/*  • Placed on {order.date} */}
           </p>
         </div>
-        <span className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'yellow'}} >
-          {data?.Delivered ? 'Deliered' : 'Shipment on the way'}
-        </span>
+        <div className={styles.stat}>
+          <p className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'gray'}} >
+            {data?.Delivered ? 'Deliered' : 'Shipment on the way'}
+          </p>
+
+          <p className={`${styles.badge} ${styles.badgeDelivered}` } style={{color: data?.paymentStatus == 'completed' ? 'green' : data?.paymentStatus == 'pending' ? '#a1a10a' : data?.paymentStatus == 'failed' ? 'red' : null}} >
+            payment: {data?.paymentStatus }
+          </p>          
+        </div>
       </header>
 
       {/* Grid Layout for Metadata split */}

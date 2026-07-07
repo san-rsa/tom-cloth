@@ -1,7 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-const Banner = require('../models/news/banner')
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
@@ -12,18 +11,9 @@ const {auth, role} = require('../middleware/mid')
 const otpGenerator = require("otp-generator");
 const User = require('../models/user')
 const Wishlist = require('../models/wishlist')
-const News = require('../models/news/news')
-const Team = require('../models/competition/team')
-const Fixture = require('../models/competition/fixture')
+
 const _ = require('lodash')
-const Standing = require('../models/competition/standing/standing')
-const Result = require('../models/competition/result')
-const Codeofconduct = require('../models/news/codesofconduct')
-const Live = require('../models/competition/live')
-const CupStanding = require('../models/competition/standing/cup')
-const Competition = require('../models/competition/competition')
-const Stat = require('../models/competition/stats')
-const Player = require('../models/competition/player')
+
 const Cloth = require('../models/clothes')
 const Order = require('../models/order')
 const Cart = require('../models/cart')

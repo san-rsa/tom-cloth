@@ -87,33 +87,6 @@ const Inputs = ({label, type, name, onchange, value, disabled, placeholder, requ
 
 const ProductCard = ({id, color, size, image, name, price, link, loggedin, category, c} ) => {
 
-       
-  const [cart, setCart] = useState([]);
-
-//  const { addToCart } = useCart();
-
-  // const { total } = useContext(CartIcon);
-
-
-
-  
-
-  // // Fetch from Mongoose via API
-  // const fetchUserCartFromDatabase = async () => {
-  //   try {
-  //     const response = await  fetch(process.env.REACT_APP_API_LINK + 'getone/user/isloggedin', {
-  //                     method: 'GET',
-  //                     credentials: "include",
-  //                     headers: {'Content-Type': 'application/json'},});
-
-  //     const data = await response.json();
-  //     setCart(data.products || []);
-  //   } catch (err) {
-  //     console.error('Error fetching cart:', err);
-  //   }
-  // };
-
-  // 2. Add Item Function
   const addToCart = async (product) => {
 
               console.log(loggedin);
@@ -202,7 +175,7 @@ const ProductCard = ({id, color, size, image, name, price, link, loggedin, categ
 
       <h4>{name}</h4>
 
-      <p>{price}</p>
+      <p>€{price}</p>
       </Link>
 
       <button onClick={() => addToCart({ id: id })} >Add to Cart</button>
@@ -597,7 +570,7 @@ const OrderCard = ({id, size, image, images, name, price, link, delivery} ) => {
         </div>
       <h4> order no: {name}</h4>
 
-      <p> € {price}</p>
+      <p> €{price}</p>
         <h5> status: {delivery} </h5>
 
             <button>View Order</button>   
@@ -613,7 +586,7 @@ const OrderCard = ({id, size, image, images, name, price, link, delivery} ) => {
 
 
 
-const OrderCardAdmin = ({id, size, image, name, price, link, style, status, images, delivery, order,  } ) => {
+const OrderCardAdmin = ({id, size, image, pay, payColor, name, price, link, style, status, images, delivery, order,  } ) => {
   return (
     <div className={Style.order_card}>
 
@@ -630,7 +603,9 @@ const OrderCardAdmin = ({id, size, image, name, price, link, style, status, imag
 
       <h4> order no: {order}</h4>
 
-      <p> € {price}</p>
+      <p> €{price}</p>
+      <p className={Style.pay} style={{color: payColor}}> payment: {pay}</p>
+
         <h5> status: {delivery} </h5>
 
  {/* <div className={Style.orderbtn}>

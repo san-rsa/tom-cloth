@@ -1,25 +1,12 @@
 require('dotenv').config()
 const User = require('../../models/user')
-const Banner = require('../../models/news/banner')
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt= require('jsonwebtoken')
 //const OTP = require('../../models/OTP')
- const {auth, role, uploadMiddleware, deleteFixture, updateStanding, updateCupStanding, firstHalf} = require('../../middleware/mid')
+ const {auth, role, uploadMiddleware, } = require('../../middleware/mid')
 const cloudinary = require('../../connection/cloudinary')
-const News = require('../../models/news/news')
-const Competition = require('../../models/competition/competition')
-const Team = require('../../models/competition/team')
-const Player = require('../../models/competition/player')
-const Fixture = require('../../models/competition/fixture')
-const Result = require('../../models/competition/result')
-const Standing = require('../../models/competition/standing/standing')
-const Codeofconduct = require('../../models/news/codesofconduct')
-const CupStanding = require('../../models/competition/standing/cup')
-const Live = require('../../models/competition/live')
-
-
 
 
 const Cloth = require('../../models/clothes')

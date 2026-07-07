@@ -354,17 +354,10 @@ router.post("/order", auth, async (req, res) => {
     
 
     try {
-        const order = await Order.findOne({ userId: user });
         const cart = await Cart.findOne({ userId: user });
         const product = await Cloth.find();
         const userInfo = await User.findById(user );
         const send_email = []
-
-
-
-        // const product = await Cloth.findOne({ userId: user });
-
-       // let productDetailss = await productById(productId);
 
 
         //--If Cart Exists ----

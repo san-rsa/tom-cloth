@@ -773,7 +773,9 @@ const AdminTeamList = () => {
             name={p.userId?.name ? p.userId?.name.first + ' ' + p.userId?.name.last : p.guestId?.name.first + ' ' + p.guestId?.name.last }
             order={p._id}
             price={p.totalCost}
+            pay={p?.paymentStatus}
             images={p.products}
+            payColor={p.paymentStatus == 'completed' ? 'green' : p.paymentStatus == 'pending' ? '#a1a10a' : p.paymentStatus == 'failed' ? 'red' : null }
             link={'/admin/order/' + p._id}
             delivery={p.Delivered ? 'Delivered' : 'Not yet delivered'}
           />
@@ -789,6 +791,7 @@ const AdminTeamList = () => {
             name={p.userId?.name ? p.userId?.name.first + ' ' + p.userId?.name.last : p.guestId?.name.first + ' ' + p.guestId?.name.last }
             order={p._id}
             price={p.totalCost}
+            pay={p?.paymentStatus}
             images={p.products}
             link={'/admin/order/' + p._id}
             delivery={p.Delivered ? 'Delivered' : 'Not yet delivered'}

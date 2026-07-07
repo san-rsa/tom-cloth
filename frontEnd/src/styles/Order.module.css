@@ -32,6 +32,9 @@
   margin: 0;
 }
 
+.stat {
+  display: flex;
+}
 /* Status Pill Badge formatting */
 .badge {
   padding: 0.35rem 0.85rem;
@@ -40,12 +43,14 @@
   border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin: 10px;
 }
 
 .badgeDelivered {
-  background-color: #d1fae5;
-  color: #c2c2c2;
+  background-color: gray;
+  /* color: #c2c2c2; */
 }
+
 
 /* Metadata Responsive Cards Grid */
 .metaGrid {
