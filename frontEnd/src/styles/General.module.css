@@ -188,6 +188,28 @@
 }
 
 
+/* not found card */
+
+.emptyContainer {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+
+.continueButton {
+  background: transparent;
+  border: 1px solid #1890ff;
+  color: #1890ff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.continueButton:hover {
+  background: #e6f7ff;
+}
 
 
 /* order card */

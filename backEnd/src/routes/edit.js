@@ -15,14 +15,20 @@ router.patch('/user', auth, async (req, res)=> {
     const user = req.userId
     try {
 
+        const {fname, lname, email, password, phone, username, street, city, county, zipcode, }= req.body
+      const fullname = {first: fname, last: lname}
+
         const update = {};
         for (const key of Object.keys(req.body)){
             if (req.body[key] !== '') {
                 update[key] = req.body[key];
             }
         }
-        User.findOneAndUpdate({_id: user}, {$set: update}, {new: true}).then( async (data) => {
-                console.log("success");
+        User.findOneAndUpdate({_id: user}, {$set: req.body,
+            name: fullname, email, password, phone, username, address: { street, city, county, zipcode, },
+
+        }, {new: true}).then( async (data) => {
+                console.log("success", );
          
                         return res.status(200).json({
             success: true,

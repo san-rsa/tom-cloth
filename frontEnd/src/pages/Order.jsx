@@ -40,10 +40,10 @@ export default function Order() {
         </div>
         <div className={styles.stat}>
           <p className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'gray'}} >
-            {data?.Delivered ? 'Deliered' : 'Shipment on the way'}
+            {data?.Delivered ? 'Delivered' : 'Shipment on the way'}
           </p>
 
-          <p className={`${styles.badge} ${styles.badgeDelivered}` } style={{color: data?.paymentStatus == 'completed' ? 'green' : data?.paymentStatus == 'pending' ? '#a1a10a' : data?.paymentStatus == 'failed' ? 'red' : null}} >
+          <p className={`${styles.badge_pay} ${styles.badgeDelivered}` } style={{color: data?.paymentStatus == 'completed' ? 'green' : data?.paymentStatus == 'pending' ? 'yellow' : data?.paymentStatus == 'failed' ? 'red' : null}} >
             payment: {data?.paymentStatus }
           </p>          
         </div>

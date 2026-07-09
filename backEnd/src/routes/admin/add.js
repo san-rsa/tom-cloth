@@ -53,8 +53,10 @@ router.post('/banner',  async (req, res)=> {
     
     if (!req.files) {
         // No file was uploaded
-        return res.status(400).json({ error: "No file uploaded" });
-      }
+        return res.status(400).json({
+				success: false,
+				message: "No file uploaded",
+			});      }
      
 
     try {
@@ -129,7 +131,10 @@ router.post('/cloth', async (req, res)=> {
     
     if (!req.files) {
         // No file was uploaded
-        return res.status(400).json({ error: "No file uploaded" });
+        return res.status(400).json({
+				success: false,
+				message: "No file uploaded",
+			});
       }      
     
 
@@ -240,8 +245,10 @@ router.post('/category',  async (req, res)=> {
             
         if (!req.files) {
             // No file was uploaded
-            return res.status(400).json({ error: "No file uploaded" });
-          }
+        return res.status(400).json({
+				success: false,
+				message: "No file uploaded",
+			});          }
          
 
     try {
@@ -274,7 +281,7 @@ router.post('/category',  async (req, res)=> {
         if(existingItem){
             return res.status(400).json({
                 success: false,
-                message: "category  already exists"
+                message: "category already exists"
             })
         }
 
@@ -316,10 +323,11 @@ router.post("/order/:id", auth, async (req, res) => {  // complete order
        // let productDetailss = await productById(productId);
 
              if (!deliver) {
+
             return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+				success: false,
+				message: "No input found",
+			});
         }
         //--If Cart Exists ----
 
@@ -338,32 +346,30 @@ router.post("/order/:id", auth, async (req, res) => {  // complete order
             //----If quantity of price is 0 throw the error -------
             else {
                 return res.status(400).json({
-                type: "product added",
-                msg: "you have this product in your delivered"
-                })
+				success: false,
+				message: "you have this product delivered",
+			});
             }
             const data = await order.save();
             res.status(200).json({
-                type: "success",
+                success: true,
                 mgs: "Process successful",
                 data: data
             })
         }
         //------------ This creates a new cart and then adds the item to the cart that has been created------------
         else {
-
             return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+				success: false,
+				message: "Invalid request",
+			});
             
         }
     } catch (err) {
         console.log(err)
         res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
+            msg: "Invalid Something went wrong",
+            success: false
         })
     }
 });

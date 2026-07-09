@@ -27,10 +27,11 @@ router.delete("/cart", auth, async (req, res) => {
     
 
     if (!size && !color && !productId ) {
-        return res.status(500).json({
-            type: "Not Found",
-            msg: "choose size"
-        })
+        
+        return res.status(400).json({
+				success: false,
+				message: "choose size",
+			});
     }
 
     try {
@@ -40,10 +41,11 @@ router.delete("/cart", auth, async (req, res) => {
         const prices = productDetails.size.findIndex(item => item._id == size);
 
              if (!productDetails) {
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+
+            return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
         }
         //--If Cart Exists ----
 
@@ -83,10 +85,10 @@ router.delete("/cart", auth, async (req, res) => {
             //----Check if quantity is greater than 0 then add item to items array ----
             else  {
 
-                    return res.status(400).json({
-                    type: "Invalid",
-                    msg: "Invalid request"
-                })
+                return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
             }
             //----If quantity of price is 0 throw the error -------
         
@@ -100,11 +102,11 @@ router.delete("/cart", auth, async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+
+            return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 
@@ -133,11 +135,10 @@ router.delete("/wishlist", auth, async (req, res) => {
         
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+                return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 
@@ -155,10 +156,10 @@ router.delete("/wishlists", auth, async (req, res) => {
         const productDetails = await Product.findOne({ _id: productId });
 
              if (!productDetails) {
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+                return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
         }
         //--If Cart Exists ----
 
@@ -179,9 +180,9 @@ router.delete("/wishlists", auth, async (req, res) => {
             //----If quantity of price is 0 throw the error -------
             else {
                 return res.status(400).json({
-                type: "product added",
-                msg: "you have don't  this product in your list"
-                })
+				success: false,
+				message: "you have don't  this product in your list",
+			});
             }
             const data = await wishlist.save();
             res.status(200).json({
@@ -193,11 +194,11 @@ router.delete("/wishlists", auth, async (req, res) => {
         //------------ This creates a new cart and then adds the item to the cart that has been created------------
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+ 
+            return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 

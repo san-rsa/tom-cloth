@@ -14,8 +14,9 @@
 
 
 .top {
-    border: 1px #ffffff solid;
+    border: 1px gold solid;
     border-width: 0 0 1px 0 ;
+    margin: 20px auto;
 
 }
 

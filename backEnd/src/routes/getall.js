@@ -5,6 +5,9 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt= require('jsonwebtoken')
+// const escapeStringRegexp = require('escape-string-regexp');
+// import escapeStringRegexp from 'escape-string-regexp';
+
 const {auth, role} = require('../middleware/mid')
 
 //const OTP = require('../models/OTP')
@@ -171,6 +174,9 @@ router.get('/clothes/most-view', async(req, res)=> {
 })
 
 
+
+
+
 router.get('/clothes/most-recent', async(req, res)=> {
 
   const data = await Cloth.find({}).sort({createdAt: 'desc'}) //.sort("title")
@@ -279,6 +285,61 @@ router.get('/orders/completed', async(req, res)=> {
 })
 
 
+
+
+
+
+
+router.get('/search/:id', async(req, res)=> {
+
+
+      const userInput = "Hello [World] ($100)?";
+      const safeString = RegExp.escape(req.params.id); 
+
+      const pattern = new RegExp(safeString, 'g');
+
+
+        const data = await Cloth.find( { $or: [ {'description': pattern}, {'name':pattern}, {'specs':pattern}, 
+          {'type': pattern}, {'categoryId':pattern}, {'gender':pattern}
+         ]}, ).sort({views: 'desc'}) //.sort("title")
+  if (data.length !== 0) {
+
+
+
+
+
+
+
+    //     const cleanTerm = escapeStringRegexp(); // e.g., "jer"
+    // const results = await Cloth.find({
+    //   name: { $regex: cleanTerm, $options: "i" }
+    // });
+
+
+    const escapeStringRegexp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Usage
+
+
+
+
+
+      console.log( pattern);
+      
+
+    return  res.status(200).json({
+     success: true,
+    data: data
+   })
+  }
+
+  else {
+    return  res.status(404).json({
+    success: false,
+    data: "not found"
+    })
+  }
+})
 
 
 router.get('/user-cart', auth, async(req, res)=> {  // all

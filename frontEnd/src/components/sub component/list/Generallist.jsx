@@ -585,6 +585,16 @@ const OrderCard = ({id, size, image, images, name, price, link, delivery} ) => {
 }
 
 
+const NotFoundCard = ({title, body, button, link, } ) => {
+  return (
+            <div className={Style.emptyContainer}>
+     
+        <h2> {title} </h2>
+        <p> {body} </p>
+        <Link to={link}>         <button className={Style.continueButton}> {button} </button> </Link>
+      </div>
+  );
+}
 
 const OrderCardAdmin = ({id, size, image, pay, payColor, name, price, link, style, status, images, delivery, order,  } ) => {
   return (
@@ -936,4 +946,4 @@ const AlertError = (message ) => {
 
 
 
-export {CardList, CartCard, CatList, ProductCard, OrderCard, PlayerBio, CheckoutCard, OrderCardAdmin, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }
+export {CardList, CartCard, CatList, NotFoundCard, ProductCard, OrderCard, PlayerBio, CheckoutCard, OrderCardAdmin, CardList2, CardList3, CardList3Edit, CardList4, HorizontalScroll, Inputs, AlertError, AlertSuccess }

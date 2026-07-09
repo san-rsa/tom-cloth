@@ -395,15 +395,17 @@ const EditUser = () => {
         
           
       
-              formData.append('data',  JSON.stringify(data));
+              formData.append('data', data );
+
+              
       
       
       
-         const api = fetch(process.env.REACT_APP_API_LINK + 'auth/register/', {
-          method: 'POST',
-          // credentials: "include",
-         // headers: {'Content-Type': "application/json", },
-          body:   formData
+         const api = fetch(process.env.REACT_APP_API_LINK + 'edit/user', {
+          method: 'PATCH',
+          credentials: "include",
+         headers: {'Content-Type': "application/json", },
+          body: JSON.stringify(data)
           })
           
           .then((res) => {           
@@ -413,7 +415,7 @@ const EditUser = () => {
            
   
             
-                  navigate("/login"); 
+                  navigate("/user"); 
   
              } else {
               setSubmitBtn(false);
@@ -490,10 +492,9 @@ const EditUser = () => {
                 </div>
 
            
-            <button className="login"  type="submit" disabled={submitbtn}> Sign up</button> 
+            <button className="login"  type="submit" disabled={submitbtn}> Edit User</button> 
 
 
-            <h3 className={Style.alternate} > Have an account sign in <Link to={"/login"}> here now</Link> </h3>
 </form>
 
 <Footer />

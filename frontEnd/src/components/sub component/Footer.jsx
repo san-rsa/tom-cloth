@@ -20,42 +20,42 @@ const Footer = () => {
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         },
 
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         },
 
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         },
 
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         },
 
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         },
 
         {
             icon: faInstagram,
             name: "instagram",
-            handle: "Agbedian",
+            handle: "",
             link: ""
         }
 
@@ -218,7 +218,7 @@ const Footer = () => {
                 <div className={Style.otherLinks}>
 
                                         
-                <h2> Agbedian League</h2>
+                <h2> name</h2>
 
                 <div className={Style.others}>
 
@@ -239,7 +239,7 @@ const Footer = () => {
 
 
                 <div className={Style.copyright} >
-                    <p > @ {year} Agbedian League </p>
+                    <p > @ {year}  </p>
                 </div>
 
 

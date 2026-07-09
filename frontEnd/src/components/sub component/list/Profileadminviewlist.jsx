@@ -752,8 +752,8 @@ const AdminTeamList = () => {
                         <div className={Style.list}>
             
                     <ul >
-                        <li onClick={handleChange} >Uncompleted</li>
-                        <li onClick={handleChange}  >Completed</li>
+                        <li onClick={handleChange} style={{color: mode.uncompleted ? 'gold' : 'white'}}>Uncompleted</li>
+                        <li onClick={handleChange}  style={{color: mode.completed ? 'gold' : 'white'}}>Completed</li>
     
                     </ul>
     

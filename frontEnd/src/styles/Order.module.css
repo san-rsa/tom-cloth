@@ -36,7 +36,7 @@
   display: flex;
 }
 /* Status Pill Badge formatting */
-.badge {
+.badge, .badge_pay {
   padding: 0.35rem 0.85rem;
   font-size: 0.85rem;
   font-weight: 600;
@@ -46,12 +46,16 @@
   margin: 10px;
 }
 
+
+
 .badgeDelivered {
   background-color: gray;
   /* color: #c2c2c2; */
 }
 
-
+.badge_pay {
+  background-color: rgb(0, 0, 0);
+}
 /* Metadata Responsive Cards Grid */
 .metaGrid {
   display: grid;
@@ -186,5 +190,9 @@
   
   .badge {
     align-self: flex-start;
+  }
+
+  .stat {
+    display: block;
   }
 }

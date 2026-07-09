@@ -14,7 +14,7 @@ import { faBars, faUser, faCartShopping, faSearch } from '@fortawesome/free-soli
 
 
 import { ShoppingCart, Heart, BarChart2, Star, Check, HelpCircle } from "lucide-react";
-import { AlertError, AlertSuccess, CartCard, ProductCard } from "../components/sub component/list/Generallist";
+import { AlertError, AlertSuccess, CartCard, NotFoundCard, ProductCard } from "../components/sub component/list/Generallist";
 import { Detailbuypanelinfo, Detailimages } from "../components/sub component/Descriptionview";
 import Footer from "../components/sub component/Footer";
 
@@ -320,13 +320,14 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
         <SearchNav />   
 
-            <div className={styles.emptyContainer}>
-     
-        <h2>Your Cart is Empty</h2>
-        <p>Add some items to your cart to see them here.</p>
-        <button className={styles.continueButton}>Continue Shopping</button>
 
-      </div>
+        <NotFoundCard 
+        title={'Your Cart is Empty'}
+        body={'Add some items to your cart to see them here.'}
+        button={'Continue Shopping'}
+        link={''}
+         />
+
         <Footer />
 
       </div>

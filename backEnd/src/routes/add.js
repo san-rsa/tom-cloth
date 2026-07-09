@@ -31,10 +31,11 @@ router.post("/cart", auth, async (req, res) => {
     
 
     if (!size && !price ) {
-        return res.status(500).json({
-            type: "Not Found",
-            msg: "choose size"
-        })
+
+                return res.status(500).json({
+				success: false,
+				message: "choose size",
+			});
     }
 
     try {
@@ -46,10 +47,10 @@ router.post("/cart", auth, async (req, res) => {
         
 
              if (!productDetails) {
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+             return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
         }
               const prices = productDetails.size.findIndex(item => item._id == size);
   
@@ -113,9 +114,9 @@ router.post("/cart", auth, async (req, res) => {
             //----If quantity of price is 0 throw the error -------
             else {
                 return res.status(400).json({
-                    type: "Invalid",
-                    msg: "Invalid request"
-                })
+				success: false,
+				message: "Invalid request",
+			});
             }
             const data = await cart.save();
             res.status(200).json({
@@ -153,14 +154,14 @@ router.post("/cart", auth, async (req, res) => {
               });
         
         
-              return res.status(201).send(newCart);
+              return res.status(200).send(newCart);
             
         }
     } catch (err) {
         console.log(err)
         res.status(400).json({
             type: "Invalid",
-            msg: "Something went wrong",
+            message: "Something went wrong",
             err: err
         })
     }
@@ -189,10 +190,10 @@ router.post("/carts-items", auth, async (req, res) => {
 
     
     if (products.length === 0 ) {
-        return res.status(500).json({
-            type: "Not Found",
-            msg: "no cart items"
-        })
+             return res.status(500).json({
+				success: false,
+				message: "no cart items",
+			});
     }
 
     try {
@@ -224,10 +225,11 @@ router.post("/carts-items", auth, async (req, res) => {
 
 
              if (!productDetails) {
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+             return res.status(500).json({
+				success: false,
+				message: "Invalid request",
+			});
+
         }
         const prices = productDetails.size.findIndex(item => item._id == size);
 
@@ -269,10 +271,11 @@ router.post("/carts-items", auth, async (req, res) => {
             }
             //----If quantity of price is 0 throw the error -------
             else {
+               
                 return res.status(400).json({
-                    type: "Invalid",
-                    msg: "Invalid request"
-                })
+				success: false,
+				message: "Invalid request",
+			});
             }
             const data = await cart.save();
 
@@ -327,11 +330,11 @@ router.post("/carts-items", auth, async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+       
+        return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 
@@ -454,18 +457,19 @@ router.post("/order", auth, async (req, res) => {
 
                       
         else {
+
                 return res.status(400).json({
-                    type: "Invalid",
-                    msg: "Invalid request no cart found"
-                })
+				success: false,
+				message: "Invalid request no cart found",
+			});
             }
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+
+            return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 
@@ -486,17 +490,19 @@ router.post("/order-from-session", async (req, res) => {
 
     
     if (!cart ) {
-        return res.status(500).json({
-            type: "Not Found",
-            msg: "no cart items"
-        })
+
+
+            return res.status(400).json({
+				success: false,
+				message: "no cart items",
+			});
     }
 
         if (!data ) {
-        return res.status(500).json({
-            type: "Not Found",
-            msg: "please fill in all required details "
-        })
+                return res.status(400).json({
+				success: false,
+				message: "please fill in all required details",
+			});
     }
     try {
                     
@@ -525,10 +531,12 @@ router.post("/order-from-session", async (req, res) => {
 
 
           if (!productDetails) {
+
+
             return res.status(500).json({
-                type: "Not Found",
-                msg: "no product found"
-            })
+				success: false,
+				message: "no product found",
+			});
         }
 
         cart_items.push({
@@ -653,8 +661,8 @@ router.post("/order-from-session", async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
+            success: false,
+            message: "Something went wrong",
             err: err
         })
     }
@@ -738,10 +746,10 @@ router.post("/wishlist", auth, async (req, res) => {
         const productDetails = await Cloth.findOne({ _id: productId });
 
              if (!productDetails) {
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+                return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
         }
         //--If Cart Exists ----
 
@@ -762,10 +770,10 @@ router.post("/wishlist", auth, async (req, res) => {
             }
             //----If quantity of price is 0 throw the error -------
             else {
-                return res.status(400).json({
-                type: "product added",
-                msg: "you have this product in your list"
-                })
+              return res.status(400).json({
+				success: false,
+				message: "you have this product in your list",
+			});
             }
             const data = await wishlist.save();
             res.status(200).json({
@@ -793,11 +801,11 @@ router.post("/wishlist", auth, async (req, res) => {
         }
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+        
+        return res.status(400).json({
+				success: false,
+				message: "Something went wrong",
+			});
     }
 });
 

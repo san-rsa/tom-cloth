@@ -96,7 +96,7 @@ const Profile = ({}) => {
         const handleChange = (event) => {
             const name = event.target.innerHTML.toLowerCase();
     
-            setInputs({overview: false, wishlist: false, orders: false, admin: false, transfer: false, official: false });
+            setInputs({overview: false, wishlist: false, orders: false, admin: false, });
 
             
             setInputs(values => ({...values, [name]: true}))
@@ -112,6 +112,9 @@ const Profile = ({}) => {
         //     fetch(process.env.REACT_APP_API_LINK  + "getall/product")
         //     .then((res) =>  res.json())
         //     .then((data) => setproduct(data.data));
+
+                //   className={activeId === item.id ? "active-item" : "normal-item"}
+
         // }, []);
     
  
@@ -206,10 +209,10 @@ const Profile = ({}) => {
                         <div className={Style.list}>
             
                     <ul >
-                        <li onClick={handleChange} >Overview</li>
-                        <li onClick={handleChange}  >Wishlist</li>
-                        <li onClick={handleChange}  >Orders</li>
-                        { (user.admin || user.team ) ? <li onClick={handleChange}  >Admin</li> : null }
+                        <li onClick={handleChange} style={{color: mode.overview ? 'gold' : 'white'}} >Overview</li>
+                        <li onClick={handleChange} style={{color: mode.wishlist ? 'gold' : 'white'}} >Wishlist</li>
+                        <li onClick={handleChange} style={{color: mode.orders ? 'gold' : 'white'}} >Orders</li>
+                        { (user.admin || user.team ) ? <li onClick={handleChange} style={{color: mode.admin ? 'gold' : 'white'}} >Admin</li> : null }
 
     
                     </ul>

@@ -664,7 +664,7 @@ const AdminCategory = ({event, typeId }) => {
 
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
 
-        {event.edit ? <button className="delete" onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
+        {event.edit ? <button className={Style.delete} onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
 
 
 
@@ -807,7 +807,8 @@ function editinput(data) {
               age: data.age ,
               categoryId: data.categoryId[0],
               available: data.available,
-              _id: data._id
+              _id: data._id,
+              img: data.img[0].url
 
               
            }) 
@@ -1269,7 +1270,7 @@ function editinput(data) {
         <button className="submit" type="submit" disabled={submitbtn}> Submit</button> 
 
 
-        {event.edit ? <button className="delete" onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
+        {event.edit ? <button className={Style.delete} onClick={HandleDelete} type="delete" disabled={submitbtn}> Delete </button> : null }
 
 
 
@@ -1299,6 +1300,7 @@ function AdminOrder() {
     const [data, setData] = useState()
     
     const [order, setOrder] = useState(false)
+    const [submitbtn, setSubmitBtn] = useState(false)
 
     let link = useParams().id
 
@@ -1327,7 +1329,7 @@ function AdminOrder() {
                                   e.preventDefault()
                       
                       
-                                  if (order === false) {
+                                  if (data.Delivered === false) {
                                       fetch(process.env.REACT_APP_API_LINK + "admin/add/order/" + link, {
                                       method: "POST",
                                       credentials: "include",
@@ -1335,12 +1337,40 @@ function AdminOrder() {
                                         "Content-type": "application/json",
                                       },
                                       body: JSON.stringify({deliver: true }),
-                                   }).then((res) =>  res.json())
-                                   .then( ()=> setOrder(true), AlertSuccess('successfully completed to order '))
+                                   }).then((res) => {
+                                      if (res.status == 200) {
+
+                                      setOrder(true) 
+                                      AlertSuccess('successfully completed to order ')
+
+                                      } else {
+                                        setSubmitBtn(false);
+                                  
+                                      }
+
+                                      return res.json()
+                                    }).then(
+                                      data => {
+
+                                      
+                                        if (data.success == false) {
+                                          AlertError(data.message)
+                                            setSubmitBtn(false)
+
+
+                                          console.log(data.message);
+                                          
+                                        } else {
+                                                        // navigate("admin"); 
+                                            setOrder(false)
+
+                                        }
+                                      })
+
                       
                       
                       
-                                  } else if (order === true) {
+                                  } else if (data.Delivered === true) {
                                       fetch(process.env.REACT_APP_API_LINK + "admin/delete/order/" + link, {
                                           method: "DELETE",
                                           credentials: "include",
@@ -1348,9 +1378,34 @@ function AdminOrder() {
                                             "Content-type": "application/json",
                                           },
                                           body: JSON.stringify({deliver: false }),
-                                       }).then((res) =>  res.json())
-                                       .then( ()=> setOrder(false), AlertSuccess('successfully removed order from complete list '))
-                      
+                                       }).then((res) => {
+                                      if (res.status == 200) {
+                                      setOrder(false)
+                                      AlertSuccess('successfully removed order from complete list ')
+                                      } else {
+                                        setSubmitBtn(false);
+                                  
+                                      }
+                                      return res.json()
+                                    }).then(
+                                      data => {
+
+                                      
+                                        if (data.success == false) {
+                                          AlertError(data.message)
+                                            setSubmitBtn(false)
+
+
+                                          console.log(data.message);
+                                          
+                                        } else {
+                                                        // navigate("admin"); 
+                                              setOrder(true)
+
+
+                                        }
+                                      })
+
                                   }
                       
                       
@@ -1374,9 +1429,15 @@ function AdminOrder() {
             Order ID: <span className={styles.boldText}>{link}</span>     {/*  • Placed on {order.date} */}
           </p>
         </div>
-        <span className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'yellow'}} >
-          {data?.Delivered ? 'Delievred' : 'Shipment on the way'}
-        </span>
+        <div className={styles.stat}>
+          <p className={`${styles.badge} ${styles.badgeDelivered}` } style={{background: data?.Delivered ? 'green' : 'gray'}} >
+            {data?.Delivered ? 'Delivered' : 'Shipment on the way'}
+          </p>
+
+          <p className={`${styles.badge_pay} ${styles.badgeDelivered}` } style={{color: data?.paymentStatus == 'completed' ? 'green' : data?.paymentStatus == 'pending' ? 'yellow' : data?.paymentStatus == 'failed' ? 'red' : null}} >
+            payment: {data?.paymentStatus }
+          </p>          
+        </div>
       </header>
 
 
@@ -1471,7 +1532,7 @@ function AdminOrder() {
           </div>
 
 
-          <button onClick={submitorder} > {data?.Delivered ? 'Remove from order completed' : 'Complete Order' }  </button>
+          <button onClick={submitorder} className={data?.Delivered ? Style.uncomplete  : Style.complete } > {data?.Delivered ? 'Remove from order completed' : 'Complete Order' }  </button>
 
 
         </div>

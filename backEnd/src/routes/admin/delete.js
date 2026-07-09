@@ -208,11 +208,12 @@ router.delete("/order/:id", auth, async (req, res) => {  // complete order
         const order = await Order.findOne({ _id: req.params.id });
        // let productDetailss = await productById(productId);
 
-             if (!deliver) {
+             if (deliver !== false) {
+
             return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+				success: false,
+				message: "Invalid request",
+			});
         }
         //--If Cart Exists ----
 
@@ -231,9 +232,9 @@ router.delete("/order/:id", auth, async (req, res) => {  // complete order
             //----If quantity of price is 0 throw the error -------
             else {
                 return res.status(400).json({
-                type: "product added",
-                msg: "this product has not been delivered "
-                })
+				success: false,
+				message: "this product has not been delivered",
+			});
             }
             const data = await order.save();
             res.status(200).json({
@@ -245,20 +246,21 @@ router.delete("/order/:id", auth, async (req, res) => {  // complete order
         //------------ This creates a new cart and then adds the item to the cart that has been created------------
         else {
 
-            return res.status(500).json({
-                type: "Not Found",
-                msg: "Invalid request"
-            })
+
+                return res.status(400).json({
+				success: false,
+				message: "Invalid request",
+			});
         
             
         }
     } catch (err) {
         console.log(err)
-        res.status(400).json({
-            type: "Invalid",
-            msg: "Something went wrong",
-            err: err
-        })
+
+            return res.status(400).json({
+				success: false,
+				message: err,
+			});
     }
 });
 
