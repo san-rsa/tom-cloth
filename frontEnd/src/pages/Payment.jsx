@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements, AddressElement } from '@stripe/react-stripe-js';
 import Nav, { SearchNav } from '../components/sub component/Nav';
+import Style from "../styles/Checkout.module.css"
 
 // Use your Stripe Publishable Key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
@@ -115,6 +116,8 @@ export default function CheckoutContainer() {
       setErrorMessage(error.message);
     }
 
+
+
     setIsProcessing(false);
   };
 
@@ -123,9 +126,9 @@ export default function CheckoutContainer() {
         {/* <Nav />
         <SearchNav /> */}
 
-            <form onSubmit={handleSubmit}>
+            <form className={Style.form} onSubmit={handleSubmit}>
 
-        <div >
+        <div style={{padding: '10px'}} >
             <h3> Address </h3>
             <AddressElement options={{ mode: 'shipping', allowedCountries: ['IE'], fields: {phone: 'always', },  validation: {
             phone: { required: 'always' }
@@ -133,7 +136,7 @@ export default function CheckoutContainer() {
           } }} />
 
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px'  }}>
         <label>Email Address</label>
         <input 
           type="email" 
@@ -147,13 +150,12 @@ export default function CheckoutContainer() {
 
         </div>
                 
-    
-        <div >
+        <div style={{padding: '10px '}} >
             <h3> Card </h3>
 
       <PaymentElement  />
       <button disabled={!stripe || isProcessing}>
-        {isProcessing ? "Processing..." : "Pay Nowz"}
+        {isProcessing ? "Processing..." : "Pay Now"}
       </button>
       {errorMessage && <div>{errorMessage}</div>}
         </div>

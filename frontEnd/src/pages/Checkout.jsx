@@ -458,7 +458,7 @@ function Description() {
 
 function Checkout() {
     const [cartItems, setCartItems] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your auth state
+    const [isLoggedIn, setIsLoggedIn] = useState(); // Toggle based on your auth state
       const [data, setInputs] = useState({});
       const [submitbtn, setSubmitBtn] = useState(false)    
     
@@ -469,14 +469,32 @@ function Checkout() {
         
       
         const startCheckout = async () => {
-          const res = await fetch(process.env.REACT_APP_API_LINK +'payment/pay', {
-            method: 'POST',
-            credentials: "include",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: 'user_99', productId: 'prod_456', amount: 29.99 })
-          });
-          const data = await res.json();
-          setClientSecret(data.clientSecret);
+
+
+          if (isLoggedIn) {
+            const res = await fetch(process.env.REACT_APP_API_LINK +'payment/pay', {
+              method: 'POST',
+              credentials: "include",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId: 'user_99', productId: 'prod_456', amount: 29.99 })
+            });
+            const data = await res.json();
+            setClientSecret(data.clientSecret);            
+          } else {
+
+
+            const cart = JSON.parse(localStorage.getItem('guest_cart'))
+
+
+            const res = await fetch(process.env.REACT_APP_API_LINK +'payment/pay-guest', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId: 'user_99', cart: cart, amount: 29.99 })
+            });
+            const data = await res.json();
+            setClientSecret(data.clientSecret);            
+          }
+
         };
     
           const fetchUserCartFromDatabase = () => {
@@ -515,7 +533,7 @@ function Checkout() {
                              
                               startCheckout()
                                       
-                             },   []);
+                             },   [isLoggedIn]);
 
 
                               useEffect(() => {
@@ -608,7 +626,7 @@ function Checkout() {
     }
   
   const subtotal = !isLoggedIn ? cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) : cartItems.reduce((acc, item) => acc + item.total, 0);
-  const shipping = 5.00;
+  const shipping = 0.00;
 
   const total = subtotal + shipping;
 
@@ -761,7 +779,7 @@ function Checkout() {
       
       {/* <form onSubmit={handleSubmit} className={styles.grid}> */}
         {/* Left Side: Shipping & Payment Forms */}
-        <div>
+        {/* <div>
           <h2 className={styles.sectionTitle}>Shipping Information</h2>
           
         { !isLoggedIn ?           <div className={styles.formGroup}>
@@ -862,8 +880,8 @@ function Checkout() {
                 onChange={handleInputChange}
               />
             </div>
-          </div> */}
-        </div>
+          </div> 
+        </div> */}
 
         {/* Right Side: Order Summary */}
         <div className={styles.summaryCard}>
@@ -914,10 +932,12 @@ function Checkout() {
           </button> */}
 
               <div>
+
+                
                 {!clientSecret ? (
                   <button onClick={startCheckout}>Buy Now </button>
                 ) : (
-                  <Elements stripe={stripePromise} options={{ clientSecret, appearance: {theme: 'stripe'}  }}>
+                  <Elements stripe={stripePromise} options={{ clientSecret, appearance: {theme: 'night'}  }}>
                     <CheckoutForms />
                   </Elements>
                 )}

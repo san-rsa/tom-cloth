@@ -1,3 +1,4 @@
+
 let middlewareObject = {};
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -16,13 +17,15 @@ const cloudinary = require("../connection/cloudinary");
 const { io } = require("../../server");
 
 const nodemailer = require('nodemailer');
-const hbs = require('nodemailer-express-handlebars')
+// const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
 
 
 
-function send_mail(guest, data, send_email) {
-                
+
+async function send_mail(guest, data, send_email) {
+                const hbs =  (await import('nodemailer-express-handlebars')).default;
+
                 const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {

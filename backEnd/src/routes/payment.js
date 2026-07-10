@@ -578,7 +578,7 @@ router.post('/webhook',  express.raw({type: 'application/json'}), async (req, re
                         //   products:cart.products,
                         guestId: save._id,
 
-                        totalCost: amountPaid,
+                        totalCost: amountPaid / 100,
                         address: {street: shippingAddress.line1, city: shippingAddress.city, county: shippingAddress.state, zipCode: shippingAddress.postal_code,
                     },
                         expireAt:'',
@@ -593,23 +593,19 @@ router.post('/webhook',  express.raw({type: 'application/json'}), async (req, re
                     }
 
 
+        //     await Order.findOneAndUpdate(
+        //         { stripePaymentIntentId },
+        //         {
+        //     //   products:cart.products,
 
-            
-
-
-            await Order.findOneAndUpdate(
-                { stripePaymentIntentId },
-                {
-            //   products:cart.products,
-
-            totalCost: amountPaid,
-            address: {street: shippingAddress.line1, city: shippingAddress.city, county: shippingAddress.state, zipCode: shippingAddress.postal_code,
-        },
-            expireAt:'',
-                paymentStatus: 'completed'
-                },
-                { upsert: true, new: true }
-            );    
+        //     totalCost: amountPaid / 100,
+        //     address: {street: shippingAddress.line1, city: shippingAddress.city, county: shippingAddress.state, zipCode: shippingAddress.postal_code,
+        // },
+        //     expireAt:'',
+        //         paymentStatus: 'completed'
+        //         },
+        //         { upsert: true, new: true }
+        //     );    
         }
 
         }
@@ -904,6 +900,7 @@ router.post('/pay', auth, async (req, res) => {
 router.post('/pay-guest', async (req, res) => {
   const { cart, amount,  } = req.body;
 
+  let userId = null
   try {
     
 
@@ -960,14 +957,17 @@ router.post('/pay-guest', async (req, res) => {
 
             
             }
+
+            console.log(cart_items.map(item => item.total).reduce((acc, next) => acc + next));
+            
        
 
 
                 const paymentIntent = await stripe.paymentIntents.create({
-                amount: cart.totalCost, // Stripe processes in cents (e.g., $10.00 = 1000)
+                amount: cart_items.map(item => item.total).reduce((acc, next) => acc + next) * 100, // Stripe processes in cents (e.g., $10.00 = 1000)
                 currency: 'eur',
                 automatic_payment_methods: { enabled: true },
-                metadata: { userId, cartId: '000000000000000000000'  } // productId } 
+                metadata: { userId: '6a298bf8cc55ecb8a3eff286', cartId: '6a298bf8cc55ecb8a3eff286'  } // productId } 
         });  
                    
         

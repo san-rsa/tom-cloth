@@ -310,7 +310,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false); // Toggle based on your aut
 
   // Calculations
   const subtotal = cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 200 || subtotal === 0 ? 0 : 15.00;
+  const shipping = 0.00  //subtotal > 200 || subtotal === 0 ? 0 : 15.00;
   const total = subtotal + shipping;
 
   if (cartItems?.length === 0 || !cartItems) {

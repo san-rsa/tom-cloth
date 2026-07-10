@@ -60,7 +60,7 @@ function App() {
 
       <Categorygender />
 
-      <Newsletter />
+      {/* <Newsletter /> */}
 
 
       

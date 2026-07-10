@@ -1443,8 +1443,11 @@ function AdminOrder() {
 
       <div className={styles.metaGrid}>
         {/* Shipping Info Card */}
-        {data?.userId ?  <div className={styles.card}>
+        {data?.userId || data?.guestId ?  <div className={styles.card}>
           <h2 className={styles.cardTitle}>Personal Info </h2>
+                    
+          <h3 className={styles.addressLine}> {data?.guestId ? 'GUEST' : null } </h3>
+
           <h3 className={styles.addressLine}> name: {data?.userId ? data.userId?.name.first + ' ' + data.userId?.name.last : data.guestId?.name.first + ' ' + data.guestId?.name.last } </h3>
           <p className={styles.addressLine}> email: {data?.userId ?  data.userId?.email : data.guestId?.email }</p>
           <p className={styles.addressLine}> phone: {data?.userId ?  data.userId?.phone : data.guestId?.phone }</p>
