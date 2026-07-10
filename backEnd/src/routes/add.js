@@ -12,7 +12,7 @@ const User = require("../models/user");
 // const _ = require("lodash");
 // const _ = require("lodash");
 const nodemailer = require('nodemailer');
-const hbs = require('nodemailer-express-handlebars')
+// const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
 
 
