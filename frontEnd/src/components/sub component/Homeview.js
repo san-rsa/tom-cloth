@@ -9,18 +9,19 @@ import Style from "../../styles/Home.module.css"
  const filter = [
   {
     name: "top",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+    image: () => require("../../img//web/top.jpg")
+     // "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
   },
   {
     name: "bottom",
-    image:
-      "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f",
+    image:() => require("../../img//web/bottom.jpg")
+     // "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f",
   },
   {
     name: "accessory",
-    image:
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
+    image:  () => require("../../img//web/accessories.jpg"),
+     // ,
+ //"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
   },
 
 ];
@@ -29,18 +30,18 @@ import Style from "../../styles/Home.module.css"
 
   {   
     name: "male",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+    image: () => require("../../img//web/men.jpg"),
+     // "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
   },
   {
     name: "female",
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b",
+    image:  () => require("../../img//web/women.jpg"),
+      // "https://images.unsp () => require("../../i require("../../img//web/accessories.jpg"),mg//web/accessories.jpg"),lash.com/photo-1483985988355-763728e1935b",
   },
   {
     name: "unisex",
-    image:
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
+    image:  () => require("../../img//web/uni.jpg"),
+      // "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
   },
 ];
 
@@ -77,7 +78,7 @@ const Category = () => {
 
         <CatList
             name={project.name}
-            img={project?.imgUrl?.url}
+            img={project?.image()}
             link={"/category/" + project.name}
 
             />    
@@ -130,7 +131,7 @@ const Category = () => {
 
         <CatList
             name={project.name}
-            img={project?.imgUrl?.url}
+            img={project?.image()}
             link={"/category/" + project.name}
 
             />    
