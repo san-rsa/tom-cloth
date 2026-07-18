@@ -32,6 +32,9 @@ import Checkout from "./pages/Checkout";
 import Order from "./pages/Order";
 import { AdminOrder } from "./components/sub component/Profileadminview";
 import CheckoutContainer from "./pages/Payment";
+import Su from "./pages/Payment";
+import SuccessOrder from "./pages/SuccesOrder";
+
 
 
 // import { CartProvider } from './context/Context-cart';
@@ -103,11 +106,11 @@ function Links() {
 
         <Route path="/payment" element={<CheckoutContainer />}/>
 
+        <Route path="/success" element={<SuccessOrder />}/>
+
+
 
         {/* 
-        <Route path="/list" element={<Menu />}/>
-
-
         <Route path="/checkout" element={<Checkout />}/>
         <Route path="/payment" element={<Payment />}/>
 

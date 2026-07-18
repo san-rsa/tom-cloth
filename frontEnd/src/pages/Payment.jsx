@@ -106,7 +106,7 @@ export default function CheckoutContainer() {
       elements,
       confirmParams: {
         // Stripe redirects here after authentication (e.g., 3D Secure)
-        return_url: `${window.location.origin}/`,
+        return_url: `${window.location.origin}/success`,
                 receipt_email: email, 
 
       },

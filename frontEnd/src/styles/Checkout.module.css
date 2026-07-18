@@ -163,6 +163,10 @@
 }
 
 
+.success button {
+  border: 1px solid #18ff3e;
+  color: #18ff3e;
+}
 .form {
  background-color: cadetblue;
  /*   color: white; */
